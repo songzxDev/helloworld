@@ -8,8 +8,6 @@
 */
 package cn.songzx.helloworld.workflow.biz.test;
 
-import java.util.UUID;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
-import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
+import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
+import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
 /**
  * @ClassName: TestWorkflowBiz
@@ -41,13 +40,46 @@ public class TestWorkflowBiz {
 		this.workflowActBpmBiz = workflowActBpmBiz;
 	}
 
-	@Test
 	public void test() {
 		try {
-			DataSourceContextHolder.setCustomerType("dataSourceActiviti518");
-			workflowActBpmBiz.getTasksById(UUID.randomUUID().toString());
-			DataSourceContextHolder.clearCustomerType();
+			// DataSourceContextHolder.setCustomerType("dataSourceActiviti522");
+			workflowActBpmBiz.getTasksById("0ce8bcac-5c69-11e7-83a7-c85b76a3c17b");
+			Thread.sleep(50000L);
+			System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
+			// DataSourceContextHolder.clearCustomerType();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void multiTest() {
+		TestRunnable runner = new TestRunnable() {
+			@Override
+			public void runTest() throws Throwable {
+				// 测试内容
+				try {
+					// DataSourceContextHolder.setCustomerType("dataSourceActiviti522");
+					workflowActBpmBiz.getTasksById("0ce8bcac-5c69-11e7-83a7-c85b76a3c17b");
+					System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
+					// DataSourceContextHolder.clearCustomerType();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		int runnerCount = 10000;
+		// Rnner数组，想当于并发多少个。
+		TestRunnable[] trs = new TestRunnable[runnerCount];
+		for (int i = 0; i < runnerCount; i++) {
+			trs[i] = runner;
+		}
+		// 用于执行多线程测试用例的Runner，将前面定义的单个Runner组成的数组传入
+		MultiThreadedTestRunner mttr = new MultiThreadedTestRunner(trs);
+		try {
+			// 开发并发执行数组里定义的内容
+			mttr.runTestRunnables();
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}

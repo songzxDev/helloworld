@@ -20,7 +20,6 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
-import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import cn.songzx.helloworld.workflow.pagemodel.WorkflowTask;
 
 /**
@@ -99,6 +98,15 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 			if (tasks != null && tasks.size() == 1) {
 				// 将Activiti流程引擎的待办信息转换成WorkflowTask对象
 				// TODO ................................
+				for (int i = 0; i < 100; i++) {
+					System.out.print("☆");
+				}
+				System.out.println("恭喜您，数据已找到！");
+			} else {
+				for (int i = 0; i < 100; i++) {
+					System.out.print("★");
+				}
+				System.out.println("很遗憾，数据不存在！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
