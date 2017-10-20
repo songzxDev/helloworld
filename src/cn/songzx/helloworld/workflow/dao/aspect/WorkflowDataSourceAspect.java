@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import cn.songzx.helloworld.workflow.dao.enmu.DynamicDataSourceLookupKey;
 import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
@@ -32,7 +33,7 @@ public class WorkflowDataSourceAspect {
 	@Before("execution(* cn.songzx.helloworld.workflow.biz.*.*(..))")
 	public void setBpmDataSource(JoinPoint jp) {
 		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：setBpmDataSource(String value)方法，动态指定了数据源！");
-		DataSourceContextHolder.setCustomerType("dataSourceActiviti518");
+		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BPM_DATASOURCE.getLookupKey());
 	}
 
 	@After("execution(* cn.songzx.helloworld.workflow.biz.*.*(..))")

@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.dao.enmu.DynamicDataSourceLookupKey;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -68,7 +69,7 @@ public class TestWorkflowBiz {
 				}
 			}
 		};
-		int runnerCount = 10000;
+		int runnerCount = 800;
 		// Rnner数组，想当于并发多少个。
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
@@ -82,6 +83,11 @@ public class TestWorkflowBiz {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testInitDataSource() {
+
 	}
 
 }
