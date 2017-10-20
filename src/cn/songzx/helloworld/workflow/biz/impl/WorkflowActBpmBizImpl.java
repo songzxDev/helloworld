@@ -75,9 +75,7 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 	@Override
 	public void completeTask(String taskId) throws Exception {
 		try {
-			DataSourceContextHolder.setCustomerType("activitiDataSourceVXviii");
 			workflowTaskBiz.complete(taskId);
-			DataSourceContextHolder.clearCustomerType();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

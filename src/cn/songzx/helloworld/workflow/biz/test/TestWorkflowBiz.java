@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
  * @ClassName: TestWorkflowBiz
@@ -43,8 +44,9 @@ public class TestWorkflowBiz {
 	@Test
 	public void test() {
 		try {
-			// DataSourceContextHolder.setCustomerType("activitiDataSource");
+			DataSourceContextHolder.setCustomerType("dataSourceActiviti518");
 			workflowActBpmBiz.getTasksById(UUID.randomUUID().toString());
+			DataSourceContextHolder.clearCustomerType();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

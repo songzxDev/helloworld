@@ -17,44 +17,57 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
 
-	<!-- 阿里druid数据库连接池 -->
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+	<!-- activiti518阿里druid数据库连接池 -->
+	<bean id="dataSourceActiviti518" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 数据库基本信息配置 -->
-		<property name="url" value="${url}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
-		<property name="driverClassName" value="${driverClassName}" />
-		<property name="filters" value="${filters}" />
+		<property name="url" value="${activiti518.url}" />
+		<property name="username" value="${activiti518.username}" />
+		<property name="password" value="${activiti518.password}" />
+		<property name="driverClassName" value="${activiti518.driverClassName}" />
+		<property name="filters" value="${activiti518.filters}" />
 		<!-- 最大并发连接数 -->
-		<property name="maxActive" value="${maxActive}" />
+		<property name="maxActive" value="${activiti518.maxActive}" />
 		<!-- 初始化连接数量 -->
-		<property name="initialSize" value="${initialSize}" />
+		<property name="initialSize" value="${activiti518.initialSize}" />
 		<!-- 配置获取连接等待超时的时间 -->
-		<property name="maxWait" value="${maxWait}" />
+		<property name="maxWait" value="${activiti518.maxWait}" />
 		<!-- 最小空闲连接数 -->
-		<property name="minIdle" value="${minIdle}" />
+		<property name="minIdle" value="${activiti518.minIdle}" />
 		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${activiti518.timeBetweenEvictionRunsMillis}" />
 		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
-		<property name="validationQuery" value="${validationQuery}" />
-		<property name="testWhileIdle" value="${testWhileIdle}" />
-		<property name="testOnBorrow" value="${testOnBorrow}" />
-		<property name="testOnReturn" value="${testOnReturn}" />
-		<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+		<property name="minEvictableIdleTimeMillis" value="${activiti518.minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="${activiti518.validationQuery}" />
+		<property name="testWhileIdle" value="${activiti518.testWhileIdle}" />
+		<property name="testOnBorrow" value="${activiti518.testOnBorrow}" />
+		<property name="testOnReturn" value="${activiti518.testOnReturn}" />
+		<property name="maxOpenPreparedStatements" value="${activiti518.maxOpenPreparedStatements}" />
 		<!-- 打开 removeAbandoned 功能 -->
-		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<property name="removeAbandoned" value="${activiti518.removeAbandoned}" />
 		<!-- 1800 秒，也就是 30 分钟 -->
-		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<property name="removeAbandonedTimeout" value="${activiti518.removeAbandonedTimeout}" />
 		<!-- 关闭abanded连接时输出错误日志 -->
-		<property name="logAbandoned" value="${logAbandoned}" />
+		<property name="logAbandoned" value="${activiti518.logAbandoned}" />
 	</bean>
 
-	<!-- 编写spring配置文件的配置多数源映射关系 -->
-	<!-- <bean id="dataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource"> <property name="targetDataSources"> <map key-type="java.lang.String"> <entry key="activitiDataSourceVXviii" value-ref="activitiDataSourceVXviii" ></entry> <entry value-ref="testDataSource2" key="testDataSource2"></entry> </map> </property> <property name="defaultTargetDataSource" ref="activitiDataSourceVXviii"></property> </bean> -->
+
+	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<!-- 指定lookupKey和与之对应的数据源 -->
+				<entry key="dataSourceActiviti518" value-ref="dataSourceActiviti518"></entry>
+			</map>
+		</property>
+		<!-- 这里可以指定默认的数据源 -->
+		<property name="defaultTargetDataSource" ref="dataSourceActiviti518" />
+	</bean>
+
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dynamicDataSource" />
 	</bean>
 
 	<!-- 流程引擎数据主键生成策略：UUID -->
@@ -62,10 +75,10 @@
 
 	<!-- spring初始化activiti流程引擎 -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<!-- 制定要使用的数据库类型 -->
-		<property name="databaseType" value="${databaseType}"></property>
+		<property name="databaseType" value="${activiti518.databaseType}"></property>
 		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值： "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jobExecutorActivate" value="true" />
@@ -74,7 +87,7 @@
 		<property name="activityFontName" value="宋体" />
 		<property name="labelFontName" value="宋体" />
 		<!-- 解析xml流程文件所使用的字符集，默认为UTF-8，依据数据库来 -->
-		<property name="xmlEncoding" value="${xmlEncoding}" />
+		<property name="xmlEncoding" value="${activiti518.xmlEncoding}" />
 		<property name="idGenerator" ref="uuidGenerator" />
 	</bean>
 
