@@ -87,7 +87,7 @@ public class TestWorkflowBiz {
 
 	@Test
 	public void testInitDataSource() {
-
+		System.out.println("流程引擎Activiti518开始初始化！");
 	}
 
 }
