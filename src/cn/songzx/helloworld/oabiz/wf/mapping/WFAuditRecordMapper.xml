@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
+    <id column="WF_AUDIT_RECORD_ID" property="wfAuditRecordId" jdbcType="VARCHAR" />
+    <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+    <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
+    <result column="CURRENT_STEP_ID" property="currentStepId" jdbcType="VARCHAR" />
+    <result column="CURRENT_STEP_NAME" property="currentStepName" jdbcType="VARCHAR" />
+    <result column="CURRENT_STEP_TYPE" property="currentStepType" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_NAME" property="currentApproverName" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_PARTYID" property="currentApproverPartyid" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_CODE" property="currentApproverCode" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_DEPT_NAME" property="currentApproverDeptName" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_DEPT_CODE" property="currentApproverDeptCode" jdbcType="VARCHAR" />
+    <result column="CURRENT_APPROVER_AUDIT_TIME" property="currentApproverAuditTime" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_APPROVER_AUDIT_IDEA" property="currentApproverAuditIdea" jdbcType="VARCHAR" />
+    <result column="NEXT_STEP_ID" property="nextStepId" jdbcType="VARCHAR" />
+    <result column="NEXT_STEP_NAME" property="nextStepName" jdbcType="VARCHAR" />
+    <result column="NEXT_STEP_TYPE" property="nextStepType" jdbcType="VARCHAR" />
+    <result column="NEXT_APPROVER_NAME" property="nextApproverName" jdbcType="VARCHAR" />
+    <result column="NEXT_APPROVER_PARTYID" property="nextApproverPartyid" jdbcType="VARCHAR" />
+    <result column="NEXT_APPROVER_CODE" property="nextApproverCode" jdbcType="VARCHAR" />
+    <result column="WF_AUTHORIZE_TYPE" property="wfAuthorizeType" jdbcType="VARCHAR" />
+    <result column="WF_AUTHORIZE_NAME" property="wfAuthorizeName" jdbcType="VARCHAR" />
+    <result column="WF_AUTHORIZE_PARTYID" property="wfAuthorizePartyid" jdbcType="VARCHAR" />
+    <result column="WF_AUTHORIZE_CODE" property="wfAuthorizeCode" jdbcType="VARCHAR" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="RESERVED_ATTRIBUTE_1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_5" property="reservedAttribute5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_AUDIT_RECORD_ID, PROCESS_INSTANCE_ID, PROCESS_NAME, CURRENT_STEP_ID, CURRENT_STEP_NAME, 
+    CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, CURRENT_APPROVER_PARTYID, CURRENT_APPROVER_CODE, 
+    CURRENT_APPROVER_DEPT_NAME, CURRENT_APPROVER_DEPT_CODE, CURRENT_APPROVER_AUDIT_TIME, 
+    CURRENT_APPROVER_AUDIT_IDEA, NEXT_STEP_ID, NEXT_STEP_NAME, NEXT_STEP_TYPE, NEXT_APPROVER_NAME, 
+    NEXT_APPROVER_PARTYID, NEXT_APPROVER_CODE, WF_AUTHORIZE_TYPE, WF_AUTHORIZE_NAME, 
+    WF_AUTHORIZE_PARTYID, WF_AUTHORIZE_CODE, USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
+    RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
+    RESERVED_ATTRIBUTE_5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_audit_record
+    where WF_AUDIT_RECORD_ID = #{wfAuditRecordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_audit_record
+    where WF_AUDIT_RECORD_ID = #{wfAuditRecordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
+    insert into wf_audit_record (WF_AUDIT_RECORD_ID, PROCESS_INSTANCE_ID, 
+      PROCESS_NAME, CURRENT_STEP_ID, CURRENT_STEP_NAME, 
+      CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, CURRENT_APPROVER_PARTYID, 
+      CURRENT_APPROVER_CODE, CURRENT_APPROVER_DEPT_NAME, 
+      CURRENT_APPROVER_DEPT_CODE, CURRENT_APPROVER_AUDIT_TIME, 
+      CURRENT_APPROVER_AUDIT_IDEA, NEXT_STEP_ID, NEXT_STEP_NAME, 
+      NEXT_STEP_TYPE, NEXT_APPROVER_NAME, NEXT_APPROVER_PARTYID, 
+      NEXT_APPROVER_CODE, WF_AUTHORIZE_TYPE, WF_AUTHORIZE_NAME, 
+      WF_AUTHORIZE_PARTYID, WF_AUTHORIZE_CODE, USABLE_STATUS, 
+      CREATE_DATETIME, MODIFY_DATETIME, RESERVED_ATTRIBUTE_1, 
+      RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, 
+      RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5)
+    values (#{wfAuditRecordId,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, 
+      #{processName,jdbcType=VARCHAR}, #{currentStepId,jdbcType=VARCHAR}, #{currentStepName,jdbcType=VARCHAR}, 
+      #{currentStepType,jdbcType=VARCHAR}, #{currentApproverName,jdbcType=VARCHAR}, #{currentApproverPartyid,jdbcType=VARCHAR}, 
+      #{currentApproverCode,jdbcType=VARCHAR}, #{currentApproverDeptName,jdbcType=VARCHAR}, 
+      #{currentApproverDeptCode,jdbcType=VARCHAR}, #{currentApproverAuditTime,jdbcType=TIMESTAMP}, 
+      #{currentApproverAuditIdea,jdbcType=VARCHAR}, #{nextStepId,jdbcType=VARCHAR}, #{nextStepName,jdbcType=VARCHAR}, 
+      #{nextStepType,jdbcType=VARCHAR}, #{nextApproverName,jdbcType=VARCHAR}, #{nextApproverPartyid,jdbcType=VARCHAR}, 
+      #{nextApproverCode,jdbcType=VARCHAR}, #{wfAuthorizeType,jdbcType=VARCHAR}, #{wfAuthorizeName,jdbcType=VARCHAR}, 
+      #{wfAuthorizePartyid,jdbcType=VARCHAR}, #{wfAuthorizeCode,jdbcType=VARCHAR}, #{usableStatus,jdbcType=CHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{reservedAttribute1,jdbcType=VARCHAR}, 
+      #{reservedAttribute2,jdbcType=VARCHAR}, #{reservedAttribute3,jdbcType=VARCHAR}, 
+      #{reservedAttribute4,jdbcType=VARCHAR}, #{reservedAttribute5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
+    insert into wf_audit_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfAuditRecordId != null" >
+        WF_AUDIT_RECORD_ID,
+      </if>
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID,
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME,
+      </if>
+      <if test="currentStepId != null" >
+        CURRENT_STEP_ID,
+      </if>
+      <if test="currentStepName != null" >
+        CURRENT_STEP_NAME,
+      </if>
+      <if test="currentStepType != null" >
+        CURRENT_STEP_TYPE,
+      </if>
+      <if test="currentApproverName != null" >
+        CURRENT_APPROVER_NAME,
+      </if>
+      <if test="currentApproverPartyid != null" >
+        CURRENT_APPROVER_PARTYID,
+      </if>
+      <if test="currentApproverCode != null" >
+        CURRENT_APPROVER_CODE,
+      </if>
+      <if test="currentApproverDeptName != null" >
+        CURRENT_APPROVER_DEPT_NAME,
+      </if>
+      <if test="currentApproverDeptCode != null" >
+        CURRENT_APPROVER_DEPT_CODE,
+      </if>
+      <if test="currentApproverAuditTime != null" >
+        CURRENT_APPROVER_AUDIT_TIME,
+      </if>
+      <if test="currentApproverAuditIdea != null" >
+        CURRENT_APPROVER_AUDIT_IDEA,
+      </if>
+      <if test="nextStepId != null" >
+        NEXT_STEP_ID,
+      </if>
+      <if test="nextStepName != null" >
+        NEXT_STEP_NAME,
+      </if>
+      <if test="nextStepType != null" >
+        NEXT_STEP_TYPE,
+      </if>
+      <if test="nextApproverName != null" >
+        NEXT_APPROVER_NAME,
+      </if>
+      <if test="nextApproverPartyid != null" >
+        NEXT_APPROVER_PARTYID,
+      </if>
+      <if test="nextApproverCode != null" >
+        NEXT_APPROVER_CODE,
+      </if>
+      <if test="wfAuthorizeType != null" >
+        WF_AUTHORIZE_TYPE,
+      </if>
+      <if test="wfAuthorizeName != null" >
+        WF_AUTHORIZE_NAME,
+      </if>
+      <if test="wfAuthorizePartyid != null" >
+        WF_AUTHORIZE_PARTYID,
+      </if>
+      <if test="wfAuthorizeCode != null" >
+        WF_AUTHORIZE_CODE,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfAuditRecordId != null" >
+        #{wfAuditRecordId,jdbcType=VARCHAR},
+      </if>
+      <if test="processInstanceId != null" >
+        #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepId != null" >
+        #{currentStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepName != null" >
+        #{currentStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepType != null" >
+        #{currentStepType,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverName != null" >
+        #{currentApproverName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverPartyid != null" >
+        #{currentApproverPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverCode != null" >
+        #{currentApproverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverDeptName != null" >
+        #{currentApproverDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverDeptCode != null" >
+        #{currentApproverDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverAuditTime != null" >
+        #{currentApproverAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentApproverAuditIdea != null" >
+        #{currentApproverAuditIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepId != null" >
+        #{nextStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepName != null" >
+        #{nextStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepType != null" >
+        #{nextStepType,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverName != null" >
+        #{nextApproverName,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverPartyid != null" >
+        #{nextApproverPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverCode != null" >
+        #{nextApproverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeType != null" >
+        #{wfAuthorizeType,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeName != null" >
+        #{wfAuthorizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizePartyid != null" >
+        #{wfAuthorizePartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeCode != null" >
+        #{wfAuthorizeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
+    update wf_audit_record
+    <set >
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepId != null" >
+        CURRENT_STEP_ID = #{currentStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepName != null" >
+        CURRENT_STEP_NAME = #{currentStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentStepType != null" >
+        CURRENT_STEP_TYPE = #{currentStepType,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverName != null" >
+        CURRENT_APPROVER_NAME = #{currentApproverName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverPartyid != null" >
+        CURRENT_APPROVER_PARTYID = #{currentApproverPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverCode != null" >
+        CURRENT_APPROVER_CODE = #{currentApproverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverDeptName != null" >
+        CURRENT_APPROVER_DEPT_NAME = #{currentApproverDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverDeptCode != null" >
+        CURRENT_APPROVER_DEPT_CODE = #{currentApproverDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="currentApproverAuditTime != null" >
+        CURRENT_APPROVER_AUDIT_TIME = #{currentApproverAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentApproverAuditIdea != null" >
+        CURRENT_APPROVER_AUDIT_IDEA = #{currentApproverAuditIdea,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepId != null" >
+        NEXT_STEP_ID = #{nextStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepName != null" >
+        NEXT_STEP_NAME = #{nextStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="nextStepType != null" >
+        NEXT_STEP_TYPE = #{nextStepType,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverName != null" >
+        NEXT_APPROVER_NAME = #{nextApproverName,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverPartyid != null" >
+        NEXT_APPROVER_PARTYID = #{nextApproverPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="nextApproverCode != null" >
+        NEXT_APPROVER_CODE = #{nextApproverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeType != null" >
+        WF_AUTHORIZE_TYPE = #{wfAuthorizeType,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeName != null" >
+        WF_AUTHORIZE_NAME = #{wfAuthorizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizePartyid != null" >
+        WF_AUTHORIZE_PARTYID = #{wfAuthorizePartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="wfAuthorizeCode != null" >
+        WF_AUTHORIZE_CODE = #{wfAuthorizeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_AUDIT_RECORD_ID = #{wfAuditRecordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
+    update wf_audit_record
+    set PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      CURRENT_STEP_ID = #{currentStepId,jdbcType=VARCHAR},
+      CURRENT_STEP_NAME = #{currentStepName,jdbcType=VARCHAR},
+      CURRENT_STEP_TYPE = #{currentStepType,jdbcType=VARCHAR},
+      CURRENT_APPROVER_NAME = #{currentApproverName,jdbcType=VARCHAR},
+      CURRENT_APPROVER_PARTYID = #{currentApproverPartyid,jdbcType=VARCHAR},
+      CURRENT_APPROVER_CODE = #{currentApproverCode,jdbcType=VARCHAR},
+      CURRENT_APPROVER_DEPT_NAME = #{currentApproverDeptName,jdbcType=VARCHAR},
+      CURRENT_APPROVER_DEPT_CODE = #{currentApproverDeptCode,jdbcType=VARCHAR},
+      CURRENT_APPROVER_AUDIT_TIME = #{currentApproverAuditTime,jdbcType=TIMESTAMP},
+      CURRENT_APPROVER_AUDIT_IDEA = #{currentApproverAuditIdea,jdbcType=VARCHAR},
+      NEXT_STEP_ID = #{nextStepId,jdbcType=VARCHAR},
+      NEXT_STEP_NAME = #{nextStepName,jdbcType=VARCHAR},
+      NEXT_STEP_TYPE = #{nextStepType,jdbcType=VARCHAR},
+      NEXT_APPROVER_NAME = #{nextApproverName,jdbcType=VARCHAR},
+      NEXT_APPROVER_PARTYID = #{nextApproverPartyid,jdbcType=VARCHAR},
+      NEXT_APPROVER_CODE = #{nextApproverCode,jdbcType=VARCHAR},
+      WF_AUTHORIZE_TYPE = #{wfAuthorizeType,jdbcType=VARCHAR},
+      WF_AUTHORIZE_NAME = #{wfAuthorizeName,jdbcType=VARCHAR},
+      WF_AUTHORIZE_PARTYID = #{wfAuthorizePartyid,jdbcType=VARCHAR},
+      WF_AUTHORIZE_CODE = #{wfAuthorizeCode,jdbcType=VARCHAR},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR}
+    where WF_AUDIT_RECORD_ID = #{wfAuditRecordId,jdbcType=VARCHAR}
+  </update>
+</mapper>

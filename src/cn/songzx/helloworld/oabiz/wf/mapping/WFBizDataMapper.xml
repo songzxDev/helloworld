@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFBizDataMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
+    <id column="WF_BIZ_DATA_ID" property="wfBizDataId" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_ID" property="bizBillId" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_AUDIT_STATUS" property="bizBillAuditStatus" jdbcType="CHAR" />
+    <result column="BIZ_BILL_NO" property="bizBillNo" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_NAME" property="bizBillName" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_KIND_ID" property="bizBillKindId" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_KIND_NAME" property="bizBillKindName" jdbcType="VARCHAR" />
+    <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_EDITOR_NAME" property="bizBillEditorName" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_EDITOR_PARTYID" property="bizBillEditorPartyid" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_EDITOR_CODE" property="bizBillEditorCode" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_EDITOR_DEPT_NAME" property="bizBillEditorDeptName" jdbcType="VARCHAR" />
+    <result column="BIZ_BILL_EDITOR_DEPT_CODE" property="bizBillEditorDeptCode" jdbcType="VARCHAR" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="WF_ENGINE_TYPE" property="wfEngineType" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_5" property="reservedAttribute5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_BIZ_DATA_ID, BIZ_BILL_ID, BIZ_BILL_AUDIT_STATUS, BIZ_BILL_NO, BIZ_BILL_NAME, BIZ_BILL_KIND_ID, 
+    BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, BIZ_BILL_EDITOR_NAME, BIZ_BILL_EDITOR_PARTYID, 
+    BIZ_BILL_EDITOR_CODE, BIZ_BILL_EDITOR_DEPT_NAME, BIZ_BILL_EDITOR_DEPT_CODE, USABLE_STATUS, 
+    CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
+    RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_biz_data
+    where WF_BIZ_DATA_ID = #{wfBizDataId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_biz_data
+    where WF_BIZ_DATA_ID = #{wfBizDataId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
+    insert into wf_biz_data (WF_BIZ_DATA_ID, BIZ_BILL_ID, BIZ_BILL_AUDIT_STATUS, 
+      BIZ_BILL_NO, BIZ_BILL_NAME, BIZ_BILL_KIND_ID, 
+      BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, BIZ_BILL_EDITOR_NAME, 
+      BIZ_BILL_EDITOR_PARTYID, BIZ_BILL_EDITOR_CODE, 
+      BIZ_BILL_EDITOR_DEPT_NAME, BIZ_BILL_EDITOR_DEPT_CODE, 
+      USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
+      WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
+      RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
+      RESERVED_ATTRIBUTE_5)
+    values (#{wfBizDataId,jdbcType=VARCHAR}, #{bizBillId,jdbcType=VARCHAR}, #{bizBillAuditStatus,jdbcType=CHAR}, 
+      #{bizBillNo,jdbcType=VARCHAR}, #{bizBillName,jdbcType=VARCHAR}, #{bizBillKindId,jdbcType=VARCHAR}, 
+      #{bizBillKindName,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, #{bizBillEditorName,jdbcType=VARCHAR}, 
+      #{bizBillEditorPartyid,jdbcType=VARCHAR}, #{bizBillEditorCode,jdbcType=VARCHAR}, 
+      #{bizBillEditorDeptName,jdbcType=VARCHAR}, #{bizBillEditorDeptCode,jdbcType=VARCHAR}, 
+      #{usableStatus,jdbcType=CHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
+      #{wfEngineType,jdbcType=VARCHAR}, #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
+      #{reservedAttribute3,jdbcType=VARCHAR}, #{reservedAttribute4,jdbcType=VARCHAR}, 
+      #{reservedAttribute5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
+    insert into wf_biz_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfBizDataId != null" >
+        WF_BIZ_DATA_ID,
+      </if>
+      <if test="bizBillId != null" >
+        BIZ_BILL_ID,
+      </if>
+      <if test="bizBillAuditStatus != null" >
+        BIZ_BILL_AUDIT_STATUS,
+      </if>
+      <if test="bizBillNo != null" >
+        BIZ_BILL_NO,
+      </if>
+      <if test="bizBillName != null" >
+        BIZ_BILL_NAME,
+      </if>
+      <if test="bizBillKindId != null" >
+        BIZ_BILL_KIND_ID,
+      </if>
+      <if test="bizBillKindName != null" >
+        BIZ_BILL_KIND_NAME,
+      </if>
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID,
+      </if>
+      <if test="bizBillEditorName != null" >
+        BIZ_BILL_EDITOR_NAME,
+      </if>
+      <if test="bizBillEditorPartyid != null" >
+        BIZ_BILL_EDITOR_PARTYID,
+      </if>
+      <if test="bizBillEditorCode != null" >
+        BIZ_BILL_EDITOR_CODE,
+      </if>
+      <if test="bizBillEditorDeptName != null" >
+        BIZ_BILL_EDITOR_DEPT_NAME,
+      </if>
+      <if test="bizBillEditorDeptCode != null" >
+        BIZ_BILL_EDITOR_DEPT_CODE,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="wfEngineType != null" >
+        WF_ENGINE_TYPE,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfBizDataId != null" >
+        #{wfBizDataId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillId != null" >
+        #{bizBillId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillAuditStatus != null" >
+        #{bizBillAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="bizBillNo != null" >
+        #{bizBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillName != null" >
+        #{bizBillName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillKindId != null" >
+        #{bizBillKindId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillKindName != null" >
+        #{bizBillKindName,jdbcType=VARCHAR},
+      </if>
+      <if test="processInstanceId != null" >
+        #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorName != null" >
+        #{bizBillEditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorPartyid != null" >
+        #{bizBillEditorPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorCode != null" >
+        #{bizBillEditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorDeptName != null" >
+        #{bizBillEditorDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorDeptCode != null" >
+        #{bizBillEditorDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wfEngineType != null" >
+        #{wfEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
+    update wf_biz_data
+    <set >
+      <if test="bizBillId != null" >
+        BIZ_BILL_ID = #{bizBillId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillAuditStatus != null" >
+        BIZ_BILL_AUDIT_STATUS = #{bizBillAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="bizBillNo != null" >
+        BIZ_BILL_NO = #{bizBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillName != null" >
+        BIZ_BILL_NAME = #{bizBillName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillKindId != null" >
+        BIZ_BILL_KIND_ID = #{bizBillKindId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillKindName != null" >
+        BIZ_BILL_KIND_NAME = #{bizBillKindName,jdbcType=VARCHAR},
+      </if>
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorName != null" >
+        BIZ_BILL_EDITOR_NAME = #{bizBillEditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorPartyid != null" >
+        BIZ_BILL_EDITOR_PARTYID = #{bizBillEditorPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorCode != null" >
+        BIZ_BILL_EDITOR_CODE = #{bizBillEditorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorDeptName != null" >
+        BIZ_BILL_EDITOR_DEPT_NAME = #{bizBillEditorDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizBillEditorDeptCode != null" >
+        BIZ_BILL_EDITOR_DEPT_CODE = #{bizBillEditorDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wfEngineType != null" >
+        WF_ENGINE_TYPE = #{wfEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_BIZ_DATA_ID = #{wfBizDataId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
+    update wf_biz_data
+    set BIZ_BILL_ID = #{bizBillId,jdbcType=VARCHAR},
+      BIZ_BILL_AUDIT_STATUS = #{bizBillAuditStatus,jdbcType=CHAR},
+      BIZ_BILL_NO = #{bizBillNo,jdbcType=VARCHAR},
+      BIZ_BILL_NAME = #{bizBillName,jdbcType=VARCHAR},
+      BIZ_BILL_KIND_ID = #{bizBillKindId,jdbcType=VARCHAR},
+      BIZ_BILL_KIND_NAME = #{bizBillKindName,jdbcType=VARCHAR},
+      PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      BIZ_BILL_EDITOR_NAME = #{bizBillEditorName,jdbcType=VARCHAR},
+      BIZ_BILL_EDITOR_PARTYID = #{bizBillEditorPartyid,jdbcType=VARCHAR},
+      BIZ_BILL_EDITOR_CODE = #{bizBillEditorCode,jdbcType=VARCHAR},
+      BIZ_BILL_EDITOR_DEPT_NAME = #{bizBillEditorDeptName,jdbcType=VARCHAR},
+      BIZ_BILL_EDITOR_DEPT_CODE = #{bizBillEditorDeptCode,jdbcType=VARCHAR},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      WF_ENGINE_TYPE = #{wfEngineType,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR}
+    where WF_BIZ_DATA_ID = #{wfBizDataId,jdbcType=VARCHAR}
+  </update>
+</mapper>

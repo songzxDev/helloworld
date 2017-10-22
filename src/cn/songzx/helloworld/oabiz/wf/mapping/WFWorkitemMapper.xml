@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFWorkitemMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
+    <id column="WF_WORKITEM_ID" property="wfWorkitemId" jdbcType="VARCHAR" />
+    <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+    <result column="WF_STEP_ID" property="wfStepId" jdbcType="VARCHAR" />
+    <result column="WF_STEP_NAME" property="wfStepName" jdbcType="VARCHAR" />
+    <result column="WF_STEP_TYPE" property="wfStepType" jdbcType="CHAR" />
+    <result column="SENDER_NAME" property="senderName" jdbcType="VARCHAR" />
+    <result column="SENDER_PARTYID" property="senderPartyid" jdbcType="VARCHAR" />
+    <result column="SENDER_CODE" property="senderCode" jdbcType="VARCHAR" />
+    <result column="SENDER_COMPLETED_DATETIME" property="senderCompletedDatetime" jdbcType="TIMESTAMP" />
+    <result column="PERFORMER_NAME" property="performerName" jdbcType="VARCHAR" />
+    <result column="PERFORMER_PARTYID" property="performerPartyid" jdbcType="VARCHAR" />
+    <result column="PERFORMER_CODE" property="performerCode" jdbcType="VARCHAR" />
+    <result column="PERFORMER_COMPLETED_DATETIME" property="performerCompletedDatetime" jdbcType="TIMESTAMP" />
+    <result column="READ_STATUS" property="readStatus" jdbcType="CHAR" />
+    <result column="DONE_STATUS" property="doneStatus" jdbcType="CHAR" />
+    <result column="AUTHORIZE_STATUS" property="authorizeStatus" jdbcType="CHAR" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="WF_ENGINE_TYPE" property="wfEngineType" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE_5" property="reservedAttribute5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_WORKITEM_ID, PROCESS_INSTANCE_ID, WF_STEP_ID, WF_STEP_NAME, WF_STEP_TYPE, SENDER_NAME, 
+    SENDER_PARTYID, SENDER_CODE, SENDER_COMPLETED_DATETIME, PERFORMER_NAME, PERFORMER_PARTYID, 
+    PERFORMER_CODE, PERFORMER_COMPLETED_DATETIME, READ_STATUS, DONE_STATUS, AUTHORIZE_STATUS, 
+    USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, 
+    RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_workitem
+    where WF_WORKITEM_ID = #{wfWorkitemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_workitem
+    where WF_WORKITEM_ID = #{wfWorkitemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
+    insert into wf_workitem (WF_WORKITEM_ID, PROCESS_INSTANCE_ID, 
+      WF_STEP_ID, WF_STEP_NAME, WF_STEP_TYPE, 
+      SENDER_NAME, SENDER_PARTYID, SENDER_CODE, 
+      SENDER_COMPLETED_DATETIME, PERFORMER_NAME, 
+      PERFORMER_PARTYID, PERFORMER_CODE, PERFORMER_COMPLETED_DATETIME, 
+      READ_STATUS, DONE_STATUS, AUTHORIZE_STATUS, 
+      USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
+      WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
+      RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
+      RESERVED_ATTRIBUTE_5)
+    values (#{wfWorkitemId,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, 
+      #{wfStepId,jdbcType=VARCHAR}, #{wfStepName,jdbcType=VARCHAR}, #{wfStepType,jdbcType=CHAR}, 
+      #{senderName,jdbcType=VARCHAR}, #{senderPartyid,jdbcType=VARCHAR}, #{senderCode,jdbcType=VARCHAR}, 
+      #{senderCompletedDatetime,jdbcType=TIMESTAMP}, #{performerName,jdbcType=VARCHAR}, 
+      #{performerPartyid,jdbcType=VARCHAR}, #{performerCode,jdbcType=VARCHAR}, #{performerCompletedDatetime,jdbcType=TIMESTAMP}, 
+      #{readStatus,jdbcType=CHAR}, #{doneStatus,jdbcType=CHAR}, #{authorizeStatus,jdbcType=CHAR}, 
+      #{usableStatus,jdbcType=CHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
+      #{wfEngineType,jdbcType=VARCHAR}, #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
+      #{reservedAttribute3,jdbcType=VARCHAR}, #{reservedAttribute4,jdbcType=VARCHAR}, 
+      #{reservedAttribute5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
+    insert into wf_workitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfWorkitemId != null" >
+        WF_WORKITEM_ID,
+      </if>
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID,
+      </if>
+      <if test="wfStepId != null" >
+        WF_STEP_ID,
+      </if>
+      <if test="wfStepName != null" >
+        WF_STEP_NAME,
+      </if>
+      <if test="wfStepType != null" >
+        WF_STEP_TYPE,
+      </if>
+      <if test="senderName != null" >
+        SENDER_NAME,
+      </if>
+      <if test="senderPartyid != null" >
+        SENDER_PARTYID,
+      </if>
+      <if test="senderCode != null" >
+        SENDER_CODE,
+      </if>
+      <if test="senderCompletedDatetime != null" >
+        SENDER_COMPLETED_DATETIME,
+      </if>
+      <if test="performerName != null" >
+        PERFORMER_NAME,
+      </if>
+      <if test="performerPartyid != null" >
+        PERFORMER_PARTYID,
+      </if>
+      <if test="performerCode != null" >
+        PERFORMER_CODE,
+      </if>
+      <if test="performerCompletedDatetime != null" >
+        PERFORMER_COMPLETED_DATETIME,
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS,
+      </if>
+      <if test="doneStatus != null" >
+        DONE_STATUS,
+      </if>
+      <if test="authorizeStatus != null" >
+        AUTHORIZE_STATUS,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="wfEngineType != null" >
+        WF_ENGINE_TYPE,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfWorkitemId != null" >
+        #{wfWorkitemId,jdbcType=VARCHAR},
+      </if>
+      <if test="processInstanceId != null" >
+        #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepId != null" >
+        #{wfStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepName != null" >
+        #{wfStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepType != null" >
+        #{wfStepType,jdbcType=CHAR},
+      </if>
+      <if test="senderName != null" >
+        #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderPartyid != null" >
+        #{senderPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCode != null" >
+        #{senderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCompletedDatetime != null" >
+        #{senderCompletedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performerName != null" >
+        #{performerName,jdbcType=VARCHAR},
+      </if>
+      <if test="performerPartyid != null" >
+        #{performerPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="performerCode != null" >
+        #{performerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="performerCompletedDatetime != null" >
+        #{performerCompletedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readStatus != null" >
+        #{readStatus,jdbcType=CHAR},
+      </if>
+      <if test="doneStatus != null" >
+        #{doneStatus,jdbcType=CHAR},
+      </if>
+      <if test="authorizeStatus != null" >
+        #{authorizeStatus,jdbcType=CHAR},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wfEngineType != null" >
+        #{wfEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
+    update wf_workitem
+    <set >
+      <if test="processInstanceId != null" >
+        PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepId != null" >
+        WF_STEP_ID = #{wfStepId,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepName != null" >
+        WF_STEP_NAME = #{wfStepName,jdbcType=VARCHAR},
+      </if>
+      <if test="wfStepType != null" >
+        WF_STEP_TYPE = #{wfStepType,jdbcType=CHAR},
+      </if>
+      <if test="senderName != null" >
+        SENDER_NAME = #{senderName,jdbcType=VARCHAR},
+      </if>
+      <if test="senderPartyid != null" >
+        SENDER_PARTYID = #{senderPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCode != null" >
+        SENDER_CODE = #{senderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="senderCompletedDatetime != null" >
+        SENDER_COMPLETED_DATETIME = #{senderCompletedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performerName != null" >
+        PERFORMER_NAME = #{performerName,jdbcType=VARCHAR},
+      </if>
+      <if test="performerPartyid != null" >
+        PERFORMER_PARTYID = #{performerPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="performerCode != null" >
+        PERFORMER_CODE = #{performerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="performerCompletedDatetime != null" >
+        PERFORMER_COMPLETED_DATETIME = #{performerCompletedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS = #{readStatus,jdbcType=CHAR},
+      </if>
+      <if test="doneStatus != null" >
+        DONE_STATUS = #{doneStatus,jdbcType=CHAR},
+      </if>
+      <if test="authorizeStatus != null" >
+        AUTHORIZE_STATUS = #{authorizeStatus,jdbcType=CHAR},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wfEngineType != null" >
+        WF_ENGINE_TYPE = #{wfEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_WORKITEM_ID = #{wfWorkitemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
+    update wf_workitem
+    set PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      WF_STEP_ID = #{wfStepId,jdbcType=VARCHAR},
+      WF_STEP_NAME = #{wfStepName,jdbcType=VARCHAR},
+      WF_STEP_TYPE = #{wfStepType,jdbcType=CHAR},
+      SENDER_NAME = #{senderName,jdbcType=VARCHAR},
+      SENDER_PARTYID = #{senderPartyid,jdbcType=VARCHAR},
+      SENDER_CODE = #{senderCode,jdbcType=VARCHAR},
+      SENDER_COMPLETED_DATETIME = #{senderCompletedDatetime,jdbcType=TIMESTAMP},
+      PERFORMER_NAME = #{performerName,jdbcType=VARCHAR},
+      PERFORMER_PARTYID = #{performerPartyid,jdbcType=VARCHAR},
+      PERFORMER_CODE = #{performerCode,jdbcType=VARCHAR},
+      PERFORMER_COMPLETED_DATETIME = #{performerCompletedDatetime,jdbcType=TIMESTAMP},
+      READ_STATUS = #{readStatus,jdbcType=CHAR},
+      DONE_STATUS = #{doneStatus,jdbcType=CHAR},
+      AUTHORIZE_STATUS = #{authorizeStatus,jdbcType=CHAR},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      WF_ENGINE_TYPE = #{wfEngineType,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE_5 = #{reservedAttribute5,jdbcType=VARCHAR}
+    where WF_WORKITEM_ID = #{wfWorkitemId,jdbcType=VARCHAR}
+  </update>
+</mapper>
