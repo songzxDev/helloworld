@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
-import cn.songzx.helloworld.workflow.dao.enmu.DynamicDataSourceLookupKey;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -27,7 +26,7 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-activiti518.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-helloworld.xml" })
 public class TestWorkflowBiz {
 
 	private WorkflowBizI workflowActBpmBiz;

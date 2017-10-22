@@ -7,85 +7,11 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.biz"></context:component-scan>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.dao"></context:component-scan>
+	<context:component-scan base-package="cn.songzx.helloworld.oabiz.wf.service"></context:component-scan>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-	<!-- 加载activiti流程引擎的db.properties配置文件 -->
-	<!-- 此流程引擎版本为：V5.18 -->
-	<bean id="bpmDbConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<array>
-				<value>classpath:db_activiti518.properties</value>
-				<value>classpath:db_activiti522.properties</value>
-			</array>
-		</property>
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-	</bean>
-
-	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
-	<!-- activiti518阿里druid数据库连接池 -->
-	<bean id="dataSourceActiviti518" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<!-- 数据库基本信息配置 -->
-		<property name="url" value="${activiti518.url}" />
-		<property name="username" value="${activiti518.username}" />
-		<property name="password" value="${activiti518.password}" />
-		<property name="driverClassName" value="${activiti518.driverClassName}" />
-		<property name="filters" value="${activiti518.filters}" />
-		<!-- 最大并发连接数 -->
-		<property name="maxActive" value="${activiti518.maxActive}" />
-		<!-- 初始化连接数量 -->
-		<property name="initialSize" value="${activiti518.initialSize}" />
-		<!-- 配置获取连接等待超时的时间 -->
-		<property name="maxWait" value="${activiti518.maxWait}" />
-		<!-- 最小空闲连接数 -->
-		<property name="minIdle" value="${activiti518.minIdle}" />
-		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-		<property name="timeBetweenEvictionRunsMillis" value="${activiti518.timeBetweenEvictionRunsMillis}" />
-		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-		<property name="minEvictableIdleTimeMillis" value="${activiti518.minEvictableIdleTimeMillis}" />
-		<property name="validationQuery" value="${activiti518.validationQuery}" />
-		<property name="testWhileIdle" value="${activiti518.testWhileIdle}" />
-		<property name="testOnBorrow" value="${activiti518.testOnBorrow}" />
-		<property name="testOnReturn" value="${activiti518.testOnReturn}" />
-		<property name="maxOpenPreparedStatements" value="${activiti518.maxOpenPreparedStatements}" />
-		<!-- 打开removeAbandoned功能 -->
-		<property name="removeAbandoned" value="${activiti518.removeAbandoned}" />
-		<!-- 1800秒，也就是30分钟 -->
-		<property name="removeAbandonedTimeout" value="${activiti518.removeAbandonedTimeout}" />
-		<!-- 关闭abanded连接时输出错误日志 -->
-		<property name="logAbandoned" value="${activiti518.logAbandoned}" />
-	</bean>
-	<!-- activiti522阿里druid数据库连接池 -->
-	<bean id="dataSourceActiviti522" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<!-- 数据库基本信息配置 -->
-		<property name="url" value="${activiti522.url}" />
-		<property name="username" value="${activiti522.username}" />
-		<property name="password" value="${activiti522.password}" />
-		<property name="driverClassName" value="${activiti522.driverClassName}" />
-		<property name="filters" value="${activiti522.filters}" />
-		<!-- 最大并发连接数 -->
-		<property name="maxActive" value="${activiti522.maxActive}" />
-		<!-- 初始化连接数量 -->
-		<property name="initialSize" value="${activiti522.initialSize}" />
-		<!-- 配置获取连接等待超时的时间 -->
-		<property name="maxWait" value="${activiti522.maxWait}" />
-		<!-- 最小空闲连接数 -->
-		<property name="minIdle" value="${activiti522.minIdle}" />
-		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-		<property name="timeBetweenEvictionRunsMillis" value="${activiti522.timeBetweenEvictionRunsMillis}" />
-		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-		<property name="minEvictableIdleTimeMillis" value="${activiti522.minEvictableIdleTimeMillis}" />
-		<property name="validationQuery" value="${activiti522.validationQuery}" />
-		<property name="testWhileIdle" value="${activiti522.testWhileIdle}" />
-		<property name="testOnBorrow" value="${activiti522.testOnBorrow}" />
-		<property name="testOnReturn" value="${activiti522.testOnReturn}" />
-		<property name="maxOpenPreparedStatements" value="${activiti522.maxOpenPreparedStatements}" />
-		<!-- 打开 removeAbandoned 功能 -->
-		<property name="removeAbandoned" value="${activiti522.removeAbandoned}" />
-		<!-- 1800 秒，也就是 30 分钟 -->
-		<property name="removeAbandonedTimeout" value="${activiti522.removeAbandonedTimeout}" />
-		<!-- 关闭abanded连接时输出错误日志 -->
-		<property name="logAbandoned" value="${activiti522.logAbandoned}" />
-	</bean>
+	<import resource="classpath:/spring-activiti518-datasource.xml"/>
+	<import resource="classpath:/spring-oabiz-datasource.xml"/>
 
 	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource">
 		<property name="targetDataSources">
@@ -93,10 +19,11 @@
 				<!-- 指定lookupKey和与之对应的数据源 -->
 				<entry key="dataSourceActiviti518" value-ref="dataSourceActiviti518"></entry>
 				<entry key="dataSourceActiviti522" value-ref="dataSourceActiviti522"></entry>
+				<entry key="dataSourceOABiz" value-ref="dataSourceOABiz"></entry>
 			</map>
 		</property>
 		<!-- 这里可以指定默认的数据源 -->
-		<property name="defaultTargetDataSource" ref="dataSourceActiviti518" />
+		<property name="defaultTargetDataSource" ref="dataSourceOABiz" />
 	</bean>
 
 	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
@@ -157,8 +84,13 @@
 	</tx:advice>
 
 	<aop:config>
-		<aop:pointcut id="transactionPointCut" expression="execution(* cn.songzx.helloworld.workflow.biz.*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointCut" advice-ref="txAdvice" order="1" />
+		<aop:pointcut id="transactionPointCutBpm" expression="execution(* cn.songzx.helloworld.workflow.biz.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointCutBpm" advice-ref="txAdvice" order="3" />
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="transactionPointCutBiz" expression="execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointCutBiz" advice-ref="txAdvice" order="4" />
 	</aop:config>
 
 
