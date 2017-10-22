@@ -32,7 +32,7 @@ public class WorkflowDataSourceAspect {
 
 	@Before("execution(* cn.songzx.helloworld.workflow.biz.*.*(..))")
 	public void setBpmDataSource(JoinPoint jp) {
-		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：setBpmDataSource(String value)方法，动态指定了数据源！");
+		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：setCustomerType(String value)方法，动态指定了数据源！");
 		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BPM_DATASOURCE.getLookupKey());
 	}
 
@@ -42,8 +42,16 @@ public class WorkflowDataSourceAspect {
 		DataSourceContextHolder.clearCustomerType();
 	}
 
+	@Before("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
 	public void setBizDataSource(JoinPoint jp) {
-		DataSourceContextHolder.setCustomerType("dataSourceActiviti518");
+		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：setCustomerType(String value)方法，动态指定了数据源！");
+		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BIZ_DATASOURCE.getLookupKey());
+	}
+
+	@After("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
+	public void removeBizDataSource(JoinPoint jp) {
+		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：clearCustomerType()方法，清除了数据源！");
+		DataSourceContextHolder.clearCustomerType();
 	}
 
 }
