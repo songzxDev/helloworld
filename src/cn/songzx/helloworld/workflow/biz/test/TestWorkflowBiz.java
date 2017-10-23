@@ -8,13 +8,18 @@
 */
 package cn.songzx.helloworld.workflow.biz.test;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.biz.WorkflowRepositoryBizI;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -40,6 +45,13 @@ public class TestWorkflowBiz {
 		this.workflowActBpmBiz = workflowActBpmBiz;
 	}
 
+	/**
+	 *
+	 * @Date: 2017年10月23日下午7:19:04
+	 * @Title: multiTest
+	 * @Description: TODO(多线程测试)
+	 * @return void 返回值类型
+	 */
 	@Test
 	public void multiTest() {
 		TestRunnable runner = new TestRunnable() {
@@ -68,9 +80,42 @@ public class TestWorkflowBiz {
 		}
 	}
 
+	/**
+	 *
+	 * @Date: 2017年10月23日下午7:18:43
+	 * @Title: testInitDataSource
+	 * @Description: TODO(初始化流程引擎)
+	 * @return void 返回值类型
+	 */
 	@Test
 	public void testInitDataSource() {
 		System.out.println("流程引擎Activiti518开始初始化！");
+	}
+
+	/**
+	 *
+	 * @Date: 2017年10月23日下午7:18:29
+	 * @Title: testDeployDiagramByZipFile
+	 * @Description: TODO(发布流程)
+	 * @return void 返回值类型
+	 */
+	@Test
+	public void testDeployDiagramByZipFile() {
+		try {
+			File directory = new File("");// 参数为空
+			String courseFile = directory.getCanonicalPath();
+			System.out.println("☆★☆★☆★☆★☆★☆★☆★☆★☆★【" + courseFile + "】☆★☆★☆★☆★☆★☆★☆★☆★☆★");
+			String sourceFilePath = courseFile + "\\bpmn\\cn\\songzx\\helloworld\\oabiz\\bpmn\\HQ";
+			String zipFilePath = courseFile + "\\bpmn\\cn\\songzx\\helloworld\\oabiz\\bpmn\\HQ";
+			String fileName = "HQ_OABIZ_CONTRACT_AUDIT_V1.0";
+			// OABizUtil.fileToZip(sourceFilePath, zipFilePath, fileName);
+			String zipFileName = fileName + ".zip";
+			workflowActBpmBiz.deployDiagramByZipFile(zipFilePath + "\\" + zipFileName, zipFileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -64,4 +64,19 @@ public interface WorkflowBizI {
 	 * @return WFWorkitem 返回值类型：新增的工作项
 	 */
 	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年10月23日下午6:13:47
+	 * @Title: deployDiagramByZipFile
+	 * @Description: TODO(通过zip文件部署流程图至流程引擎)
+	 * @param zipFilePath
+	 *            zip文件路径
+	 * @param zipFileName
+	 *            zip文件名称
+	 * @return
+	 * @throws Exception
+	 * @return String 返回值类型
+	 */
+	public String deployDiagramByZipFile(String zipFilePath, String zipFileName) throws Exception;
 }

@@ -90,6 +90,7 @@
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="deploy*" propagation="REQUIRED"/>
 			<!-- 修改 -->
 			<tx:method name="edit*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
