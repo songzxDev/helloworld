@@ -10,8 +10,8 @@
 	<context:component-scan base-package="cn.songzx.helloworld.oabiz.wf.service"></context:component-scan>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-	<import resource="classpath:/spring-activiti518-datasource.xml"/>
-	<import resource="classpath:/spring-oabiz-datasource.xml"/>
+	<import resource="classpath:/spring-activiti518-datasource.xml" />
+	<import resource="classpath:/spring-oabiz-datasource.xml" />
 
 	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource">
 		<property name="targetDataSources">
@@ -23,12 +23,24 @@
 			</map>
 		</property>
 		<!-- 这里可以指定默认的数据源 -->
-		<property name="defaultTargetDataSource" ref="dataSourceOABiz" />
+		<property name="defaultTargetDataSource" ref="dataSourceActiviti518" />
 	</bean>
 
 	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 
+	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<bean id="sqlSessionFactoryBiz" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dynamicDataSource" />
+		<!-- 自动扫描mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath:/cn/songzx/helloworld/oabiz/wf/mapping/*.xml"></property>
+	</bean>
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean id="mapperConfBiz" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.songzx.helloworld.oabiz.wf.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBiz"></property>
+	</bean>
 
+	<!-- 配置事务 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dynamicDataSource" />
 	</bean>
@@ -42,8 +54,12 @@
 		<property name="transactionManager" ref="transactionManager" />
 		<!-- 制定要使用的数据库类型 -->
 		<property name="databaseType" value="${activiti518.databaseType}"></property>
-		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值： "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
-		<property name="databaseSchemaUpdate" value="true" />
+		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值：
+			 "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。
+			 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。
+			 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
+		<property name="databaseSchemaUpdate" value="false" />
+
 		<property name="jobExecutorActivate" value="true" />
 		<property name="enableDatabaseEventLogging" value="true" />
 		<!-- 避免发布的图片和xml遇到中文时乱码 -->
@@ -67,15 +83,22 @@
 	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
 	<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
 
-	<!-- 事务切面切入配置 -->
+	<!-- 配置事务的传播特性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
+			<!-- 新增 -->
 			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="save*" propagation="REQUIRED" />
+			<!-- 修改 -->
+			<tx:method name="edit*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
 			<tx:method name="modify*" propagation="REQUIRED" />
+			<!-- 删除 -->
 			<tx:method name="delete*" propagation="REQUIRED" />
 			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="clear*" propagation="REQUIRED" />
+			<!-- 查询 -->
 			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
 			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
 			<tx:method name="query*" read-only="true" propagation="SUPPORTS" />
@@ -87,7 +110,7 @@
 		<aop:pointcut id="transactionPointCutBpm" expression="execution(* cn.songzx.helloworld.workflow.biz.*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointCutBpm" advice-ref="txAdvice" order="3" />
 	</aop:config>
-	
+
 	<aop:config>
 		<aop:pointcut id="transactionPointCutBiz" expression="execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointCutBiz" advice-ref="txAdvice" order="4" />

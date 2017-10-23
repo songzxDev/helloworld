@@ -1,7 +1,3 @@
-drop index WF_BIZ_DATA_INDEX_3 on WF_BIZ_DATA;
-
-drop index WF_BIZ_DATA_INDEX_2 on WF_BIZ_DATA;
-
 drop index WF_BIZ_DATA_INDEX_1 on WF_BIZ_DATA;
 
 drop table if exists WF_BIZ_DATA;
@@ -43,21 +39,5 @@ create index WF_BIZ_DATA_INDEX_1 on WF_BIZ_DATA
 (
    BIZ_BILL_ID,
    BIZ_BILL_NO,
-   PROCESS_INSTANCE_ID
-);
-
-/*==============================================================*/
-/* Index: WF_BIZ_DATA_INDEX_2                                   */
-/*==============================================================*/
-create index WF_BIZ_DATA_INDEX_2 on WF_BIZ_DATA
-(
-   BIZ_BILL_NO
-);
-
-/*==============================================================*/
-/* Index: WF_BIZ_DATA_INDEX_3                                   */
-/*==============================================================*/
-create index WF_BIZ_DATA_INDEX_3 on WF_BIZ_DATA
-(
    PROCESS_INSTANCE_ID
 );
