@@ -1,255 +1,263 @@
 package cn.songzx.helloworld.oabiz.wf.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class WFWorkitem {
-    private String wfWorkitemId;
+public class WFWorkitem implements Serializable {
 
-    private String processInstanceId;
 
-    private String wfStepId;
+	/**
+	* @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+	*/
+	private static final long serialVersionUID = -6381962920665898088L;
 
-    private String wfStepName;
+	private String wfWorkitemId;
 
-    private String wfStepType;
+	private String processInstanceId;
 
-    private String senderName;
+	private String wfStepId;
 
-    private String senderPartyid;
+	private String wfStepName;
 
-    private String senderCode;
+	private String wfStepType;
 
-    private Date senderCompletedDatetime;
+	private String senderName;
 
-    private String performerName;
+	private String senderPartyid;
 
-    private String performerPartyid;
+	private String senderCode;
 
-    private String performerCode;
+	private Date senderCompletedDatetime;
 
-    private Date performerCompletedDatetime;
+	private String performerName;
 
-    private String readStatus;
+	private String performerPartyid;
 
-    private String doneStatus;
+	private String performerCode;
 
-    private String authorizeStatus;
+	private Date performerCompletedDatetime;
 
-    private String usableStatus;
+	private String readStatus;
 
-    private Date createDatetime;
+	private String doneStatus;
 
-    private Date modifyDatetime;
+	private String authorizeStatus;
 
-    private String wfEngineType;
+	private String usableStatus;
 
-    private String reservedAttribute1;
+	private Date createDatetime;
 
-    private String reservedAttribute2;
+	private Date modifyDatetime;
 
-    private String reservedAttribute3;
+	private String wfEngineType;
 
-    private String reservedAttribute4;
+	private String reservedAttribute1;
 
-    private String reservedAttribute5;
+	private String reservedAttribute2;
 
-    public String getWfWorkitemId() {
-        return wfWorkitemId;
-    }
+	private String reservedAttribute3;
 
-    public void setWfWorkitemId(String wfWorkitemId) {
-        this.wfWorkitemId = wfWorkitemId == null ? null : wfWorkitemId.trim();
-    }
+	private String reservedAttribute4;
 
-    public String getProcessInstanceId() {
-        return processInstanceId;
-    }
+	private String reservedAttribute5;
 
-    public void setProcessInstanceId(String processInstanceId) {
-        this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
-    }
+	public String getWfWorkitemId() {
+		return wfWorkitemId;
+	}
 
-    public String getWfStepId() {
-        return wfStepId;
-    }
+	public void setWfWorkitemId(String wfWorkitemId) {
+		this.wfWorkitemId = wfWorkitemId == null ? null : wfWorkitemId.trim();
+	}
 
-    public void setWfStepId(String wfStepId) {
-        this.wfStepId = wfStepId == null ? null : wfStepId.trim();
-    }
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
 
-    public String getWfStepName() {
-        return wfStepName;
-    }
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
+	}
 
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName == null ? null : wfStepName.trim();
-    }
+	public String getWfStepId() {
+		return wfStepId;
+	}
 
-    public String getWfStepType() {
-        return wfStepType;
-    }
+	public void setWfStepId(String wfStepId) {
+		this.wfStepId = wfStepId == null ? null : wfStepId.trim();
+	}
 
-    public void setWfStepType(String wfStepType) {
-        this.wfStepType = wfStepType == null ? null : wfStepType.trim();
-    }
+	public String getWfStepName() {
+		return wfStepName;
+	}
 
-    public String getSenderName() {
-        return senderName;
-    }
+	public void setWfStepName(String wfStepName) {
+		this.wfStepName = wfStepName == null ? null : wfStepName.trim();
+	}
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName == null ? null : senderName.trim();
-    }
+	public String getWfStepType() {
+		return wfStepType;
+	}
 
-    public String getSenderPartyid() {
-        return senderPartyid;
-    }
-
-    public void setSenderPartyid(String senderPartyid) {
-        this.senderPartyid = senderPartyid == null ? null : senderPartyid.trim();
-    }
-
-    public String getSenderCode() {
-        return senderCode;
-    }
-
-    public void setSenderCode(String senderCode) {
-        this.senderCode = senderCode == null ? null : senderCode.trim();
-    }
-
-    public Date getSenderCompletedDatetime() {
-        return senderCompletedDatetime;
-    }
-
-    public void setSenderCompletedDatetime(Date senderCompletedDatetime) {
-        this.senderCompletedDatetime = senderCompletedDatetime;
-    }
-
-    public String getPerformerName() {
-        return performerName;
-    }
-
-    public void setPerformerName(String performerName) {
-        this.performerName = performerName == null ? null : performerName.trim();
-    }
-
-    public String getPerformerPartyid() {
-        return performerPartyid;
-    }
-
-    public void setPerformerPartyid(String performerPartyid) {
-        this.performerPartyid = performerPartyid == null ? null : performerPartyid.trim();
-    }
-
-    public String getPerformerCode() {
-        return performerCode;
-    }
-
-    public void setPerformerCode(String performerCode) {
-        this.performerCode = performerCode == null ? null : performerCode.trim();
-    }
-
-    public Date getPerformerCompletedDatetime() {
-        return performerCompletedDatetime;
-    }
-
-    public void setPerformerCompletedDatetime(Date performerCompletedDatetime) {
-        this.performerCompletedDatetime = performerCompletedDatetime;
-    }
-
-    public String getReadStatus() {
-        return readStatus;
-    }
-
-    public void setReadStatus(String readStatus) {
-        this.readStatus = readStatus == null ? null : readStatus.trim();
-    }
-
-    public String getDoneStatus() {
-        return doneStatus;
-    }
-
-    public void setDoneStatus(String doneStatus) {
-        this.doneStatus = doneStatus == null ? null : doneStatus.trim();
-    }
-
-    public String getAuthorizeStatus() {
-        return authorizeStatus;
-    }
-
-    public void setAuthorizeStatus(String authorizeStatus) {
-        this.authorizeStatus = authorizeStatus == null ? null : authorizeStatus.trim();
-    }
-
-    public String getUsableStatus() {
-        return usableStatus;
-    }
-
-    public void setUsableStatus(String usableStatus) {
-        this.usableStatus = usableStatus == null ? null : usableStatus.trim();
-    }
-
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public Date getModifyDatetime() {
-        return modifyDatetime;
-    }
-
-    public void setModifyDatetime(Date modifyDatetime) {
-        this.modifyDatetime = modifyDatetime;
-    }
-
-    public String getWfEngineType() {
-        return wfEngineType;
-    }
-
-    public void setWfEngineType(String wfEngineType) {
-        this.wfEngineType = wfEngineType == null ? null : wfEngineType.trim();
-    }
-
-    public String getReservedAttribute1() {
-        return reservedAttribute1;
-    }
-
-    public void setReservedAttribute1(String reservedAttribute1) {
-        this.reservedAttribute1 = reservedAttribute1 == null ? null : reservedAttribute1.trim();
-    }
-
-    public String getReservedAttribute2() {
-        return reservedAttribute2;
-    }
-
-    public void setReservedAttribute2(String reservedAttribute2) {
-        this.reservedAttribute2 = reservedAttribute2 == null ? null : reservedAttribute2.trim();
-    }
-
-    public String getReservedAttribute3() {
-        return reservedAttribute3;
-    }
-
-    public void setReservedAttribute3(String reservedAttribute3) {
-        this.reservedAttribute3 = reservedAttribute3 == null ? null : reservedAttribute3.trim();
-    }
-
-    public String getReservedAttribute4() {
-        return reservedAttribute4;
-    }
-
-    public void setReservedAttribute4(String reservedAttribute4) {
-        this.reservedAttribute4 = reservedAttribute4 == null ? null : reservedAttribute4.trim();
-    }
-
-    public String getReservedAttribute5() {
-        return reservedAttribute5;
-    }
-
-    public void setReservedAttribute5(String reservedAttribute5) {
-        this.reservedAttribute5 = reservedAttribute5 == null ? null : reservedAttribute5.trim();
-    }
+	public void setWfStepType(String wfStepType) {
+		this.wfStepType = wfStepType == null ? null : wfStepType.trim();
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName == null ? null : senderName.trim();
+	}
+
+	public String getSenderPartyid() {
+		return senderPartyid;
+	}
+
+	public void setSenderPartyid(String senderPartyid) {
+		this.senderPartyid = senderPartyid == null ? null : senderPartyid.trim();
+	}
+
+	public String getSenderCode() {
+		return senderCode;
+	}
+
+	public void setSenderCode(String senderCode) {
+		this.senderCode = senderCode == null ? null : senderCode.trim();
+	}
+
+	public Date getSenderCompletedDatetime() {
+		return senderCompletedDatetime;
+	}
+
+	public void setSenderCompletedDatetime(Date senderCompletedDatetime) {
+		this.senderCompletedDatetime = senderCompletedDatetime;
+	}
+
+	public String getPerformerName() {
+		return performerName;
+	}
+
+	public void setPerformerName(String performerName) {
+		this.performerName = performerName == null ? null : performerName.trim();
+	}
+
+	public String getPerformerPartyid() {
+		return performerPartyid;
+	}
+
+	public void setPerformerPartyid(String performerPartyid) {
+		this.performerPartyid = performerPartyid == null ? null : performerPartyid.trim();
+	}
+
+	public String getPerformerCode() {
+		return performerCode;
+	}
+
+	public void setPerformerCode(String performerCode) {
+		this.performerCode = performerCode == null ? null : performerCode.trim();
+	}
+
+	public Date getPerformerCompletedDatetime() {
+		return performerCompletedDatetime;
+	}
+
+	public void setPerformerCompletedDatetime(Date performerCompletedDatetime) {
+		this.performerCompletedDatetime = performerCompletedDatetime;
+	}
+
+	public String getReadStatus() {
+		return readStatus;
+	}
+
+	public void setReadStatus(String readStatus) {
+		this.readStatus = readStatus == null ? null : readStatus.trim();
+	}
+
+	public String getDoneStatus() {
+		return doneStatus;
+	}
+
+	public void setDoneStatus(String doneStatus) {
+		this.doneStatus = doneStatus == null ? null : doneStatus.trim();
+	}
+
+	public String getAuthorizeStatus() {
+		return authorizeStatus;
+	}
+
+	public void setAuthorizeStatus(String authorizeStatus) {
+		this.authorizeStatus = authorizeStatus == null ? null : authorizeStatus.trim();
+	}
+
+	public String getUsableStatus() {
+		return usableStatus;
+	}
+
+	public void setUsableStatus(String usableStatus) {
+		this.usableStatus = usableStatus == null ? null : usableStatus.trim();
+	}
+
+	public Date getCreateDatetime() {
+		return createDatetime;
+	}
+
+	public void setCreateDatetime(Date createDatetime) {
+		this.createDatetime = createDatetime;
+	}
+
+	public Date getModifyDatetime() {
+		return modifyDatetime;
+	}
+
+	public void setModifyDatetime(Date modifyDatetime) {
+		this.modifyDatetime = modifyDatetime;
+	}
+
+	public String getWfEngineType() {
+		return wfEngineType;
+	}
+
+	public void setWfEngineType(String wfEngineType) {
+		this.wfEngineType = wfEngineType == null ? null : wfEngineType.trim();
+	}
+
+	public String getReservedAttribute1() {
+		return reservedAttribute1;
+	}
+
+	public void setReservedAttribute1(String reservedAttribute1) {
+		this.reservedAttribute1 = reservedAttribute1 == null ? null : reservedAttribute1.trim();
+	}
+
+	public String getReservedAttribute2() {
+		return reservedAttribute2;
+	}
+
+	public void setReservedAttribute2(String reservedAttribute2) {
+		this.reservedAttribute2 = reservedAttribute2 == null ? null : reservedAttribute2.trim();
+	}
+
+	public String getReservedAttribute3() {
+		return reservedAttribute3;
+	}
+
+	public void setReservedAttribute3(String reservedAttribute3) {
+		this.reservedAttribute3 = reservedAttribute3 == null ? null : reservedAttribute3.trim();
+	}
+
+	public String getReservedAttribute4() {
+		return reservedAttribute4;
+	}
+
+	public void setReservedAttribute4(String reservedAttribute4) {
+		this.reservedAttribute4 = reservedAttribute4 == null ? null : reservedAttribute4.trim();
+	}
+
+	public String getReservedAttribute5() {
+		return reservedAttribute5;
+	}
+
+	public void setReservedAttribute5(String reservedAttribute5) {
+		this.reservedAttribute5 = reservedAttribute5 == null ? null : reservedAttribute5.trim();
+	}
 }

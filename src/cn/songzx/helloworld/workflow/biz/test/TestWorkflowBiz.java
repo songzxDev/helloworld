@@ -40,18 +40,6 @@ public class TestWorkflowBiz {
 		this.workflowActBpmBiz = workflowActBpmBiz;
 	}
 
-	public void test() {
-		try {
-			// DataSourceContextHolder.setCustomerType("dataSourceActiviti522");
-			workflowActBpmBiz.getTasksById("0ce8bcac-5c69-11e7-83a7-c85b76a3c17b");
-			Thread.sleep(50000L);
-			System.out.println("°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó");
-			// DataSourceContextHolder.clearCustomerType();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Test
 	public void multiTest() {
 		TestRunnable runner = new TestRunnable() {
@@ -59,10 +47,6 @@ public class TestWorkflowBiz {
 			public void runTest() throws Throwable {
 				// ≤‚ ‘ƒ⁄»›
 				try {
-					// DataSourceContextHolder.setCustomerType("dataSourceActiviti522");
-					workflowActBpmBiz.getTasksById("0ce8bcac-5c69-11e7-83a7-c85b76a3c17b");
-					System.out.println("°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó°Ó");
-					// DataSourceContextHolder.clearCustomerType();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

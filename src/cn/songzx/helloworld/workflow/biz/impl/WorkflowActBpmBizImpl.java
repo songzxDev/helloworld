@@ -8,8 +8,7 @@
 */
 package cn.songzx.helloworld.workflow.biz.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,10 +16,10 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.task.Task;
 
+import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
+import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
-import cn.songzx.helloworld.workflow.pagemodel.WorkflowTask;
 
 /**
  * @ClassName: WorkflowBizImpl
@@ -45,68 +44,50 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 	private ManagementService workflowManagementBiz;
 
 	/**
-	 *
-	 * @Date: 2017年10月19日上午9:54:01
+	 * @Date: 2017年10月23日上午10:21:07
 	 * @Title: startProcessInstanceByKey
-	 * @Description: TODO(根据流程定义的key启动流程实例)
-	 * @param processKey
-	 * @throws Exception
-	 * @return void 返回值类型
-	 */
-	@Override
-	public void startProcessInstanceByKey(String processDefinitionKey) throws Exception {
-		try {
-			workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 *
-	 * @Date: 2017年10月19日上午10:00:44
-	 * @Title: completeTask
-	 * @Description: TODO(根据taskId提交待办事项)
-	 * @param taskId
-	 * @throws Exception
-	 * @return void 返回值类型
-	 */
-	@Override
-	public void completeTask(String taskId) throws Exception {
-		try {
-			workflowTaskBiz.complete(taskId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * @Date: 2017年10月19日上午10:14:34
-	 * @Title: getTasksById
 	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param taskId
+	 * @param processDefinitionKey
+	 * @param variables
 	 * @return
 	 * @throws Exception
 	 * @return 返回值类型
 	 */
 	@Override
-	public List<WorkflowTask> getTasksById(String taskId) throws Exception {
-		List<WorkflowTask> list = new ArrayList<WorkflowTask>();
-		try {
-			String querySql = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE ID_=#{taskId}";
-			List<Task> tasks = workflowTaskBiz.createNativeTaskQuery().sql(querySql).parameter("taskId", taskId).list();
-			if (tasks != null && tasks.size() == 1) {
-				// 将Activiti流程引擎的待办信息转换成WorkflowTask对象
-				// TODO ................................
-				for (int i = 0; i < 100; i++) {
-					System.out.print("☆");
-				}
-				System.out.println("恭喜您，数据已找到！");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
+	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @Date: 2017年10月23日上午10:21:07
+	 * @Title: getWFWorkitemByPK
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param workitemId
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
+	 */
+	@Override
+	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @Date: 2017年10月23日上午10:21:07
+	 * @Title: completeWorkitemByPK
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param workitemId
+	 * @param variables
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
+	 */
+	@Override
+	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

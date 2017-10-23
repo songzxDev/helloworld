@@ -1,26 +1,26 @@
 /**
-* @Title: WorkflowBizI.java
-* @Package cn.songzx.helloworld.workflow.biz
+* @Title: OABizWFServiceI.java
+* @Package cn.songzx.helloworld.oabiz.wf.service
 * @Description: TODO(用一句话描述该文件做什么)
 * @author Songzx songzx_2326@163.com
-* @date 2017年10月19日 上午9:42:22
+* @date 2017年10月23日 上午9:22:07
 * @version V1.0
 */
-package cn.songzx.helloworld.workflow.biz;
+package cn.songzx.helloworld.oabiz.wf.service;
 
 import java.util.Map;
 
-import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
-import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFWorkitemPM;
 
 /**
- * @ClassName: WorkflowBizI
+ * @ClassName: OABizWFServiceI
  * @Description: TODO(这里用一句话描述这个类的作用)
  * @author Songzx songzx_2326@163.com
- * @date 2017年10月19日 上午9:42:22
+ * @date 2017年10月23日 上午9:22:07
  *
  */
-public interface WorkflowBizI {
+public interface OABizWFServiceI {
 
 	/**
 	 *
@@ -33,9 +33,9 @@ public interface WorkflowBizI {
 	 *            流程实例公共变量
 	 * @return
 	 * @throws Exception
-	 * @return WFBizData 返回一个新的流程实例
+	 * @return WFBizDataPM 返回一个新的流程实例
 	 */
-	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception;
+	public WFBizDataPM startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception;
 
 	/**
 	 *
@@ -46,9 +46,9 @@ public interface WorkflowBizI {
 	 *            工作项的主键
 	 * @return
 	 * @throws Exception
-	 * @return WFWorkitem 工作项详细信息
+	 * @return WFWorkitemPM 工作项详细信息
 	 */
-	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception;
+	public WFWorkitemPM getWFWorkitemByPK(String workitemId) throws Exception;
 
 	/**
 	 *
@@ -61,7 +61,8 @@ public interface WorkflowBizI {
 	 *            流程实例公共变量
 	 * @return
 	 * @throws Exception
-	 * @return WFWorkitem 返回值类型：新增的工作项
+	 * @return WFWorkitemPM 返回值类型：新增的工作项
 	 */
-	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception;
+	public WFWorkitemPM completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception;
+
 }
