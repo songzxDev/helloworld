@@ -1,9 +1,9 @@
 /**
 * @Title: WorkflowBizI.java
 * @Package cn.songzx.helloworld.workflow.biz
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:42:22
+* @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:42:22
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.biz;
@@ -15,53 +15,53 @@ import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 
 /**
  * @ClassName: WorkflowBizI
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:42:22
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:42:22
  *
  */
 public interface WorkflowBizI {
 
 	/**
 	 *
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç9:39:27
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ9:39:27
 	 * @Title: startProcessInstanceByKey
-	 * @Description: TODO(Æô¶¯Ò»¸öĞÂµÄÁ÷³ÌÊµÀı)
+	 * @Description: TODO(å¯åŠ¨ä¸€ä¸ªæ–°çš„æµç¨‹å®ä¾‹)
 	 * @param processDefinitionKey
-	 *            Á÷³Ì¶¨ÒåµÄkeyÖµ
+	 *            æµç¨‹å®šä¹‰çš„keyå€¼
 	 * @param variables
-	 *            Á÷³ÌÊµÀı¹«¹²±äÁ¿
+	 *            æµç¨‹å®ä¾‹å…¬å…±å˜é‡
 	 * @return
 	 * @throws Exception
-	 * @return WFBizData ·µ»ØÒ»¸öĞÂµÄÁ÷³ÌÊµÀı
+	 * @return WFBizData è¿”å›ä¸€ä¸ªæ–°çš„æµç¨‹å®ä¾‹
 	 */
 	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception;
 
 	/**
 	 *
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç9:33:44
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ9:33:44
 	 * @Title: getWFWorkitemByPK
-	 * @Description: TODO(¸ù¾İ¹¤×÷ÏîµÄÖ÷¼ü»ñÈ¡¹¤×÷ÏîµÄĞÅÏ¢)
+	 * @Description: TODO(æ ¹æ®å·¥ä½œé¡¹çš„ä¸»é”®è·å–å·¥ä½œé¡¹çš„ä¿¡æ¯)
 	 * @param workitemId
-	 *            ¹¤×÷ÏîµÄÖ÷¼ü
+	 *            å·¥ä½œé¡¹çš„ä¸»é”®
 	 * @return
 	 * @throws Exception
-	 * @return WFWorkitem ¹¤×÷ÏîÏêÏ¸ĞÅÏ¢
+	 * @return WFWorkitem å·¥ä½œé¡¹è¯¦ç»†ä¿¡æ¯
 	 */
 	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception;
 
 	/**
 	 *
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:00:47
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:00:47
 	 * @Title: completeWorkitemByPK
-	 * @Description: TODO(Ìá½»µ±Ç°¹¤×÷Ïî£¬²¢·µ»ØĞÂÔöµÄ¹¤×÷Ïî)
+	 * @Description: TODO(æäº¤å½“å‰å·¥ä½œé¡¹ï¼Œå¹¶è¿”å›æ–°å¢çš„å·¥ä½œé¡¹)
 	 * @param workitemId
-	 *            µ±Ç°¹¤×÷ÏîÖ÷¼ü
+	 *            å½“å‰å·¥ä½œé¡¹ä¸»é”®
 	 * @param variables
-	 *            Á÷³ÌÊµÀı¹«¹²±äÁ¿
+	 *            æµç¨‹å®ä¾‹å…¬å…±å˜é‡
 	 * @return
 	 * @throws Exception
-	 * @return WFWorkitem ·µ»ØÖµÀàĞÍ£ºĞÂÔöµÄ¹¤×÷Ïî
+	 * @return WFWorkitem è¿”å›å€¼ç±»å‹ï¼šæ–°å¢çš„å·¥ä½œé¡¹
 	 */
 	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception;
 }

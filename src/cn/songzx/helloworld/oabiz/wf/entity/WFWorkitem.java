@@ -7,7 +7,7 @@ public class WFWorkitem implements Serializable {
 
 
 	/**
-	* @Fields serialVersionUID : TODO(ÓÃÒ»¾ä»°ÃèÊöÕâ¸ö±äÁ¿±íÊ¾Ê²Ã´)
+	* @Fields serialVersionUID : TODO(ç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªå˜é‡è¡¨ç¤ºä»€ä¹ˆ)
 	*/
 	private static final long serialVersionUID = -6381962920665898088L;
 

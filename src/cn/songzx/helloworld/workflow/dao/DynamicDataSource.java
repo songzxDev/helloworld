@@ -1,9 +1,9 @@
 /**
 * @Title: DynamicDataSource.java
 * @Package cn.songzx.helloworld.workflow.dao
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:54:06
+* @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:54:06
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.dao;
@@ -14,19 +14,19 @@ import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
  * @ClassName: DynamicDataSource
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:54:06
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:54:06
  *
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	/**
-	 * @Date: 2017Äê10ÔÂ19ÈÕÏÂÎç4:54:06
+	 * @Date: 2017å¹´10æœˆ19æ—¥ä¸‹åˆ4:54:06
 	 * @Title: determineCurrentLookupKey
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @return
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	protected Object determineCurrentLookupKey() {

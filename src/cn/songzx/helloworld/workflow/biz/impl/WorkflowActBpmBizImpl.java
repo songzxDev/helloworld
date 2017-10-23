@@ -1,9 +1,9 @@
 /**
 * @Title: WorkflowBizImpl.java
 * @Package cn.songzx.helloworld.workflow.biz.impl
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:46:17
+* @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:46:17
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.biz.impl;
@@ -16,16 +16,18 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
 
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 
 /**
  * @ClassName: WorkflowBizImpl
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:46:17
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:46:17
  *
  */
 @org.springframework.stereotype.Service(value = "workflowActBpmBiz")
@@ -44,29 +46,39 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 	private ManagementService workflowManagementBiz;
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:21:07
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:21:07
 	 * @Title: startProcessInstanceByKey
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param processDefinitionKey
 	 * @param variables
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		WFBizData wfBizData = null;
+		try {
+			ProcessInstance newProcessInstance = workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey, variables);
+			if (newProcessInstance != null) {
+				wfBizData = new WFBizData();
+				wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());// æ•°æ®ä¸»é”®
+				wfBizData.setProcessInstanceId(newProcessInstance.getProcessInstanceId());// æµç¨‹å®ä¾‹ID
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return wfBizData;
 	}
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:21:07
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:21:07
 	 * @Title: getWFWorkitemByPK
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param workitemId
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception {
@@ -75,14 +87,14 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 	}
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:21:07
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:21:07
 	 * @Title: completeWorkitemByPK
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param workitemId
 	 * @param variables
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception {

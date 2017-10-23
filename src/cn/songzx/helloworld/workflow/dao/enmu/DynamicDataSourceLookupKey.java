@@ -1,18 +1,18 @@
 /**
 * @Title: DynamicDataSourceLookupKey.java
 * @Package cn.songzx.helloworld.workflow.dao.enmu
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ20ÈÕ ÏÂÎç2:10:16
+* @date 2017å¹´10æœˆ20æ—¥ ä¸‹åˆ2:10:16
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.dao.enmu;
 
 /**
  * @ClassName: DynamicDataSourceLookupKey
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ20ÈÕ ÏÂÎç2:10:16
+ * @date 2017å¹´10æœˆ20æ—¥ ä¸‹åˆ2:10:16
  *
  */
 public enum DynamicDataSourceLookupKey {
@@ -22,9 +22,9 @@ public enum DynamicDataSourceLookupKey {
 	private String lookupKey;
 
 	/**
-	 * @Date: 2017Äê10ÔÂ20ÈÕÏÂÎç2:29:30
+	 * @Date: 2017å¹´10æœˆ20æ—¥ä¸‹åˆ2:29:30
 	 * @Title: DynamicDataSourceLookupKey.java
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param lookupKey
 	 */
 	private DynamicDataSourceLookupKey(String lookupKey) {

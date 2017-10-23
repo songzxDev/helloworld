@@ -1,18 +1,18 @@
 /**
 * @Title: WorkflowTask.java
 * @Package cn.songzx.helloworld.workflow.pagemodel
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç10:51:30
+* @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ10:51:30
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.pagemodel;
 
 /**
  * @ClassName: WorkflowTask
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç10:51:30
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ10:51:30
  *
  */
 public class WorkflowTask {

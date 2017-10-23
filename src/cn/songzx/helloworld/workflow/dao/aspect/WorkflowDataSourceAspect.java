@@ -1,9 +1,9 @@
 /**
 * @Title: DataSourceAspect.java
 * @Package cn.songzx.helloworld.workflow.dao.aspect
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç5:14:23
+* @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ5:14:23
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.dao.aspect;
@@ -20,9 +20,9 @@ import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
  * @ClassName: WorkflowDataSourceAspect
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç5:14:23
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ5:14:23
  *
  */
 @Order(0)
@@ -32,25 +32,25 @@ public class WorkflowDataSourceAspect {
 
 	@Before("execution(* cn.songzx.helloworld.workflow.biz.*.*(..))")
 	public void setBpmDataSource(JoinPoint jp) {
-		System.out.println("µ±Ç°Ïß³Ì¡¾" + Thread.currentThread().getName() + "¡¿Ö´ĞĞÁË£ºsetCustomerType(String value)·½·¨£¬¶¯Ì¬Ö¸¶¨ÁËÊı¾İÔ´£¡");
+		System.out.println("å½“å‰çº¿ç¨‹ã€" + Thread.currentThread().getName() + "ã€‘æ‰§è¡Œäº†ï¼šsetCustomerType(String value)æ–¹æ³•ï¼ŒåŠ¨æ€æŒ‡å®šäº†æ•°æ®æºï¼");
 		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BPM_DATASOURCE.getLookupKey());
 	}
 
 	@After("execution(* cn.songzx.helloworld.workflow.biz.*.*(..))")
 	public void removeBpmDataSource(JoinPoint jp) {
-		System.out.println("µ±Ç°Ïß³Ì¡¾" + Thread.currentThread().getName() + "¡¿Ö´ĞĞÁË£ºclearCustomerType()·½·¨£¬Çå³ıÁËÊı¾İÔ´£¡");
+		System.out.println("å½“å‰çº¿ç¨‹ã€" + Thread.currentThread().getName() + "ã€‘æ‰§è¡Œäº†ï¼šclearCustomerType()æ–¹æ³•ï¼Œæ¸…é™¤äº†æ•°æ®æºï¼");
 		DataSourceContextHolder.clearCustomerType();
 	}
 
 	@Before("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
 	public void setBizDataSource(JoinPoint jp) {
-		System.out.println("µ±Ç°Ïß³Ì¡¾" + Thread.currentThread().getName() + "¡¿Ö´ĞĞÁË£ºsetCustomerType(String value)·½·¨£¬¶¯Ì¬Ö¸¶¨ÁËÊı¾İÔ´£¡");
+		System.out.println("å½“å‰çº¿ç¨‹ã€" + Thread.currentThread().getName() + "ã€‘æ‰§è¡Œäº†ï¼šsetCustomerType(String value)æ–¹æ³•ï¼ŒåŠ¨æ€æŒ‡å®šäº†æ•°æ®æºï¼");
 		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BIZ_DATASOURCE.getLookupKey());
 	}
 
 	@After("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
 	public void removeBizDataSource(JoinPoint jp) {
-		System.out.println("µ±Ç°Ïß³Ì¡¾" + Thread.currentThread().getName() + "¡¿Ö´ĞĞÁË£ºclearCustomerType()·½·¨£¬Çå³ıÁËÊı¾İÔ´£¡");
+		System.out.println("å½“å‰çº¿ç¨‹ã€" + Thread.currentThread().getName() + "ã€‘æ‰§è¡Œäº†ï¼šclearCustomerType()æ–¹æ³•ï¼Œæ¸…é™¤äº†æ•°æ®æºï¼");
 		DataSourceContextHolder.clearCustomerType();
 	}
 

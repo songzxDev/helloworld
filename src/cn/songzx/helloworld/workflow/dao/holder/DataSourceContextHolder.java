@@ -1,23 +1,23 @@
 /**
 * @Title: DataSourceContextHolder.java
 * @Package cn.songzx.helloworld.workflow.dao.holder
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:56:03
+* @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:56:03
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.dao.holder;
 
 /**
  * @ClassName: DataSourceContextHolder
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:56:03
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:56:03
  *
  */
 public class DataSourceContextHolder {
 	/**
-	 * ×¢Òâ£ºÊı¾İÔ´±êÊ¶±£´æÔÚÏß³Ì±äÁ¿ÖĞ£¬±ÜÃâ¶àÏß³Ì²Ù×÷Êı¾İÔ´Ê±»¥Ïà¸ÉÈÅ
+	 * æ³¨æ„ï¼šæ•°æ®æºæ ‡è¯†ä¿å­˜åœ¨çº¿ç¨‹å˜é‡ä¸­ï¼Œé¿å…å¤šçº¿ç¨‹æ“ä½œæ•°æ®æºæ—¶äº’ç›¸å¹²æ‰°
 	 */
 	private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal<String>();
 

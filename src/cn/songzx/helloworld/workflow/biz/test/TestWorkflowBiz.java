@@ -1,9 +1,9 @@
 /**
 * @Title: TestWorkflowBiz.java
 * @Package cn.songzx.helloworld.workflow.biz.test
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:30:44
+* @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:30:44
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.biz.test;
@@ -20,9 +20,9 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
 /**
  * @ClassName: TestWorkflowBiz
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÏÂÎç4:30:44
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸‹åˆ4:30:44
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,7 +45,7 @@ public class TestWorkflowBiz {
 		TestRunnable runner = new TestRunnable() {
 			@Override
 			public void runTest() throws Throwable {
-				// ²âÊÔÄÚÈİ
+				// æµ‹è¯•å†…å®¹
 				try {
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,15 +53,15 @@ public class TestWorkflowBiz {
 			}
 		};
 		int runnerCount = 800;
-		// RnnerÊı×é£¬Ïëµ±ÓÚ²¢·¢¶àÉÙ¸ö¡£
+		// Rnneræ•°ç»„ï¼Œæƒ³å½“äºå¹¶å‘å¤šå°‘ä¸ªã€‚
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
 			trs[i] = runner;
 		}
-		// ÓÃÓÚÖ´ĞĞ¶àÏß³Ì²âÊÔÓÃÀıµÄRunner£¬½«Ç°Ãæ¶¨ÒåµÄµ¥¸öRunner×é³ÉµÄÊı×é´«Èë
+		// ç”¨äºæ‰§è¡Œå¤šçº¿ç¨‹æµ‹è¯•ç”¨ä¾‹çš„Runnerï¼Œå°†å‰é¢å®šä¹‰çš„å•ä¸ªRunnerç»„æˆçš„æ•°ç»„ä¼ å…¥
 		MultiThreadedTestRunner mttr = new MultiThreadedTestRunner(trs);
 		try {
-			// ¿ª·¢²¢·¢Ö´ĞĞÊı×éÀï¶¨ÒåµÄÄÚÈİ
+			// å¼€å‘å¹¶å‘æ‰§è¡Œæ•°ç»„é‡Œå®šä¹‰çš„å†…å®¹
 			mttr.runTestRunnables();
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class TestWorkflowBiz {
 
 	@Test
 	public void testInitDataSource() {
-		System.out.println("Á÷³ÌÒıÇæActiviti518¿ªÊ¼³õÊ¼»¯£¡");
+		System.out.println("æµç¨‹å¼•æ“Activiti518å¼€å§‹åˆå§‹åŒ–ï¼");
 	}
 
 }

@@ -1,9 +1,9 @@
 /**
 * @Title: MyTest.java
 * @Package cn.songzx.helloworld.oabiz.wf.test
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ23ÈÕ ÉÏÎç10:50:35
+* @date 2017å¹´10æœˆ23æ—¥ ä¸Šåˆ10:50:35
 * @version V1.0
 */
 package cn.songzx.helloworld.oabiz.wf.test;
@@ -13,25 +13,25 @@ import java.util.List;
 
 /**
  * @ClassName: MyTest
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ23ÈÕ ÉÏÎç10:50:35
+ * @date 2017å¹´10æœˆ23æ—¥ ä¸Šåˆ10:50:35
  *
  */
 public class MyTest {
 
 	public static void main(String[] args) throws Exception {
-
-		List<String> list = new ArrayList<String>();
-		list.add("ËïÎò¿Õ");
+		List<String> list = null;
 		try {
+			list = new ArrayList<String>();
+			list.add("å­™æ‚Ÿç©º");
 			System.out.println(list.get(0));
 		} catch (Exception e) {
-			throw new Exception("³öÒì³£ÁË£º\r\n" + e.getMessage());
+			throw new Exception("å‡ºå¼‚å¸¸äº†ï¼š\r\n" + e.getMessage());
 		} finally {
-			System.out.println("¶¼ËûÂèµÄ³öÒì³£ÁË£¬Õ¦»¹ËûÂèµÄÈÃÎÒÖ´ĞĞÄØ£¡");
+			System.out.println("éƒ½ä»–å¦ˆçš„å‡ºå¼‚å¸¸äº†ï¼Œå’‹è¿˜ä»–å¦ˆçš„è®©æˆ‘æ‰§è¡Œå‘¢ï¼");
 		}
-		System.out.println("ËûÂèµÄÖÕÓÚÔËĞĞÕı³£ÁË£¬ºÈ¾ÆÇì×£Ò»ÏÂ£¡");
+		System.out.println("ä»–å¦ˆçš„ç»ˆäºè¿è¡Œæ­£å¸¸äº†ï¼Œå–é…’åº†ç¥ä¸€ä¸‹ï¼");
 	}
 
 }

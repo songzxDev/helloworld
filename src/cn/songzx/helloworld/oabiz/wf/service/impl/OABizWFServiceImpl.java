@@ -1,9 +1,9 @@
 /**
 * @Title: OABizWFServiceImpl.java
 * @Package cn.songzx.helloworld.oabiz.wf.service.impl
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ23ÈÕ ÉÏÎç9:44:21
+* @date 2017å¹´10æœˆ23æ—¥ ä¸Šåˆ9:44:21
 * @version V1.0
 */
 package cn.songzx.helloworld.oabiz.wf.service.impl;
@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBizDataMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFWorkitemMapper;
@@ -25,22 +26,33 @@ import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 
 /**
  * @ClassName: OABizWFServiceImpl
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ23ÈÕ ÉÏÎç9:44:21
+ * @date 2017å¹´10æœˆ23æ—¥ ä¸Šåˆ9:44:21
  *
  */
 @org.springframework.stereotype.Service("oaBizWFService")
 public class OABizWFServiceImpl implements OABizWFServiceI {
 
+	/**
+	 * ä¸šåŠ¡ç³»ç»Ÿï¼šæµç¨‹ç³»ç»Ÿå’Œä¸šåŠ¡ç³»ç»Ÿå…³è”ä¿¡æ¯è¡¨æŒä¹…å±‚æ¥å£
+	 */
 	private WFBizDataMapper wfBizDataMapper;
 
+	/**
+	 * ä¸šåŠ¡ç³»ç»Ÿï¼šæµç¨‹å·¥ä½œé¡¹ä¿¡æ¯è¡¨æŒä¹…å±‚æ¥å£
+	 */
 	private WFWorkitemMapper wfWorkitemMapper;
 
+	/**
+	 * ä¸šåŠ¡ç³»ç»Ÿï¼šæµç¨‹å®¡æ‰¹è®°å½•ä¿¡æ¯è¡¨æŒä¹…å±‚æ¥å£
+	 */
 	private WFAuditRecordMapper wfAuditRecordMapper;
 
 	/**
-	 * Èç¹ûÁ÷³ÌÒıÇæÀàĞÍ·¢Éú±ä»¯£¬½öĞèĞŞ¸ÄÏÂÃæ±êÇ©ÖĞµÄnameÖµ
+	 * æµç¨‹å¼•æ“ç›¸å…³çš„æŒä¹…å±‚æ¥å£ï¼Œå’Œä¸šåŠ¡ç³»ç»Ÿä¸æ˜¯åŒä¸€ä¸ªæ•°æ®æº
+	 *
+	 * å¦‚æœæµç¨‹å¼•æ“ç±»å‹å‘ç”Ÿå˜åŒ–ï¼Œä»…éœ€ä¿®æ”¹ä¸‹é¢æ ‡ç­¾ä¸­çš„nameå€¼
 	 */
 	@Resource(name = "workflowActBpmBiz")
 	private WorkflowBizI workflowBiz;
@@ -73,44 +85,44 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	}
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:03:25
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:03:25
 	 * @Title: startProcessInstanceByKey
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param processDefinitionKey
 	 * @param variables
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFBizDataPM startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
 		WFBizDataPM newWFBizDataPM = new WFBizDataPM();
-		// step1.µ÷ÓÃÁ÷³ÌÒıÇæ·şÎñĞÂÔöÒ»¸öÁ÷³ÌÊµÀı
+		// step1.è°ƒç”¨æµç¨‹å¼•æ“æœåŠ¡æ–°å¢ä¸€ä¸ªæµç¨‹å®ä¾‹
 		WFBizData newWFBizData = workflowBiz.startProcessInstanceByKey(processDefinitionKey, variables);
-		// step2.½«ĞÂÔöµÄÁ÷³ÌÊµÀıÊı¾İÍ¬²½µ½ÒµÎñÏµÍ³µÄÁ÷³ÌÒµÎñ¹ØÁªĞÅÏ¢±íÖĞ£¬²¢¼Ó¹¤Ç°¶ËÒ³ÃæÕ¹Ê¾ËùĞèÒªµÄPageModel
+		// step2.å°†æ–°å¢çš„æµç¨‹å®ä¾‹æ•°æ®åŒæ­¥åˆ°ä¸šåŠ¡ç³»ç»Ÿçš„æµç¨‹ä¸šåŠ¡å…³è”ä¿¡æ¯è¡¨ä¸­ï¼Œå¹¶åŠ å·¥å‰ç«¯é¡µé¢å±•ç¤ºæ‰€éœ€è¦çš„PageModel
 		if (newWFBizData != null) {
 			try {
 				wfBizDataMapper.insertSelective(newWFBizData);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				// Èç¹û³öÏÖÒì³££¬Ò²Òª±£Ö¤Ò³ÃæÕı³£ÏÔÊ¾£¬Òì³£ÓÉºóÌ¨½øĞĞ´¦Àí
-				org.springframework.beans.BeanUtils.copyProperties(newWFBizData, newWFBizDataPM);
-				// TODO ¼Ó¹¤PageModel......................
-				Thread.sleep(50L);// Ä£Äâ¼Ó¹¤£¬ºóĞøĞèÒª¸ù¾İÊµ¼ÊÒµÎñÂß¼­±àĞ´
+				// å¦‚æœå‡ºç°å¼‚å¸¸ï¼Œä¹Ÿè¦ä¿è¯é¡µé¢æ­£å¸¸æ˜¾ç¤ºï¼Œå¼‚å¸¸ç”±åå°è¿›è¡Œå¤„ç†
+				OABizUtil.copyProperties(newWFBizData, newWFBizDataPM);
+				// TODO åŠ å·¥PageModel......................
+				Thread.sleep(50L);// æ¨¡æ‹ŸåŠ å·¥ï¼Œåç»­éœ€è¦æ ¹æ®å®é™…ä¸šåŠ¡é€»è¾‘ç¼–å†™
 			}
 		}
 		return newWFBizDataPM;
 	}
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:03:25
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:03:25
 	 * @Title: getWFWorkitemByPK
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param workitemId
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFWorkitemPM getWFWorkitemByPK(String workitemId) throws Exception {
@@ -119,14 +131,14 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	}
 
 	/**
-	 * @Date: 2017Äê10ÔÂ23ÈÕÉÏÎç10:03:25
+	 * @Date: 2017å¹´10æœˆ23æ—¥ä¸Šåˆ10:03:25
 	 * @Title: completeWorkitemByPK
-	 * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸ö·½·¨µÄ×÷ÓÃ)
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
 	 * @param workitemId
 	 * @param variables
 	 * @return
 	 * @throws Exception
-	 * @return ·µ»ØÖµÀàĞÍ
+	 * @return è¿”å›å€¼ç±»å‹
 	 */
 	@Override
 	public WFWorkitemPM completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception {

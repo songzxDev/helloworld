@@ -1,9 +1,9 @@
 /**
 * @Title: WorkflowManagementBizI.java
 * @Package cn.songzx.helloworld.workflow.biz
-* @Description: TODO(ÓÃÒ»¾ä»°ÃèÊö¸ÃÎÄ¼ş×öÊ²Ã´)
+* @Description: TODO(ç”¨ä¸€å¥è¯æè¿°è¯¥æ–‡ä»¶åšä»€ä¹ˆ)
 * @author Songzx songzx_2326@163.com
-* @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:39:49
+* @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:39:49
 * @version V1.0
 */
 package cn.songzx.helloworld.workflow.biz;
@@ -23,9 +23,9 @@ import org.activiti.engine.runtime.JobQuery;
 
 /**
  * @ClassName: WorkflowManagementBizI
- * @Description: TODO(ÕâÀïÓÃÒ»¾ä»°ÃèÊöÕâ¸öÀàµÄ×÷ÓÃ)
+ * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
  * @author Songzx songzx_2326@163.com
- * @date 2017Äê10ÔÂ19ÈÕ ÉÏÎç9:39:49
+ * @date 2017å¹´10æœˆ19æ—¥ ä¸Šåˆ9:39:49
  *
  */
 public interface WorkflowManagementBizI {
