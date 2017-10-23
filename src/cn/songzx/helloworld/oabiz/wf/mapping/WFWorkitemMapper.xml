@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
     <id column="WF_WORKITEM_ID" property="wfWorkitemId" jdbcType="VARCHAR" />
     <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+    <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
     <result column="WF_STEP_ID" property="wfStepId" jdbcType="VARCHAR" />
     <result column="WF_STEP_NAME" property="wfStepName" jdbcType="VARCHAR" />
     <result column="WF_STEP_TYPE" property="wfStepType" jdbcType="CHAR" />
@@ -29,11 +30,12 @@
     <result column="RESERVED_ATTRIBUTE_5" property="reservedAttribute5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    WF_WORKITEM_ID, PROCESS_INSTANCE_ID, WF_STEP_ID, WF_STEP_NAME, WF_STEP_TYPE, SENDER_NAME, 
-    SENDER_PARTYID, SENDER_CODE, SENDER_COMPLETED_DATETIME, PERFORMER_NAME, PERFORMER_PARTYID, 
-    PERFORMER_CODE, PERFORMER_COMPLETED_DATETIME, READ_STATUS, DONE_STATUS, AUTHORIZE_STATUS, 
-    USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, 
-    RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5
+    WF_WORKITEM_ID, PROCESS_INSTANCE_ID, PROCESS_NAME, WF_STEP_ID, WF_STEP_NAME, WF_STEP_TYPE, 
+    SENDER_NAME, SENDER_PARTYID, SENDER_CODE, SENDER_COMPLETED_DATETIME, PERFORMER_NAME, 
+    PERFORMER_PARTYID, PERFORMER_CODE, PERFORMER_COMPLETED_DATETIME, READ_STATUS, DONE_STATUS, 
+    AUTHORIZE_STATUS, USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, 
+    RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
+    RESERVED_ATTRIBUTE_5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -47,23 +49,25 @@
   </delete>
   <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
     insert into wf_workitem (WF_WORKITEM_ID, PROCESS_INSTANCE_ID, 
-      WF_STEP_ID, WF_STEP_NAME, WF_STEP_TYPE, 
-      SENDER_NAME, SENDER_PARTYID, SENDER_CODE, 
-      SENDER_COMPLETED_DATETIME, PERFORMER_NAME, 
-      PERFORMER_PARTYID, PERFORMER_CODE, PERFORMER_COMPLETED_DATETIME, 
-      READ_STATUS, DONE_STATUS, AUTHORIZE_STATUS, 
-      USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
-      WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
+      PROCESS_NAME, WF_STEP_ID, WF_STEP_NAME, 
+      WF_STEP_TYPE, SENDER_NAME, SENDER_PARTYID, 
+      SENDER_CODE, SENDER_COMPLETED_DATETIME, 
+      PERFORMER_NAME, PERFORMER_PARTYID, PERFORMER_CODE, 
+      PERFORMER_COMPLETED_DATETIME, READ_STATUS, 
+      DONE_STATUS, AUTHORIZE_STATUS, USABLE_STATUS, 
+      CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, 
+      RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
       RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
       RESERVED_ATTRIBUTE_5)
     values (#{wfWorkitemId,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, 
-      #{wfStepId,jdbcType=VARCHAR}, #{wfStepName,jdbcType=VARCHAR}, #{wfStepType,jdbcType=CHAR}, 
-      #{senderName,jdbcType=VARCHAR}, #{senderPartyid,jdbcType=VARCHAR}, #{senderCode,jdbcType=VARCHAR}, 
-      #{senderCompletedDatetime,jdbcType=TIMESTAMP}, #{performerName,jdbcType=VARCHAR}, 
-      #{performerPartyid,jdbcType=VARCHAR}, #{performerCode,jdbcType=VARCHAR}, #{performerCompletedDatetime,jdbcType=TIMESTAMP}, 
-      #{readStatus,jdbcType=CHAR}, #{doneStatus,jdbcType=CHAR}, #{authorizeStatus,jdbcType=CHAR}, 
-      #{usableStatus,jdbcType=CHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
-      #{wfEngineType,jdbcType=VARCHAR}, #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
+      #{processName,jdbcType=VARCHAR}, #{wfStepId,jdbcType=VARCHAR}, #{wfStepName,jdbcType=VARCHAR}, 
+      #{wfStepType,jdbcType=CHAR}, #{senderName,jdbcType=VARCHAR}, #{senderPartyid,jdbcType=VARCHAR}, 
+      #{senderCode,jdbcType=VARCHAR}, #{senderCompletedDatetime,jdbcType=TIMESTAMP}, 
+      #{performerName,jdbcType=VARCHAR}, #{performerPartyid,jdbcType=VARCHAR}, #{performerCode,jdbcType=VARCHAR}, 
+      #{performerCompletedDatetime,jdbcType=TIMESTAMP}, #{readStatus,jdbcType=CHAR}, 
+      #{doneStatus,jdbcType=CHAR}, #{authorizeStatus,jdbcType=CHAR}, #{usableStatus,jdbcType=CHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{wfEngineType,jdbcType=VARCHAR}, 
+      #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
       #{reservedAttribute3,jdbcType=VARCHAR}, #{reservedAttribute4,jdbcType=VARCHAR}, 
       #{reservedAttribute5,jdbcType=VARCHAR})
   </insert>
@@ -75,6 +79,9 @@
       </if>
       <if test="processInstanceId != null" >
         PROCESS_INSTANCE_ID,
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME,
       </if>
       <if test="wfStepId != null" >
         WF_STEP_ID,
@@ -153,6 +160,9 @@
       <if test="processInstanceId != null" >
         #{processInstanceId,jdbcType=VARCHAR},
       </if>
+      <if test="processName != null" >
+        #{processName,jdbcType=VARCHAR},
+      </if>
       <if test="wfStepId != null" >
         #{wfStepId,jdbcType=VARCHAR},
       </if>
@@ -230,6 +240,9 @@
       <if test="processInstanceId != null" >
         PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
       </if>
+      <if test="processName != null" >
+        PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      </if>
       <if test="wfStepId != null" >
         WF_STEP_ID = #{wfStepId,jdbcType=VARCHAR},
       </if>
@@ -305,6 +318,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem" >
     update wf_workitem
     set PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      PROCESS_NAME = #{processName,jdbcType=VARCHAR},
       WF_STEP_ID = #{wfStepId,jdbcType=VARCHAR},
       WF_STEP_NAME = #{wfStepName,jdbcType=VARCHAR},
       WF_STEP_TYPE = #{wfStepType,jdbcType=CHAR},

@@ -9,6 +9,7 @@ create table WF_WORKITEM
 (
    WF_WORKITEM_ID       varchar(40) not null,
    PROCESS_INSTANCE_ID  varchar(40) not null,
+   PROCESS_NAME         varchar(300) not null,
    WF_STEP_ID           varchar(40) not null,
    WF_STEP_NAME         varchar(100) not null,
    WF_STEP_TYPE         char(1) not null,

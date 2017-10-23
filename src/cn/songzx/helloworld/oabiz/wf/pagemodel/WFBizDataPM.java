@@ -19,6 +19,10 @@ public class WFBizDataPM {
 
     private String processInstanceId;
 
+    private String processDefinitionKey;
+
+    private String processDefinitionName;
+
     private String bizBillEditorName;
 
     private String bizBillEditorPartyid;
@@ -109,6 +113,22 @@ public class WFBizDataPM {
 
     public void setProcessInstanceId(String processInstanceId) {
         this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
+    }
+
+    public String getProcessDefinitionKey() {
+        return processDefinitionKey;
+    }
+
+    public void setProcessDefinitionKey(String processDefinitionKey) {
+        this.processDefinitionKey = processDefinitionKey == null ? null : processDefinitionKey.trim();
+    }
+
+    public String getProcessDefinitionName() {
+        return processDefinitionName;
+    }
+
+    public void setProcessDefinitionName(String processDefinitionName) {
+        this.processDefinitionName = processDefinitionName == null ? null : processDefinitionName.trim();
     }
 
     public String getBizBillEditorName() {

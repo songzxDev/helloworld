@@ -8,7 +8,7 @@ public class WFBizData implements Serializable {
 	/**
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
 	 */
-	private static final long serialVersionUID = 5319076083870183555L;
+	private static final long serialVersionUID = 2647148254226237186L;
 
 	private String wfBizDataId;
 
@@ -25,6 +25,10 @@ public class WFBizData implements Serializable {
 	private String bizBillKindName;
 
 	private String processInstanceId;
+
+	private String processDefinitionKey;
+
+	private String processDefinitionName;
 
 	private String bizBillEditorName;
 
@@ -116,6 +120,22 @@ public class WFBizData implements Serializable {
 
 	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
+	}
+
+	public String getProcessDefinitionKey() {
+		return processDefinitionKey;
+	}
+
+	public void setProcessDefinitionKey(String processDefinitionKey) {
+		this.processDefinitionKey = processDefinitionKey == null ? null : processDefinitionKey.trim();
+	}
+
+	public String getProcessDefinitionName() {
+		return processDefinitionName;
+	}
+
+	public void setProcessDefinitionName(String processDefinitionName) {
+		this.processDefinitionName = processDefinitionName == null ? null : processDefinitionName.trim();
 	}
 
 	public String getBizBillEditorName() {

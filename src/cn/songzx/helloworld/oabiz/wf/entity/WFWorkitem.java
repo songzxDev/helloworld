@@ -5,15 +5,16 @@ import java.util.Date;
 
 public class WFWorkitem implements Serializable {
 
-
 	/**
-	* @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
-	*/
-	private static final long serialVersionUID = -6381962920665898088L;
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+	 */
+	private static final long serialVersionUID = -3376583911595161521L;
 
 	private String wfWorkitemId;
 
 	private String processInstanceId;
+
+	private String processName;
 
 	private String wfStepId;
 
@@ -75,6 +76,14 @@ public class WFWorkitem implements Serializable {
 
 	public void setProcessInstanceId(String processInstanceId) {
 		this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
+	}
+
+	public String getProcessName() {
+		return processName;
+	}
+
+	public void setProcessName(String processName) {
+		this.processName = processName == null ? null : processName.trim();
 	}
 
 	public String getWfStepId() {

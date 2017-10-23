@@ -10,6 +10,8 @@
     <result column="BIZ_BILL_KIND_ID" property="bizBillKindId" jdbcType="VARCHAR" />
     <result column="BIZ_BILL_KIND_NAME" property="bizBillKindName" jdbcType="VARCHAR" />
     <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
+    <result column="PROCESS_DEFINITION_KEY" property="processDefinitionKey" jdbcType="VARCHAR" />
+    <result column="PROCESS_DEFINITION_NAME" property="processDefinitionName" jdbcType="VARCHAR" />
     <result column="BIZ_BILL_EDITOR_NAME" property="bizBillEditorName" jdbcType="VARCHAR" />
     <result column="BIZ_BILL_EDITOR_PARTYID" property="bizBillEditorPartyid" jdbcType="VARCHAR" />
     <result column="BIZ_BILL_EDITOR_CODE" property="bizBillEditorCode" jdbcType="VARCHAR" />
@@ -27,10 +29,11 @@
   </resultMap>
   <sql id="Base_Column_List" >
     WF_BIZ_DATA_ID, BIZ_BILL_ID, BIZ_BILL_AUDIT_STATUS, BIZ_BILL_NO, BIZ_BILL_NAME, BIZ_BILL_KIND_ID, 
-    BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, BIZ_BILL_EDITOR_NAME, BIZ_BILL_EDITOR_PARTYID, 
-    BIZ_BILL_EDITOR_CODE, BIZ_BILL_EDITOR_DEPT_NAME, BIZ_BILL_EDITOR_DEPT_CODE, USABLE_STATUS, 
-    CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, 
-    RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5
+    BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, PROCESS_DEFINITION_KEY, PROCESS_DEFINITION_NAME, 
+    BIZ_BILL_EDITOR_NAME, BIZ_BILL_EDITOR_PARTYID, BIZ_BILL_EDITOR_CODE, BIZ_BILL_EDITOR_DEPT_NAME, 
+    BIZ_BILL_EDITOR_DEPT_CODE, USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, WF_ENGINE_TYPE, 
+    RESERVED_ATTRIBUTE_1, RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, RESERVED_ATTRIBUTE_4, 
+    RESERVED_ATTRIBUTE_5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -45,7 +48,8 @@
   <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBizData" >
     insert into wf_biz_data (WF_BIZ_DATA_ID, BIZ_BILL_ID, BIZ_BILL_AUDIT_STATUS, 
       BIZ_BILL_NO, BIZ_BILL_NAME, BIZ_BILL_KIND_ID, 
-      BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, BIZ_BILL_EDITOR_NAME, 
+      BIZ_BILL_KIND_NAME, PROCESS_INSTANCE_ID, PROCESS_DEFINITION_KEY, 
+      PROCESS_DEFINITION_NAME, BIZ_BILL_EDITOR_NAME, 
       BIZ_BILL_EDITOR_PARTYID, BIZ_BILL_EDITOR_CODE, 
       BIZ_BILL_EDITOR_DEPT_NAME, BIZ_BILL_EDITOR_DEPT_CODE, 
       USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
@@ -54,7 +58,8 @@
       RESERVED_ATTRIBUTE_5)
     values (#{wfBizDataId,jdbcType=VARCHAR}, #{bizBillId,jdbcType=VARCHAR}, #{bizBillAuditStatus,jdbcType=CHAR}, 
       #{bizBillNo,jdbcType=VARCHAR}, #{bizBillName,jdbcType=VARCHAR}, #{bizBillKindId,jdbcType=VARCHAR}, 
-      #{bizBillKindName,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, #{bizBillEditorName,jdbcType=VARCHAR}, 
+      #{bizBillKindName,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, #{processDefinitionKey,jdbcType=VARCHAR}, 
+      #{processDefinitionName,jdbcType=VARCHAR}, #{bizBillEditorName,jdbcType=VARCHAR}, 
       #{bizBillEditorPartyid,jdbcType=VARCHAR}, #{bizBillEditorCode,jdbcType=VARCHAR}, 
       #{bizBillEditorDeptName,jdbcType=VARCHAR}, #{bizBillEditorDeptCode,jdbcType=VARCHAR}, 
       #{usableStatus,jdbcType=CHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
@@ -88,6 +93,12 @@
       </if>
       <if test="processInstanceId != null" >
         PROCESS_INSTANCE_ID,
+      </if>
+      <if test="processDefinitionKey != null" >
+        PROCESS_DEFINITION_KEY,
+      </if>
+      <if test="processDefinitionName != null" >
+        PROCESS_DEFINITION_NAME,
       </if>
       <if test="bizBillEditorName != null" >
         BIZ_BILL_EDITOR_NAME,
@@ -157,6 +168,12 @@
       <if test="processInstanceId != null" >
         #{processInstanceId,jdbcType=VARCHAR},
       </if>
+      <if test="processDefinitionKey != null" >
+        #{processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processDefinitionName != null" >
+        #{processDefinitionName,jdbcType=VARCHAR},
+      </if>
       <if test="bizBillEditorName != null" >
         #{bizBillEditorName,jdbcType=VARCHAR},
       </if>
@@ -225,6 +242,12 @@
       <if test="processInstanceId != null" >
         PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
       </if>
+      <if test="processDefinitionKey != null" >
+        PROCESS_DEFINITION_KEY = #{processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processDefinitionName != null" >
+        PROCESS_DEFINITION_NAME = #{processDefinitionName,jdbcType=VARCHAR},
+      </if>
       <if test="bizBillEditorName != null" >
         BIZ_BILL_EDITOR_NAME = #{bizBillEditorName,jdbcType=VARCHAR},
       </if>
@@ -279,6 +302,8 @@
       BIZ_BILL_KIND_ID = #{bizBillKindId,jdbcType=VARCHAR},
       BIZ_BILL_KIND_NAME = #{bizBillKindName,jdbcType=VARCHAR},
       PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
+      PROCESS_DEFINITION_KEY = #{processDefinitionKey,jdbcType=VARCHAR},
+      PROCESS_DEFINITION_NAME = #{processDefinitionName,jdbcType=VARCHAR},
       BIZ_BILL_EDITOR_NAME = #{bizBillEditorName,jdbcType=VARCHAR},
       BIZ_BILL_EDITOR_PARTYID = #{bizBillEditorPartyid,jdbcType=VARCHAR},
       BIZ_BILL_EDITOR_CODE = #{bizBillEditorCode,jdbcType=VARCHAR},

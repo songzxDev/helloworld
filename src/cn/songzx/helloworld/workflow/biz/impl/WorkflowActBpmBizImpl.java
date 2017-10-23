@@ -22,6 +22,7 @@ import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.dao.enmu.WFEngineType;
 
 /**
  * @ClassName: WorkflowBizImpl
@@ -64,6 +65,9 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 				wfBizData = new WFBizData();
 				wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());// 数据主键
 				wfBizData.setProcessInstanceId(newProcessInstance.getProcessInstanceId());// 流程实例ID
+				wfBizData.setCreateDatetime(OABizUtil.getCurrentTimestamp());// 数据创建日期
+				wfBizData.setUsableStatus("1");// 逻辑删除标识，1是否，0是被标记为逻辑删除
+				wfBizData.setWfEngineType(WFEngineType.ACTIVITI518.name());// 流程引擎类型
 			}
 		} catch (Exception e) {
 			throw e;

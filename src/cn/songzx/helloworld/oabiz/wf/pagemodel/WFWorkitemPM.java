@@ -7,6 +7,8 @@ public class WFWorkitemPM {
 
     private String processInstanceId;
 
+    private String processName;
+
     private String wfStepId;
 
     private String wfStepName;
@@ -67,6 +69,14 @@ public class WFWorkitemPM {
 
     public void setProcessInstanceId(String processInstanceId) {
         this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
+    }
+
+    public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName == null ? null : processName.trim();
     }
 
     public String getWfStepId() {

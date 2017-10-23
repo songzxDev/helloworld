@@ -15,6 +15,8 @@ create table WF_BIZ_DATA
    BIZ_BILL_KIND_ID     varchar(40) not null,
    BIZ_BILL_KIND_NAME   varchar(100) not null,
    PROCESS_INSTANCE_ID  varchar(40) not null,
+   PROCESS_DEFINITION_KEY varchar(300) not null,
+   PROCESS_DEFINITION_NAME varchar(300) not null,
    BIZ_BILL_EDITOR_NAME varchar(100) not null,
    BIZ_BILL_EDITOR_PARTYID varchar(100) not null,
    BIZ_BILL_EDITOR_CODE varchar(200) not null,
