@@ -22,6 +22,12 @@ import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
  */
 public interface WorkflowBizI {
 
+	public static final String APPROVAL_DISENGAGED = "001";// 流程实例审批状态为：未提交
+
+	public static final String APPROVAL_UNDERWAY = "002";// 流程实例审批状态为：进行中
+
+	public static final String APPROVAL_COMPLETED = "003";// 流程实例审批状态为：已完成
+
 	/**
 	 *
 	 * @Date: 2017年10月23日上午9:39:27

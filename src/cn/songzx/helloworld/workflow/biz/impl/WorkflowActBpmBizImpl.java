@@ -78,6 +78,19 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 				wfBizData.setCreateDatetime(OABizUtil.getCurrentTimestamp());// 数据创建日期
 				wfBizData.setUsableStatus("1");// 逻辑删除标识，1是否，0是被标记为逻辑删除
 				wfBizData.setWfEngineType(WFEngineType.ACTIVITI518.name());// 流程引擎类型
+				wfBizData.setBizBillAuditStatus(WorkflowBizI.APPROVAL_UNDERWAY);// 流程实例审批状态为：进行中
+				if (variables != null && !variables.isEmpty()) {
+					wfBizData.setBizBillEditorName((String) variables.get("dynamic_participant_name"));// 参与者人员姓名
+					wfBizData.setBizBillEditorPartyid((String) variables.get("dynamic_participant_partyid"));// 参与者人员partyid
+					wfBizData.setBizBillEditorCode((String) variables.get("dynamic_participant_code"));// 参与者人员CODE
+					wfBizData.setBizBillEditorDeptName((String) variables.get("dynamic_participant_dept_name"));// 参与者所在部门名称
+					wfBizData.setBizBillEditorDeptCode((String) variables.get("dynamic_participant_dept_code"));// 参与者所在部门CODE
+					wfBizData.setBizBillId((String) variables.get("business_bill_id"));// 业务单据主键
+					wfBizData.setBizBillName((String) variables.get("business_bill_name"));// 业务单据名称
+					wfBizData.setBizBillNo((String) variables.get("business_bill_no"));// 业务单据编号
+					wfBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
+					wfBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
+				}
 			}
 		} catch (Exception e) {
 			throw e;

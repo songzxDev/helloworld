@@ -10,6 +10,8 @@ package cn.songzx.helloworld.workflow.biz.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
-import cn.songzx.helloworld.workflow.biz.WorkflowRepositoryBizI;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -52,7 +53,7 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(多线程测试)
 	 * @return void 返回值类型
 	 */
-	@Test
+	// @Test
 	public void multiTest() {
 		TestRunnable runner = new TestRunnable() {
 			@Override
@@ -87,7 +88,7 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(初始化流程引擎)
 	 * @return void 返回值类型
 	 */
-	@Test
+	// @Test
 	public void testInitDataSource() {
 		System.out.println("流程引擎Activiti518开始初始化！");
 	}
@@ -99,7 +100,7 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(发布流程)
 	 * @return void 返回值类型
 	 */
-	@Test
+	// @Test
 	public void testDeployDiagramByZipFile() {
 		try {
 			File directory = new File("");// 参数为空
@@ -117,5 +118,7 @@ public class TestWorkflowBiz {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }

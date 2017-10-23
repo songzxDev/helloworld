@@ -2,9 +2,9 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://wf.songzx.cn/oabiz">
   <process id="HQ_OABIZ_CONTRACT_AUDIT_V1.0" name="集团_OA系统_合同审计审批_V1.0" isExecutable="true">
     <startEvent id="ACT000" name="启动流程"></startEvent>
-    <userTask id="ACT001" name="合同接口人" activiti:assignee="${dynamic_participant}"></userTask>
-    <userTask id="ACT002" name="财务人员审核" activiti:assignee="${dynamic_participant}"></userTask>
-    <userTask id="ACT003" name="纪检人员备案" activiti:assignee="${dynamic_participant}"></userTask>
+    <userTask id="ACT001" name="合同接口人" activiti:assignee="${dynamic_participant_partyid}"></userTask>
+    <userTask id="ACT002" name="财务人员审核" activiti:assignee="${dynamic_participant_partyid}"></userTask>
+    <userTask id="ACT003" name="纪检人员备案" activiti:assignee="${dynamic_participant_partyid}"></userTask>
     <endEvent id="ACT999" name="结束流程"></endEvent>
     <sequenceFlow id="GOTO_ACT001" sourceRef="ACT000" targetRef="ACT001"></sequenceFlow>
     <sequenceFlow id="GOTO_ACT002" sourceRef="ACT001" targetRef="ACT002"></sequenceFlow>
