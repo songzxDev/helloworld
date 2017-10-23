@@ -102,11 +102,6 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 					System.out.print("☆");
 				}
 				System.out.println("恭喜您，数据已找到！");
-			} else {
-				for (int i = 0; i < 100; i++) {
-					System.out.print("★");
-				}
-				System.out.println("很遗憾，数据不存在！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
