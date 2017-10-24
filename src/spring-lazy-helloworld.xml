@@ -10,7 +10,7 @@
 	<import resource="classpath:/spring-lazy-bpm-datasource.xml" />
 	<import resource="classpath:/spring-lazy-biz-datasource.xml" />
 
-	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource">
+	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource" init-method="init" destroy-method="destroy">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
 				<!-- 指定lookupKey和与之对应的数据源 -->
@@ -20,7 +20,7 @@
 			</map>
 		</property>
 		<!-- 这里可以指定默认的数据源 -->
-		<!-- <property name="defaultTargetDataSource" ref="dataSourceOABiz" /> -->
+		<property name="defaultTargetDataSource" ref="dataSourceOABiz" />
 	</bean>
 
 	<!-- 配置事务 -->
@@ -114,12 +114,12 @@
 	</tx:advice>
 
 	<aop:config>
-		<aop:pointcut id="transactionPointCutBpm" expression="execution(* cn.songzx.helloworld.workflow.biz.*.*(..))" />
+		<aop:pointcut id="transactionPointCutBpm" expression="execution(* cn.songzx.helloworld.workflow.biz..*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointCutBpm" advice-ref="txAdvice" order="3" />
 	</aop:config>
 
 	<aop:config>
-		<aop:pointcut id="transactionPointCutBiz" expression="execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))" />
+		<aop:pointcut id="transactionPointCutBiz" expression="execution(* cn.songzx.helloworld.oabiz.wf.service..*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointCutBiz" advice-ref="txAdvice" order="4" />
 	</aop:config>
 

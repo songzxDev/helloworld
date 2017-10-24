@@ -33,4 +33,33 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 		return DataSourceContextHolder.getCustomerType();
 	}
 
+	/**
+	 * @Date: 2017年10月24日下午6:36:03
+	 * @Title: afterPropertiesSet
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @return 返回值类型
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		System.out.println("");
+		System.out.println("");
+		System.out.println("类【DynamicDataSource】的afterPropertiesSet()方法被调用了！");
+		System.out.println("");
+		super.afterPropertiesSet();
+	}
+
+	public void init() {
+		System.out.println("");
+		System.out.println("");
+		System.out.println("类【DynamicDataSource】的init()方法被调用了！");
+		System.out.println("");
+	}
+
+	public void destroy() {
+		System.out.println("");
+		System.out.println("");
+		System.out.println("类【DynamicDataSource】的destroy()方法被调用了！");
+		System.out.println("");
+	}
+
 }

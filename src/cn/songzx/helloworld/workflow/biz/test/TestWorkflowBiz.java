@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import javax.annotation.Resource;
 
+import org.activiti.engine.ActivitiException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,8 +34,8 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring-helloworld-aspects.xml", "classpath:/spring-lazy-helloworld.xml" })
 public class TestWorkflowBiz {
-	//
-	// @Resource(name="workflowBizActBpm518")
+
+	@Resource(name = "workflowBizActBpm518")
 	private WorkflowBizI workflowBiz;
 
 	/**
@@ -83,8 +84,14 @@ public class TestWorkflowBiz {
 	 */
 	@Test
 	public void testInitDataSource() {
-		System.out.println("流程引擎Activiti518开始初始化！");
-		System.out.println(DataSourceContextHolder.getCustomerType());
+		try {
+			System.out.println("流程引擎Activiti518开始初始化！");
+			System.out.println(DataSourceContextHolder.getCustomerType());
+		} catch (ActivitiException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

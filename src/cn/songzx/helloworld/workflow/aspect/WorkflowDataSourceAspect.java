@@ -45,5 +45,4 @@ public class WorkflowDataSourceAspect {
 		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：clearCustomerType()方法，清除了数据源！");
 		DataSourceContextHolder.clearCustomerType();
 	}
-
 }

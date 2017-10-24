@@ -5,6 +5,10 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="false">
 	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="cn.songzx.helloworld.workflow.aspect"></context:component-scan>
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<context:component-scan base-package="cn.songzx.helloworld.workflow.aspect">
+		<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"></bean>
+	<bean class="cn.songzx.helloworld.oabiz.util.WFPostProcessor"></bean>
 </beans>
