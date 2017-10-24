@@ -43,13 +43,13 @@ public class WorkflowDataSourceAspect {
 	}
 
 	@Before("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
-	public void setBizDataSource(JoinPoint jp) {
+	public void setBizWFDataSource(JoinPoint jp) {
 		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：setCustomerType(String value)方法，动态指定了数据源！");
 		DataSourceContextHolder.setCustomerType(DynamicDataSourceLookupKey.BIZ_DATASOURCE.getLookupKey());
 	}
 
 	@After("execution(* cn.songzx.helloworld.oabiz.wf.service.*.*(..))")
-	public void removeBizDataSource(JoinPoint jp) {
+	public void removeBizWFDataSource(JoinPoint jp) {
 		System.out.println("当前线程【" + Thread.currentThread().getName() + "】执行了：clearCustomerType()方法，清除了数据源！");
 		DataSourceContextHolder.clearCustomerType();
 	}

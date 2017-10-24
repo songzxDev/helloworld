@@ -11,9 +11,10 @@ package cn.songzx.helloworld.oabiz.wf.test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -30,16 +31,9 @@ import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring-helloworld.xml" })
 public class TestOABizWFService {
+	@Resource(name = "oaBizWFService")
 	private OABizWFServiceI oaBizWFService;
 
-	public OABizWFServiceI getOaBizWFService() {
-		return oaBizWFService;
-	}
-
-	@Autowired
-	public void setOaBizWFService(OABizWFServiceI oaBizWFService) {
-		this.oaBizWFService = oaBizWFService;
-	}
 
 	@Test
 	public void teststartProcessInstanceByKey() {

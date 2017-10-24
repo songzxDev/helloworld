@@ -10,16 +10,14 @@ package cn.songzx.helloworld.workflow.biz.test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
@@ -35,16 +33,9 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
 @ContextConfiguration(locations = { "classpath:/spring-helloworld.xml" })
 public class TestWorkflowBiz {
 
-	private WorkflowBizI workflowActBpmBiz;
+	@Resource(name="workflowBizActBpm518")
+	private WorkflowBizI workflowBiz;
 
-	public WorkflowBizI getWorkflowActBpmBiz() {
-		return workflowActBpmBiz;
-	}
-
-	@Autowired
-	public void setWorkflowActBpmBiz(WorkflowBizI workflowActBpmBiz) {
-		this.workflowActBpmBiz = workflowActBpmBiz;
-	}
 
 	/**
 	 *
@@ -100,7 +91,7 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(发布流程)
 	 * @return void 返回值类型
 	 */
-	// @Test
+	@Test
 	public void testDeployDiagramByZipFile() {
 		try {
 			File directory = new File("");// 参数为空
@@ -111,7 +102,7 @@ public class TestWorkflowBiz {
 			String fileName = "HQ_OABIZ_CONTRACT_AUDIT_V1.0";
 			// OABizUtil.fileToZip(sourceFilePath, zipFilePath, fileName);
 			String zipFileName = fileName + ".zip";
-			workflowActBpmBiz.deployDiagramByZipFile(zipFilePath + "\\" + zipFileName, zipFileName);
+			workflowBiz.deployDiagramByZipFile(zipFilePath + "\\" + zipFileName, zipFileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

@@ -32,7 +32,16 @@ import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
  *
  */
 @org.springframework.stereotype.Service("oaBizWFService")
+@org.springframework.context.annotation.Lazy(value = true)
 public class OABizWFServiceImpl implements OABizWFServiceI {
+
+	/**
+	 * 流程引擎相关的持久层接口，和业务系统不是同一个数据源
+	 *
+	 * 如果流程引擎类型发生变化，仅需修改下面标签中的name值
+	 */
+	@Resource(name = "workflowBizActBpm518")
+	private WorkflowBizI workflowBiz;
 
 	/**
 	 * 业务系统：流程系统和业务系统关联信息表持久层接口
@@ -48,14 +57,6 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	 * 业务系统：流程审批记录信息表持久层接口
 	 */
 	private WFAuditRecordMapper wfAuditRecordMapper;
-
-	/**
-	 * 流程引擎相关的持久层接口，和业务系统不是同一个数据源
-	 *
-	 * 如果流程引擎类型发生变化，仅需修改下面标签中的name值
-	 */
-	@Resource(name = "workflowActBpmBiz")
-	private WorkflowBizI workflowBiz;
 
 	public WFBizDataMapper getWfBizDataMapper() {
 		return wfBizDataMapper;

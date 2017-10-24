@@ -3,7 +3,7 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="true">
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.biz"></context:component-scan>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.dao"></context:component-scan>
@@ -23,12 +23,17 @@
 			</map>
 		</property>
 		<!-- 这里可以指定默认的数据源 -->
-		<property name="defaultTargetDataSource" ref="dataSourceActiviti518" />
+		<!-- <property name="defaultTargetDataSource" ref="dataSourceOABiz" /> -->
 	</bean>
 
-	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
 
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【模拟OA模块持久层接口调用配置开始】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+	<!-- spring和MyBatis整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactoryBiz" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
@@ -39,25 +44,21 @@
 		<property name="basePackage" value="cn.songzx.helloworld.oabiz.wf.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBiz"></property>
 	</bean>
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【模拟OA模块持久层接口调用配置结束】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 
-	<!-- 配置事务 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dynamicDataSource" />
-	</bean>
 
-	<!-- 流程引擎数据主键生成策略：UUID -->
-	<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator"></bean>
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【activiti518流程引擎配置开始】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+	<!-- activiti518流程引擎数据主键生成策略：UUID -->
+	<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator" lazy-init="true"></bean>
 
-	<!-- spring初始化activiti流程引擎 -->
-	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+	<!-- spring懒加载模式初始化activiti518流程引擎 -->
+	<!-- lazy-init="true"表示懒加载，不提前初始化Bean，而是只有在真正使用时才创建及初始化Bean -->
+	<bean id="activiti518WfEngineConf" class="org.activiti.spring.SpringProcessEngineConfiguration" lazy-init="true">
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<!-- 制定要使用的数据库类型 -->
 		<property name="databaseType" value="${activiti518.databaseType}"></property>
-		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值：
-			 "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。
-			 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。
-			 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
+		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值： "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
 		<property name="databaseSchemaUpdate" value="false" />
 		<property name="jobExecutorActivate" value="true" />
 		<property name="enableDatabaseEventLogging" value="true" />
@@ -69,18 +70,20 @@
 		<property name="idGenerator" ref="uuidGenerator" />
 	</bean>
 
-	<!-- activiti流程引擎 -->
-	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
-		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	<!-- activiti518流程引擎 -->
+	<bean id="activiti518ProcessEngine" class="org.activiti.spring.ProcessEngineFactoryBean" lazy-init="true">
+		<property name="processEngineConfiguration" ref="activiti518WfEngineConf" />
 	</bean>
 
-	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
-	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
-	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
-	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
-	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
-	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
-	<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
+	<bean id="repositoryService518" factory-bean="activiti518ProcessEngine" factory-method="getRepositoryService" lazy-init="true" />
+	<bean id="runtimeService518" factory-bean="activiti518ProcessEngine" factory-method="getRuntimeService" lazy-init="true" />
+	<bean id="taskService518" factory-bean="activiti518ProcessEngine" factory-method="getTaskService" lazy-init="true" />
+	<bean id="formService518" factory-bean="activiti518ProcessEngine" factory-method="getFormService" lazy-init="true" />
+	<bean id="historyService518" factory-bean="activiti518ProcessEngine" factory-method="getHistoryService" lazy-init="true" />
+	<bean id="managementService518" factory-bean="activiti518ProcessEngine" factory-method="getManagementService" lazy-init="true" />
+	<bean id="identityService518" factory-bean="activiti518ProcessEngine" factory-method="getIdentityService" lazy-init="true" />
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【activiti518流程引擎配置结束】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+
 
 	<!-- 配置事务的传播特性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
@@ -89,8 +92,8 @@
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="deploy*" propagation="REQUIRED"/>
-			<tx:method name="start*" propagation="REQUIRED"/>
+			<tx:method name="deploy*" propagation="REQUIRED" />
+			<tx:method name="start*" propagation="REQUIRED" />
 			<!-- 修改 -->
 			<tx:method name="edit*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />

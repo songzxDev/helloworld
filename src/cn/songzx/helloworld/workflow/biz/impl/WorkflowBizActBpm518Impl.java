@@ -1,11 +1,3 @@
-/**
-* @Title: WorkflowBizImpl.java
-* @Package cn.songzx.helloworld.workflow.biz.impl
-* @Description: TODO(用一句话描述该文件做什么)
-* @author Songzx songzx_2326@163.com
-* @date 2017年10月19日 上午9:46:17
-* @version V1.0
-*/
 package cn.songzx.helloworld.workflow.biz.impl;
 
 import java.io.FileInputStream;
@@ -28,30 +20,32 @@ import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
 import cn.songzx.helloworld.workflow.dao.enmu.WFEngineType;
+import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
- * @ClassName: WorkflowBizImpl
- * @Description: TODO(这里用一句话描述这个类的作用)
- * @author Songzx songzx_2326@163.com
- * @date 2017年10月19日 上午9:46:17
  *
+* @ClassName: WorkflowBizActBpm518Impl
+* @Description: TODO(这里用一句话描述这个类的作用)
+* @author Songzx songzx_2326@163.com
+* @date 2017年10月24日 下午12:21:50
+*
  */
-@org.springframework.stereotype.Service(value = "workflowActBpmBiz")
-public class WorkflowActBpmBizImpl implements WorkflowBizI {
+@org.springframework.stereotype.Service(value = "workflowBizActBpm518")
+public class WorkflowBizActBpm518Impl implements WorkflowBizI {
 
-	@Resource(name = "runtimeService")
+	@Resource(name = "runtimeService518")
 	private RuntimeService workflowRuntimeBiz;
 
-	@Resource(name = "taskService")
+	@Resource(name = "taskService518")
 	private TaskService workflowTaskBiz;
 
-	@Resource(name = "historyService")
+	@Resource(name = "historyService518")
 	private HistoryService workflowHistoryBiz;
 
-	@Resource(name = "managementService")
+	@Resource(name = "managementService518")
 	private ManagementService workflowManagementBiz;
 
-	@Resource(name = "repositoryService")
+	@Resource(name = "repositoryService518")
 	private RepositoryService workflowRepositoryBiz;
 
 	/**
@@ -67,6 +61,7 @@ public class WorkflowActBpmBizImpl implements WorkflowBizI {
 	@Override
 	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
 		WFBizData wfBizData = null;
+		System.out.println("警告：当前数据源☆【" + DataSourceContextHolder.getCustomerType() + "】★类型为业务系统，非流程系统指定数据源！");
 		try {
 			ProcessInstance newProcessInstance = workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey, variables);
 			if (newProcessInstance != null) {
