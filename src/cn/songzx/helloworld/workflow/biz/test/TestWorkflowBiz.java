@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -30,12 +31,11 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-helloworld.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-lazy-helloworld.xml" })
 public class TestWorkflowBiz {
-
-	@Resource(name="workflowBizActBpm518")
+	// "classpath:/spring-helloworld-aspects.xml"
+	// @Resource(name="workflowBizActBpm518")
 	private WorkflowBizI workflowBiz;
-
 
 	/**
 	 *
@@ -79,9 +79,10 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(初始化流程引擎)
 	 * @return void 返回值类型
 	 */
-	// @Test
+	@Test
 	public void testInitDataSource() {
 		System.out.println("流程引擎Activiti518开始初始化！");
+		System.out.println(DataSourceContextHolder.getCustomerType());
 	}
 
 	/**
@@ -109,7 +110,5 @@ public class TestWorkflowBiz {
 			e.printStackTrace();
 		}
 	}
-
-
 
 }

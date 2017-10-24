@@ -6,12 +6,9 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="true">
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.biz"></context:component-scan>
-	<context:component-scan base-package="cn.songzx.helloworld.workflow.dao"></context:component-scan>
 	<context:component-scan base-package="cn.songzx.helloworld.oabiz.wf.service"></context:component-scan>
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-
-	<import resource="classpath:/spring-activiti518-datasource.xml" />
-	<import resource="classpath:/spring-oabiz-datasource.xml" />
+	<import resource="classpath:/spring-lazy-bpm-datasource.xml" />
+	<import resource="classpath:/spring-lazy-biz-datasource.xml" />
 
 	<bean id="dynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource">
 		<property name="targetDataSources">
@@ -49,11 +46,11 @@
 
 	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【activiti518流程引擎配置开始】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 	<!-- activiti518流程引擎数据主键生成策略：UUID -->
-	<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator" lazy-init="true"></bean>
+	<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator"></bean>
 
 	<!-- spring懒加载模式初始化activiti518流程引擎 -->
-	<!-- lazy-init="true"表示懒加载，不提前初始化Bean，而是只有在真正使用时才创建及初始化Bean -->
-	<bean id="activiti518WfEngineConf" class="org.activiti.spring.SpringProcessEngineConfiguration" lazy-init="true">
+	<!-- 表示懒加载，不提前初始化Bean，而是只有在真正使用时才创建及初始化Bean -->
+	<bean id="activiti518WfEngineConf" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<!-- 制定要使用的数据库类型 -->
@@ -71,17 +68,17 @@
 	</bean>
 
 	<!-- activiti518流程引擎 -->
-	<bean id="activiti518ProcessEngine" class="org.activiti.spring.ProcessEngineFactoryBean" lazy-init="true">
+	<bean id="activiti518ProcessEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="activiti518WfEngineConf" />
 	</bean>
 
-	<bean id="repositoryService518" factory-bean="activiti518ProcessEngine" factory-method="getRepositoryService" lazy-init="true" />
-	<bean id="runtimeService518" factory-bean="activiti518ProcessEngine" factory-method="getRuntimeService" lazy-init="true" />
-	<bean id="taskService518" factory-bean="activiti518ProcessEngine" factory-method="getTaskService" lazy-init="true" />
-	<bean id="formService518" factory-bean="activiti518ProcessEngine" factory-method="getFormService" lazy-init="true" />
-	<bean id="historyService518" factory-bean="activiti518ProcessEngine" factory-method="getHistoryService" lazy-init="true" />
-	<bean id="managementService518" factory-bean="activiti518ProcessEngine" factory-method="getManagementService" lazy-init="true" />
-	<bean id="identityService518" factory-bean="activiti518ProcessEngine" factory-method="getIdentityService" lazy-init="true" />
+	<bean id="repositoryService518" factory-bean="activiti518ProcessEngine" factory-method="getRepositoryService" />
+	<bean id="runtimeService518" factory-bean="activiti518ProcessEngine" factory-method="getRuntimeService" />
+	<bean id="taskService518" factory-bean="activiti518ProcessEngine" factory-method="getTaskService" />
+	<bean id="formService518" factory-bean="activiti518ProcessEngine" factory-method="getFormService" />
+	<bean id="historyService518" factory-bean="activiti518ProcessEngine" factory-method="getHistoryService" />
+	<bean id="managementService518" factory-bean="activiti518ProcessEngine" factory-method="getManagementService" />
+	<bean id="identityService518" factory-bean="activiti518ProcessEngine" factory-method="getIdentityService" />
 	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【activiti518流程引擎配置结束】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 
 
