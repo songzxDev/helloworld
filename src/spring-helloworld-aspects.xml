@@ -6,5 +6,5 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="false">
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.songzx.helloworld.workflow.aspect"></context:component-scan>
-	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
