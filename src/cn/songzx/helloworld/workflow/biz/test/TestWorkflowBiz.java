@@ -31,9 +31,9 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-lazy-helloworld.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-helloworld-aspects.xml", "classpath:/spring-lazy-helloworld.xml" })
 public class TestWorkflowBiz {
-	// "classpath:/spring-helloworld-aspects.xml"
+	//
 	// @Resource(name="workflowBizActBpm518")
 	private WorkflowBizI workflowBiz;
 
@@ -44,19 +44,21 @@ public class TestWorkflowBiz {
 	 * @Description: TODO(多线程测试)
 	 * @return void 返回值类型
 	 */
-	// @Test
+	@Test
 	public void multiTest() {
 		TestRunnable runner = new TestRunnable() {
 			@Override
 			public void runTest() throws Throwable {
 				// 测试内容
 				try {
+					System.out.println("流程引擎Activiti518开始初始化！");
+					System.out.println(DataSourceContextHolder.getCustomerType());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		};
-		int runnerCount = 800;
+		int runnerCount = 10;
 		// Rnner数组，想当于并发多少个。
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
