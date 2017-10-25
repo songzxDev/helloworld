@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="true">
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="cn.songzx.helloworld.workflow.aspect">
+		<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"></bean>
+	<bean class="cn.songzx.helloworld.oabiz.util.WFPostProcessor"></bean>
+	<bean class="cn.songzx.helloworld.oabiz.util.WFInitializingBean"></bean>
+
+	<import resource="classpath:/spring-lazy-wf-datasource.xml" />
+
+	<bean id="wfDynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource" init-method="init" destroy-method="destroy">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<!-- 指定lookupKey和与之对应的数据源 -->
+				<entry key="wfActbpm518DBS" value-ref="wfActbpm518DBS"></entry>
+				<entry key="wfActbpm522DBS" value-ref="wfActbpm522DBS"></entry>
+			</map>
+		</property>
+		<!-- 这里可以指定默认的数据源 -->
+		<property name="defaultTargetDataSource" ref="wfActbpm518DBS" />
+	</bean>
+
+	<!-- 配置事务 -->
+	<bean id="wfTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="wfDynamicDataSource" />
+	</bean>
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【wfActbpm518流程引擎配置开始】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+	<!-- wfActbpm518流程引擎数据主键生成策略：UUID -->
+	<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator"></bean>
+
+	<!-- spring懒加载模式初始化wfActbpm518流程引擎 -->
+	<!-- 表示懒加载，不提前初始化Bean，而是只有在真正使用时才创建及初始化Bean -->
+	<bean id="wfActbpm518EngineConf" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="dataSource" ref="wfDynamicDataSource" />
+		<property name="transactionManager" ref="wfTransactionManager" />
+		<!-- 制定要使用的数据库类型 -->
+		<property name="databaseType" value="${activiti518.databaseType}"></property>
+		<!-- 设置流程引擎启动和关闭时数据库执行的策略 databaseSchemaUpdate 有以下三个值：
+			 "false" Activiti在启动时，会对比数据库中保存的版本，如果没有表或者版本不匹配，将在启动时抛出异常。
+			 "true" Activiti在启动时，会对数据库中所有表进行更新，如果表不存在，则Activiti会自动创建。
+			 "create-drop" Activiti在启动时会执行表的创建工作，在关闭时会执行表的删除工作。 开发阶段设置为：true -->
+		<property name="databaseSchemaUpdate" value="false" />
+		<property name="jobExecutorActivate" value="true" />
+		<property name="enableDatabaseEventLogging" value="true" />
+		<!-- 避免发布的图片和xml遇到中文时乱码 -->
+		<property name="activityFontName" value="宋体" />
+		<property name="labelFontName" value="宋体" />
+		<!-- 解析xml流程文件所使用的字符集，默认为UTF-8，依据数据库来 -->
+		<property name="xmlEncoding" value="${activiti518.xmlEncoding}" />
+		<property name="idGenerator" ref="uuidGenerator" />
+	</bean>
+
+	<!-- wfActbpm518流程引擎 -->
+	<bean id="wfActbpm518ProcessEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="wfActbpm518EngineConf" />
+	</bean>
+
+	<bean id="wfActbpm518RepositoryService" factory-bean="wfActbpm518ProcessEngine" factory-method="getRepositoryService" />
+	<bean id="wfActbpm518RuntimeService" factory-bean="wfActbpm518ProcessEngine" factory-method="getRuntimeService" />
+	<bean id="wfActbpm518TaskService" factory-bean="wfActbpm518ProcessEngine" factory-method="getTaskService" />
+	<bean id="wfActbpm518FormService" factory-bean="wfActbpm518ProcessEngine" factory-method="getFormService" />
+	<bean id="wfActbpm518HistoryService" factory-bean="wfActbpm518ProcessEngine" factory-method="getHistoryService" />
+	<bean id="wfActbpm518ManagementService" factory-bean="wfActbpm518ProcessEngine" factory-method="getManagementService" />
+	<bean id="wfActbpm518IdentityService" factory-bean="wfActbpm518ProcessEngine" factory-method="getIdentityService" />
+	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★【wfActbpm518流程引擎配置结束】☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
+
+	<bean id="workflowBizActBpm518" class="cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl">
+		<property name="workflowRuntimeBiz" ref="wfActbpm518RuntimeService"></property>
+		<property name="workflowTaskBiz" ref="wfActbpm518TaskService"></property>
+		<property name="workflowHistoryBiz" ref="wfActbpm518HistoryService"></property>
+		<property name="workflowRepositoryBiz" ref="wfActbpm518RepositoryService"></property>
+		<property name="workflowManagementBiz" ref="wfActbpm518ManagementService"></property>
+	</bean>
+
+
+
+
+	<!-- 配置事务的传播特性 -->
+	<tx:advice id="wfTxAdvice" transaction-manager="wfTransactionManager">
+		<tx:attributes>
+			<!-- 新增 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="deploy*" propagation="REQUIRED" />
+			<tx:method name="start*" propagation="REQUIRED" />
+			<!-- 修改 -->
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="complete*" propagation="REQUIRED" />
+			<tx:method name="submit*" propagation="REQUIRED" />
+			<!-- 删除 -->
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="clear*" propagation="REQUIRED" />
+			<tx:method name="clean*" propagation="REQUIRED" />
+			<tx:method name="sweep*" propagation="REQUIRED" />
+			<!-- 查询 -->
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="select*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="gain*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="wfTransactionPointCut" expression="execution(* cn.songzx.helloworld.workflow.biz..*.*(..))" />
+		<aop:advisor pointcut-ref="wfTransactionPointCut" advice-ref="wfTxAdvice" order="3" />
+	</aop:config>
+</beans>

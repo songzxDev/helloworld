@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
-import javax.annotation.Resource;
-
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
@@ -15,6 +13,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.util.WFInitializingBean;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
@@ -24,28 +23,22 @@ import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
  *
-* @ClassName: WorkflowBizActBpm518Impl
-* @Description: TODO(这里用一句话描述这个类的作用)
-* @author Songzx songzx_2326@163.com
-* @date 2017年10月24日 下午12:21:50
-*
+ * @ClassName: WorkflowBizActBpm518Impl
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author Songzx songzx_2326@163.com
+ * @date 2017年10月24日 下午12:21:50
+ *
  */
-@org.springframework.stereotype.Service(value = "workflowBizActBpm518")
-public class WorkflowBizActBpm518Impl implements WorkflowBizI {
+public class WorkflowBizActBpm518Impl extends WFInitializingBean implements WorkflowBizI {
 
-	@Resource(name = "runtimeService518")
 	private RuntimeService workflowRuntimeBiz;
 
-	@Resource(name = "taskService518")
 	private TaskService workflowTaskBiz;
 
-	@Resource(name = "historyService518")
 	private HistoryService workflowHistoryBiz;
 
-	@Resource(name = "managementService518")
 	private ManagementService workflowManagementBiz;
 
-	@Resource(name = "repositoryService518")
 	private RepositoryService workflowRepositoryBiz;
 
 	/**
@@ -156,6 +149,93 @@ public class WorkflowBizActBpm518Impl implements WorkflowBizI {
 			}
 		}
 		return deployStatus;
+	}
+
+	/**
+	 * @Date: 2017年10月25日上午9:53:16
+	 * @Title: afterPropertiesSet
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @throws Exception
+	 * @return 返回值类型
+	 */
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+	}
+
+	/**
+	 * @return the workflowRuntimeBiz
+	 */
+	public RuntimeService getWorkflowRuntimeBiz() {
+		return workflowRuntimeBiz;
+	}
+
+	/**
+	 * @param workflowRuntimeBiz
+	 *            the workflowRuntimeBiz to set
+	 */
+	public void setWorkflowRuntimeBiz(RuntimeService workflowRuntimeBiz) {
+		this.workflowRuntimeBiz = workflowRuntimeBiz;
+	}
+
+	/**
+	 * @return the workflowTaskBiz
+	 */
+	public TaskService getWorkflowTaskBiz() {
+		return workflowTaskBiz;
+	}
+
+	/**
+	 * @param workflowTaskBiz
+	 *            the workflowTaskBiz to set
+	 */
+	public void setWorkflowTaskBiz(TaskService workflowTaskBiz) {
+		this.workflowTaskBiz = workflowTaskBiz;
+	}
+
+	/**
+	 * @return the workflowHistoryBiz
+	 */
+	public HistoryService getWorkflowHistoryBiz() {
+		return workflowHistoryBiz;
+	}
+
+	/**
+	 * @param workflowHistoryBiz
+	 *            the workflowHistoryBiz to set
+	 */
+	public void setWorkflowHistoryBiz(HistoryService workflowHistoryBiz) {
+		this.workflowHistoryBiz = workflowHistoryBiz;
+	}
+
+	/**
+	 * @return the workflowManagementBiz
+	 */
+	public ManagementService getWorkflowManagementBiz() {
+		return workflowManagementBiz;
+	}
+
+	/**
+	 * @param workflowManagementBiz
+	 *            the workflowManagementBiz to set
+	 */
+	public void setWorkflowManagementBiz(ManagementService workflowManagementBiz) {
+		this.workflowManagementBiz = workflowManagementBiz;
+	}
+
+	/**
+	 * @return the workflowRepositoryBiz
+	 */
+	public RepositoryService getWorkflowRepositoryBiz() {
+		return workflowRepositoryBiz;
+	}
+
+	/**
+	 * @param workflowRepositoryBiz
+	 *            the workflowRepositoryBiz to set
+	 */
+	public void setWorkflowRepositoryBiz(RepositoryService workflowRepositoryBiz) {
+		this.workflowRepositoryBiz = workflowRepositoryBiz;
 	}
 
 }

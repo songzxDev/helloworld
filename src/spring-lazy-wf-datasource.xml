@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="true">
 	<!-- 加载activiti流程引擎的db.properties配置文件 -->
 	<!-- 此流程引擎版本为：V5.18 -->
-	<bean id="bpmDbConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean id="wfDbConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<array>
 				<value>classpath:db_activiti518.properties</value>
@@ -19,7 +19,7 @@
 
 	<!-- ☆★ ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 	<!-- activiti518阿里druid数据库连接池 -->
-	<bean id="dataSourceActiviti518" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<bean id="wfActbpm518DBS" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 数据库基本信息配置 -->
 		<property name="url" value="${activiti518.url}" />
 		<property name="username" value="${activiti518.username}" />
@@ -51,7 +51,7 @@
 		<property name="logAbandoned" value="${activiti518.logAbandoned}" />
 	</bean>
 	<!-- activiti522阿里druid数据库连接池 -->
-	<bean id="dataSourceActiviti522" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<bean id="wfActbpm522DBS" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 数据库基本信息配置 -->
 		<property name="url" value="${activiti522.url}" />
 		<property name="username" value="${activiti522.username}" />

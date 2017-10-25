@@ -32,7 +32,7 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-helloworld-aspects.xml", "classpath:/spring-lazy-helloworld.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-helloworld-wf.xml", "classpath:/spring-lazy-helloworld.xml" })
 public class TestWorkflowBiz {
 
 	@Resource(name = "workflowBizActBpm518")

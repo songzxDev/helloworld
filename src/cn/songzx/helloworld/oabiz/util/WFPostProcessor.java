@@ -33,9 +33,6 @@ public class WFPostProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆对象【" + beanName + "】开始实例化！☆☆☆☆☆☆☆☆☆☆☆☆");
-		if(beanName.equals("activiti518WfEngineConf")) {
-
-		}
 		return bean;
 	}
 
