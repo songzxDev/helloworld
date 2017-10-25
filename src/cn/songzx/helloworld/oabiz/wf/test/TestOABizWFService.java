@@ -22,7 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
-import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
