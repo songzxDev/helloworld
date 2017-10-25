@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
@@ -32,7 +33,7 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring-helloworld-wf.xml", "classpath:/spring-lazy-helloworld.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-lazy-wf.xml", "classpath:/spring-lazy-biz.xml" })
 public class TestWorkflowBiz {
 
 	@Resource(name = "workflowBizActBpm518")
@@ -86,7 +87,6 @@ public class TestWorkflowBiz {
 	public void testInitDataSource() {
 		try {
 			System.out.println("流程引擎Activiti518开始初始化！");
-			System.out.println(DataSourceContextHolder.getCustomerType());
 		} catch (ActivitiException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

@@ -17,7 +17,7 @@ package cn.songzx.helloworld.workflow.dao.enmu;
  */
 public enum DynamicDataSourceLookupKey {
 
-	BPM_DATASOURCE("dataSourceActiviti518"), BIZ_DATASOURCE("dataSourceOABiz");
+	BPM_DATASOURCE("wfActbpm518DBS"), BIZ_DATASOURCE("dataSourceOABiz");
 
 	private String lookupKey;
 

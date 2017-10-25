@@ -62,7 +62,7 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 				wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());// 数据主键
 				wfBizData.setProcessInstanceId(newProcessInstance.getProcessInstanceId());// 流程实例ID
 				wfBizData.setProcessDefinitionKey(processDefinitionKey);// 流程定义Key
-				wfBizData.setProcessDefinitionName(newProcessInstance.getProcessDefinitionName());// 流程定义名称，即：流程名称
+				wfBizData.setProcessDefinitionName(processDefinitionKey);// 流程定义名称，即：流程名称
 				wfBizData.setCreateDatetime(OABizUtil.getCurrentTimestamp());// 数据创建日期
 				wfBizData.setUsableStatus("1");// 逻辑删除标识，1是否，0是被标记为逻辑删除
 				wfBizData.setWfEngineType(WFEngineType.ACTIVITI518.name());// 流程引擎类型
@@ -151,18 +151,7 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		return deployStatus;
 	}
 
-	/**
-	 * @Date: 2017年10月25日上午9:53:16
-	 * @Title: afterPropertiesSet
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @throws Exception
-	 * @return 返回值类型
-	 */
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		super.afterPropertiesSet();
-	}
-
+	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
 	/**
 	 * @return the workflowRuntimeBiz
 	 */
@@ -237,5 +226,5 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 	public void setWorkflowRepositoryBiz(RepositoryService workflowRepositoryBiz) {
 		this.workflowRepositoryBiz = workflowRepositoryBiz;
 	}
-
+	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
 }

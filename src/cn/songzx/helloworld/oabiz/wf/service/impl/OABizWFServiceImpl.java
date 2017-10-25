@@ -58,33 +58,6 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	 */
 	private WFAuditRecordMapper wfAuditRecordMapper;
 
-	public WFBizDataMapper getWfBizDataMapper() {
-		return wfBizDataMapper;
-	}
-
-	@Autowired
-	public void setWfBizDataMapper(WFBizDataMapper wfBizDataMapper) {
-		this.wfBizDataMapper = wfBizDataMapper;
-	}
-
-	public WFWorkitemMapper getWfWorkitemMapper() {
-		return wfWorkitemMapper;
-	}
-
-	@Autowired
-	public void setWfWorkitemMapper(WFWorkitemMapper wfWorkitemMapper) {
-		this.wfWorkitemMapper = wfWorkitemMapper;
-	}
-
-	public WFAuditRecordMapper getWfAuditRecordMapper() {
-		return wfAuditRecordMapper;
-	}
-
-	@Autowired
-	public void setWfAuditRecordMapper(WFAuditRecordMapper wfAuditRecordMapper) {
-		this.wfAuditRecordMapper = wfAuditRecordMapper;
-	}
-
 	/**
 	 * @Date: 2017年10月23日上午10:03:25
 	 * @Title: startProcessInstanceByKey
@@ -147,4 +120,34 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 		return newWFWorkitemPM;
 	}
 
+
+
+	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
+	public WFBizDataMapper getWfBizDataMapper() {
+		return wfBizDataMapper;
+	}
+
+	@Autowired
+	public void setWfBizDataMapper(WFBizDataMapper wfBizDataMapper) {
+		this.wfBizDataMapper = wfBizDataMapper;
+	}
+
+	public WFWorkitemMapper getWfWorkitemMapper() {
+		return wfWorkitemMapper;
+	}
+
+	@Autowired
+	public void setWfWorkitemMapper(WFWorkitemMapper wfWorkitemMapper) {
+		this.wfWorkitemMapper = wfWorkitemMapper;
+	}
+
+	public WFAuditRecordMapper getWfAuditRecordMapper() {
+		return wfAuditRecordMapper;
+	}
+
+	@Autowired
+	public void setWfAuditRecordMapper(WFAuditRecordMapper wfAuditRecordMapper) {
+		this.wfAuditRecordMapper = wfAuditRecordMapper;
+	}
+	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
 }
