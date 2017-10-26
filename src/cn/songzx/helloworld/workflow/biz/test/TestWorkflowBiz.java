@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
@@ -118,6 +117,16 @@ public class TestWorkflowBiz {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testGetWFWorkitemsByProcInstId() {
+		try {
+			workflowBiz.getWFWorkitemsByProcInstId("e0e2af7b-ba28-11e7-a2bb-c85b76a3c17b", false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

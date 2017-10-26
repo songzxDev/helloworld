@@ -1,6 +1,8 @@
 package cn.songzx.helloworld.workflow.biz.impl;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
@@ -11,6 +13,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.util.WFInitializingBean;
@@ -151,6 +154,33 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		return deployStatus;
 	}
 
+	/**
+	 * @Date: 2017年10月26日下午7:36:35
+	 * @Title: getWFWorkitemsByProcInstId
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param procInstId
+	 * @param doneFlag
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
+	 */
+	@Override
+	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, boolean doneFlag) throws Exception {
+		List<WFWorkitem> wfWorkitems = new ArrayList<WFWorkitem>();
+		String queryTaskSql = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
+		Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryTaskSql).parameter("processInstanceId", procInstId).singleResult();
+		System.out.println("执行查询时间为：☆☆☆☆☆【" + OABizUtil.getCurrentTimestampString() + "】★★★★★");
+		System.out.println();
+		StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】待办事项信息如下：\r\n" + "\r\n");
+		if (currentTask != null) {
+			stbu.append("流程实例ID: " + procInstId + "\r\n");
+			stbu.append("新增待办ID: " + currentTask.getId() + "\r\n");
+			stbu.append("当前处理环节ID: " + currentTask.getTaskDefinitionKey() + ", 当前处理环节名称: " + currentTask.getName() + "\r\n");
+		}
+		System.out.println(stbu.toString());
+		return wfWorkitems;
+	}
+
 	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
 	/**
 	 * @return the workflowRuntimeBiz
@@ -227,4 +257,5 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		this.workflowRepositoryBiz = workflowRepositoryBiz;
 	}
 	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
+
 }

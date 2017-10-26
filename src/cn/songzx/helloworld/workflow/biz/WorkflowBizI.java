@@ -8,6 +8,7 @@
 */
 package cn.songzx.helloworld.workflow.biz;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
@@ -55,6 +56,21 @@ public interface WorkflowBizI {
 	 * @return WFWorkitem 工作项详细信息
 	 */
 	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年10月26日下午7:33:35
+	 * @Title: getWFWorkitemsByProcInstId
+	 * @Description: TODO(根据流程实例ID和待办处理标记查询该实例下的工作项集合)
+	 * @param procInstId
+	 *            流程实例ID
+	 * @param doneFlag
+	 *            false表示"待处理"，true表示"已处理"
+	 * @return
+	 * @throws Exception
+	 * @return List<WFWorkitem> 返回值类型
+	 */
+	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, boolean doneFlag) throws Exception;
 
 	/**
 	 *

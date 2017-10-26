@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -131,6 +132,11 @@ public class OABizUtil {
 	 */
 	public static Timestamp getCurrentTimestamp() {
 		return new Timestamp(System.currentTimeMillis());
+	}
+
+	public static String getCurrentTimestampString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		return sdf.format(new java.util.Date());
 	}
 
 	private static String digits(long val, int digits) {

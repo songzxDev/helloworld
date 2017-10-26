@@ -120,8 +120,6 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 		return newWFWorkitemPM;
 	}
 
-
-
 	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
 	public WFBizDataMapper getWfBizDataMapper() {
 		return wfBizDataMapper;
