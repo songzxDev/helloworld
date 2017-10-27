@@ -10,8 +10,6 @@ import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.engine.delegate.event.ActivitiEventType;
 import org.activiti.engine.task.Task;
 
-import cn.songzx.helloworld.oabiz.util.OABizUtil;
-
 public class ActBpm518EventListener implements ActivitiEventListener, Serializable {
 
 	/**
@@ -53,7 +51,6 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 				if (taskService != null) {
 					String queryTaskSql = "SELECT * FROM " + managementService.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
 					Task currentTask = taskService.createNativeTaskQuery().sql(queryTaskSql).parameter("processInstanceId", processInstanceId).singleResult();
-					System.out.println("执行查询时间为：☆☆☆☆☆【" + OABizUtil.getCurrentTimestampString() + "】★★★★★");
 					System.out.println();
 					StringBuilder stbu = new StringBuilder("Activiti518流程引擎流程新创建了一个待办任务！\r\n");
 					if (currentTask != null) {

@@ -8,8 +8,16 @@
 */
 package cn.songzx.helloworld.oabiz.wf.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson.JSON;
+
+import cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil;
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
 
 /**
  * @ClassName: MyTest
@@ -18,20 +26,14 @@ import java.util.List;
  * @date 2017年10月23日 上午10:50:35
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/spring-lazy-wf.xml", "classpath:/spring-lazy-biz.xml" })
 public class MyTest {
 
-	public static void main(String[] args) throws Exception {
-		List<String> list = null;
-		try {
-			list = new ArrayList<String>();
-			list.add("孙悟空");
-			System.out.println(list.get(0));
-		} catch (Exception e) {
-			throw new Exception("出异常了：\r\n" + e.getMessage());
-		} finally {
-			System.out.println("都他妈的出异常了，咋还他妈的让我执行呢！");
-		}
-		System.out.println("他妈的终于运行正常了，喝酒庆祝一下！");
+	@Test
+	public void testGetBean() {
+		DruidDataSource dataSource = OABizSpringContextUtil.getBean("wfActbpm518DBS", DruidDataSource.class);
+		System.out.println("流程引擎数据源的对象json信息：\r\n");
+		System.out.println(OABizUtil.getTargetObjectToString(dataSource));
 	}
-
 }

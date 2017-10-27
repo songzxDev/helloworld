@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -33,7 +34,16 @@ import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
  * @date 2017年10月23日 下午1:48:21
  *
  */
-public class OABizUtil {
+public class OABizUtil implements Serializable {
+
+	/**
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+	 */
+	private static final long serialVersionUID = -2983265915023442957L;
+
+	private static ThreadLocal<SimpleDateFormat> SDF_THREAD_LOCAL = new ThreadLocal<SimpleDateFormat>();
+
+	private static ThreadLocal<StringBuilder> STRBUI_THREAD_LOCAL = new ThreadLocal<StringBuilder>();
 
 	/**
 	 *
@@ -134,9 +144,61 @@ public class OABizUtil {
 		return new Timestamp(System.currentTimeMillis());
 	}
 
-	public static String getCurrentTimestampString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		return sdf.format(new java.util.Date());
+	/**
+	 *
+	 * @Date: 2017年10月27日下午1:56:41
+	 * @Title: getNowDateTimeString
+	 * @Description: TODO(返回指定格式的字符串类型日期时间)
+	 * @param pattern
+	 *            指定日期格式，例如：yyyy-MM-dd HH:mm:ss.SSS
+	 * @return
+	 * @return String 返回值类型
+	 */
+	public static String getNowDateTimeString(String pattern) {
+		if (SDF_THREAD_LOCAL.get() == null) {
+			SDF_THREAD_LOCAL.set(new SimpleDateFormat(pattern));
+		}
+		return SDF_THREAD_LOCAL.get().format(new java.util.Date());
+	}
+
+	/**
+	 *
+	 * @Date: 2017年10月27日下午4:08:32
+	 * @Title: getTargetObjectToString
+	 * @Description: TODO(获得目标对象的属性信息)
+	 * @param target
+	 *            目标对象
+	 * @return
+	 * @return String 返回值类型
+	 */
+	public static String getTargetObjectToString(Object target) {
+		if (STRBUI_THREAD_LOCAL.get() == null) {
+			STRBUI_THREAD_LOCAL.set(new StringBuilder("{"));
+		}
+		StringBuilder strBui = STRBUI_THREAD_LOCAL.get();
+		try {
+			Class<?> targetClazz = target.getClass();
+			if (targetClazz != null) {
+				Field[] fields = targetClazz.getDeclaredFields();
+				for (int i = 0; i < fields.length; i++) {
+					Field field = fields[i];
+					field.setAccessible(true);
+					strBui.append("\"" + field.getName() + "\":\"" + field.get(target) + "\"");
+					if (i == fields.length - 1) {
+						strBui.append("}");
+					} else {
+						strBui.append(",");
+					}
+				}
+			}
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return strBui.toString();
 	}
 
 	private static String digits(long val, int digits) {
@@ -347,6 +409,11 @@ public class OABizUtil {
 					try {
 						if (null != bis)
 							bis.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+						throw new RuntimeException(e);
+					}
+					try {
 						if (null != zos)
 							zos.close();
 					} catch (IOException e) {
@@ -359,4 +426,5 @@ public class OABizUtil {
 		}
 
 	}
+
 }

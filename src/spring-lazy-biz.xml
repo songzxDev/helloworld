@@ -6,6 +6,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" default-lazy-init="true">
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="cn.songzx.helloworld.oabiz"></context:component-scan>
+	<bean id="bizSpringContextUtil" class="cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil" lazy-init="false"></bean>
 	<import resource="classpath:/spring-lazy-biz-datasource.xml" />
 
 	<bean id="bizDynamicDataSource" class="cn.songzx.helloworld.workflow.dao.DynamicDataSource" init-method="init" destroy-method="destroy">

@@ -11,6 +11,7 @@ import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -43,6 +44,85 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 	private ManagementService workflowManagementBiz;
 
 	private RepositoryService workflowRepositoryBiz;
+
+	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
+	/**
+	 * @return the workflowRuntimeBiz
+	 */
+	public RuntimeService getWorkflowRuntimeBiz() {
+		return workflowRuntimeBiz;
+	}
+
+	/**
+	 * @param workflowRuntimeBiz
+	 *            the workflowRuntimeBiz to set
+	 */
+	public void setWorkflowRuntimeBiz(RuntimeService workflowRuntimeBiz) {
+		this.workflowRuntimeBiz = workflowRuntimeBiz;
+	}
+
+	/**
+	 * @return the workflowTaskBiz
+	 */
+	public TaskService getWorkflowTaskBiz() {
+		return workflowTaskBiz;
+	}
+
+	/**
+	 * @param workflowTaskBiz
+	 *            the workflowTaskBiz to set
+	 */
+	public void setWorkflowTaskBiz(TaskService workflowTaskBiz) {
+		this.workflowTaskBiz = workflowTaskBiz;
+	}
+
+	/**
+	 * @return the workflowHistoryBiz
+	 */
+	public HistoryService getWorkflowHistoryBiz() {
+		return workflowHistoryBiz;
+	}
+
+	/**
+	 * @param workflowHistoryBiz
+	 *            the workflowHistoryBiz to set
+	 */
+	public void setWorkflowHistoryBiz(HistoryService workflowHistoryBiz) {
+		this.workflowHistoryBiz = workflowHistoryBiz;
+	}
+
+	/**
+	 * @return the workflowManagementBiz
+	 */
+	public ManagementService getWorkflowManagementBiz() {
+		return workflowManagementBiz;
+	}
+
+	/**
+	 * @param workflowManagementBiz
+	 *            the workflowManagementBiz to set
+	 */
+	public void setWorkflowManagementBiz(ManagementService workflowManagementBiz) {
+		this.workflowManagementBiz = workflowManagementBiz;
+	}
+
+	/**
+	 * @return the workflowRepositoryBiz
+	 */
+	public RepositoryService getWorkflowRepositoryBiz() {
+		return workflowRepositoryBiz;
+	}
+
+	/**
+	 * @param workflowRepositoryBiz
+	 *            the workflowRepositoryBiz to set
+	 */
+	public void setWorkflowRepositoryBiz(RepositoryService workflowRepositoryBiz) {
+		this.workflowRepositoryBiz = workflowRepositoryBiz;
+	}
+	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
+
+	//
 
 	/**
 	 * @Date: 2017年10月23日上午10:21:07
@@ -166,96 +246,66 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 	 */
 	@Override
 	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, boolean doneFlag) throws Exception {
-		List<WFWorkitem> wfWorkitems = new ArrayList<WFWorkitem>();
-		String queryTaskSql = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
-		Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryTaskSql).parameter("processInstanceId", procInstId).singleResult();
-		System.out.println("执行查询时间为：☆☆☆☆☆【" + OABizUtil.getCurrentTimestampString() + "】★★★★★");
-		System.out.println();
-		StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】待办事项信息如下：\r\n" + "\r\n");
-		if (currentTask != null) {
-			stbu.append("流程实例ID: " + procInstId + "\r\n");
-			stbu.append("新增待办ID: " + currentTask.getId() + "\r\n");
-			stbu.append("当前处理环节ID: " + currentTask.getTaskDefinitionKey() + ", 当前处理环节名称: " + currentTask.getName() + "\r\n");
+		List<WFWorkitem> wfWorkitems = new ArrayList<WFWorkitem>();// 工作项集合
+		if (doneFlag == false) {// 查询该流程实例下的待办信息
+			String queryCurrentTaskSql = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
+			Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryCurrentTaskSql).parameter("processInstanceId", procInstId).singleResult();
+			System.out.println();
+			if (currentTask != null) {
+				StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】待办事项信息如下：\r\n" + "\r\n");
+				stbu.append("流程实例ID: " + procInstId + "\r\n");
+				stbu.append("待办ID: " + currentTask.getId() + "\r\n");
+				stbu.append("当前处理环节ID: " + currentTask.getTaskDefinitionKey() + ", 当前处理环节名称: " + currentTask.getName() + "\r\n");
+				System.out.println(stbu.toString());
+			}
+
+		} else {// 查询该流程实例下的已办信息
+			String queryHistoryTasksSql = "SELECT * FROM " + workflowManagementBiz.getTableName(HistoricTaskInstance.class) + " WHERE PROC_INST_ID_=#{processInstanceId} AND END_TIME_ != NULL ORDER BY START_TIME_ DESC";
+			List<HistoricTaskInstance> historyTasks = workflowHistoryBiz.createNativeHistoricTaskInstanceQuery().sql(queryHistoryTasksSql).parameter("processInstanceId", procInstId).list();
+			if (historyTasks != null && historyTasks.size() > 0) {
+				for (HistoricTaskInstance historicTaskInstance : historyTasks) {
+					StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】已办事项信息如下：\r\n" + "\r\n");
+					stbu.append("流程实例ID: " + procInstId + "\r\n");
+					stbu.append("已办ID: " + historicTaskInstance.getId() + "\r\n");
+					stbu.append("历史处理环节ID: " + historicTaskInstance.getTaskDefinitionKey() + ", 历史处理环节名称: " + historicTaskInstance.getName() + "\r\n");
+					System.out.println(stbu.toString());
+				}
+			}
 		}
-		System.out.println(stbu.toString());
+
 		return wfWorkitems;
 	}
 
-	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
 	/**
-	 * @return the workflowRuntimeBiz
+	 * @Date: 2017年10月27日上午11:45:10
+	 * @Title: getWFWorkitemsByProcInstId
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param procInstId
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
 	 */
-	public RuntimeService getWorkflowRuntimeBiz() {
-		return workflowRuntimeBiz;
+	@Override
+	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
-	 * @param workflowRuntimeBiz
-	 *            the workflowRuntimeBiz to set
+	 * @Date: 2017年10月27日上午11:45:11
+	 * @Title: getWFWorkitemsByProcInstId
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param procInstId
+	 * @param executionId
+	 * @param doneFlag
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
 	 */
-	public void setWorkflowRuntimeBiz(RuntimeService workflowRuntimeBiz) {
-		this.workflowRuntimeBiz = workflowRuntimeBiz;
+	@Override
+	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, String executionId, boolean doneFlag) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	/**
-	 * @return the workflowTaskBiz
-	 */
-	public TaskService getWorkflowTaskBiz() {
-		return workflowTaskBiz;
-	}
-
-	/**
-	 * @param workflowTaskBiz
-	 *            the workflowTaskBiz to set
-	 */
-	public void setWorkflowTaskBiz(TaskService workflowTaskBiz) {
-		this.workflowTaskBiz = workflowTaskBiz;
-	}
-
-	/**
-	 * @return the workflowHistoryBiz
-	 */
-	public HistoryService getWorkflowHistoryBiz() {
-		return workflowHistoryBiz;
-	}
-
-	/**
-	 * @param workflowHistoryBiz
-	 *            the workflowHistoryBiz to set
-	 */
-	public void setWorkflowHistoryBiz(HistoryService workflowHistoryBiz) {
-		this.workflowHistoryBiz = workflowHistoryBiz;
-	}
-
-	/**
-	 * @return the workflowManagementBiz
-	 */
-	public ManagementService getWorkflowManagementBiz() {
-		return workflowManagementBiz;
-	}
-
-	/**
-	 * @param workflowManagementBiz
-	 *            the workflowManagementBiz to set
-	 */
-	public void setWorkflowManagementBiz(ManagementService workflowManagementBiz) {
-		this.workflowManagementBiz = workflowManagementBiz;
-	}
-
-	/**
-	 * @return the workflowRepositoryBiz
-	 */
-	public RepositoryService getWorkflowRepositoryBiz() {
-		return workflowRepositoryBiz;
-	}
-
-	/**
-	 * @param workflowRepositoryBiz
-	 *            the workflowRepositoryBiz to set
-	 */
-	public void setWorkflowRepositoryBiz(RepositoryService workflowRepositoryBiz) {
-		this.workflowRepositoryBiz = workflowRepositoryBiz;
-	}
-	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
 
 }
