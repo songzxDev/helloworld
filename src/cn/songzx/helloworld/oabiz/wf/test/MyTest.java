@@ -18,6 +18,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 
 import cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
+import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
 /**
  * @ClassName: MyTest
@@ -29,6 +31,46 @@ import cn.songzx.helloworld.oabiz.util.OABizUtil;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring-lazy-wf.xml", "classpath:/spring-lazy-biz.xml" })
 public class MyTest {
+
+	/**
+	 *
+	 * @Date: 2017年10月23日下午7:19:04
+	 * @Title: multiTest
+	 * @Description: TODO(多线程测试)
+	 * @return void 返回值类型
+	 */
+	@Test
+	public void multiTest() {
+		TestRunnable runner = new TestRunnable() {
+			@Override
+			public void runTest() throws Throwable {
+				// 测试内容
+				try {
+					DruidDataSource dataSource = OABizSpringContextUtil.getBean("wfActbpm518DBS", DruidDataSource.class);
+					System.out.println("流程引擎数据源的对象json信息：\r\n");
+					System.out.println(OABizUtil.getTargetObjectToString(dataSource));
+				} catch (BeansException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		int runnerCount = 10;
+		// Rnner数组，想当于并发多少个。
+		TestRunnable[] trs = new TestRunnable[runnerCount];
+		for (int i = 0; i < runnerCount; i++) {
+			trs[i] = runner;
+		}
+		// 用于执行多线程测试用例的Runner，将前面定义的单个Runner组成的数组传入
+		MultiThreadedTestRunner mttr = new MultiThreadedTestRunner(trs);
+		try {
+			// 开发并发执行数组里定义的内容
+			mttr.runTestRunnables();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void testGetBean() {
