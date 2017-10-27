@@ -86,20 +86,25 @@ public class MyTest {
 	}
 
 	public static void main(String[] args) {
-		final String str = "孙悟空";
-		Thread[] threadsA = new Thread[1];
-		for (int i = 0; i < threadsA.length; i++) {
-			threadsA[i] = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					System.out.println(OABizUtil.generateNineteenUUIDPK());
-					System.out.println(OABizUtil.getTargetObjectToString(str));
-				}
-
-			});
-		}
-		for (int i = 0; i < threadsA.length; i++) {
-			threadsA[i].start();
+		// final String str = "孙悟空";
+		// Thread[] threadsA = new Thread[1];
+		// for (int i = 0; i < threadsA.length; i++) {
+		// threadsA[i] = new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// System.out.println(OABizUtil.generateNineteenUUIDPK());
+		// System.out.println(OABizUtil.getTargetObjectToString(str));
+		// }
+		//
+		// });
+		// }
+		// for (int i = 0; i < threadsA.length; i++) {
+		// threadsA[i].start();
+		// }
+		ThreadLocal<String> tl = new ThreadLocal<String>();
+		for (int i = 0; i < 100; i++) {
+			tl.remove();
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		}
 
 	}
