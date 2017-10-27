@@ -39,6 +39,7 @@ public class OABizSpringContextUtil implements ApplicationContextAware {
 		if (applicationContext == null) {
 			throw new RuntimeException("ApplicationContext对象为空，请核实spring相关配置文件是否被加载！");
 		}
+		System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了set(new StringBuilder())方法！");
 		APPCON_THREAD_LOCAL.set(applicationContext);
 	}
 
@@ -56,7 +57,16 @@ public class OABizSpringContextUtil implements ApplicationContextAware {
 	 * @return T 返回值类型
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getBean(String beanName, Class<T> targetClazz) throws BeansException {
-		return (T) APPCON_THREAD_LOCAL.get().getBean(beanName);
+	public static <T> T getBean(String beanName, Class<T> targetClazz) throws BeansException, Exception {
+		T t = targetClazz.newInstance();
+		try {
+			t = (T) APPCON_THREAD_LOCAL.get().getBean(beanName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			APPCON_THREAD_LOCAL.remove();
+			System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了remove()方法！");
+		}
+		return t;
 	}
 }

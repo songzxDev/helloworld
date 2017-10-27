@@ -10,6 +10,7 @@ package cn.songzx.helloworld.oabiz.wf.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeansException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -32,8 +33,33 @@ public class MyTest {
 
 	@Test
 	public void testGetBean() {
-		DruidDataSource dataSource = OABizSpringContextUtil.getBean("wfActbpm518DBS", DruidDataSource.class);
-		System.out.println("流程引擎数据源的对象json信息：\r\n");
-		System.out.println(OABizUtil.getTargetObjectToString(dataSource));
+		try {
+			DruidDataSource dataSource = OABizSpringContextUtil.getBean("wfActbpm518DBS", DruidDataSource.class);
+			System.out.println("流程引擎数据源的对象json信息：\r\n");
+			System.out.println(OABizUtil.getTargetObjectToString(dataSource));
+		} catch (BeansException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		final String str = "孙悟空";
+		Thread[] threadsA = new Thread[1];
+		for (int i = 0; i < threadsA.length; i++) {
+			threadsA[i] = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					System.out.println(OABizUtil.generateNineteenUUIDPK());
+					System.out.println(OABizUtil.getTargetObjectToString(str));
+				}
+
+			});
+		}
+		for (int i = 0; i < threadsA.length; i++) {
+			threadsA[i].start();
+		}
+
 	}
 }

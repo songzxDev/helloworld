@@ -90,14 +90,7 @@ public class OABizUtil implements Serializable {
 	 * @return String 返回值类型
 	 */
 	public static String generateNineteenUUIDPK() {
-		UUID uuid = UUID.randomUUID();
-		StringBuilder sb = new StringBuilder();
-		sb.append(digits(uuid.getMostSignificantBits() >> 32, 8));
-		sb.append(digits(uuid.getMostSignificantBits() >> 16, 4));
-		sb.append(digits(uuid.getMostSignificantBits(), 4));
-		sb.append(digits(uuid.getLeastSignificantBits() >> 48, 4));
-		sb.append(digits(uuid.getLeastSignificantBits(), 12));
-		return sb.toString();
+		return Numbers.generateNineteenUUID();
 	}
 
 	/**
@@ -155,10 +148,29 @@ public class OABizUtil implements Serializable {
 	 * @return String 返回值类型
 	 */
 	public static String getNowDateTimeString(String pattern) {
-		if (SDF_THREAD_LOCAL.get() == null) {
+		String nowDateTime = "";
+		try {
 			SDF_THREAD_LOCAL.set(new SimpleDateFormat(pattern));
+			nowDateTime = SDF_THREAD_LOCAL.get().format(new java.util.Date());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			SDF_THREAD_LOCAL.remove();
 		}
-		return SDF_THREAD_LOCAL.get().format(new java.util.Date());
+		return nowDateTime;
+	}
+
+	/**
+	 * 将字符串转换为长整型数字
+	 *
+	 * @param s
+	 *            数字字符串
+	 * @param radix
+	 *            进制数
+	 * @return
+	 */
+	public static long toNumber(String s, int radix) {
+		return Numbers.toNumber(s, radix);
 	}
 
 	/**
@@ -172,9 +184,8 @@ public class OABizUtil implements Serializable {
 	 * @return String 返回值类型
 	 */
 	public static String getTargetObjectToString(Object target) {
-		if (STRBUI_THREAD_LOCAL.get() == null) {
-			STRBUI_THREAD_LOCAL.set(new StringBuilder("{"));
-		}
+		System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了set(new StringBuilder())方法！");
+		STRBUI_THREAD_LOCAL.set(new StringBuilder("{"));
 		StringBuilder strBui = STRBUI_THREAD_LOCAL.get();
 		try {
 			Class<?> targetClazz = target.getClass();
@@ -197,13 +208,11 @@ public class OABizUtil implements Serializable {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
+		} finally {
+			STRBUI_THREAD_LOCAL.remove();
+			System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了remove()方法！");
 		}
 		return strBui.toString();
-	}
-
-	private static String digits(long val, int digits) {
-		long hi = 1L << (digits * 4);
-		return Numbers.toString(hi | (val & (hi - 1)), Numbers.MAX_RADIX).substring(1);
 	}
 
 	/**
@@ -339,6 +348,39 @@ public class OABizUtil implements Serializable {
 				throw forInputString(s);
 			}
 			return negative ? result : -result;
+		}
+
+		/**
+		 *
+		 * @Date: 2017年10月23日下午2:01:29
+		 * @Title: generateNineteenUUIDPK
+		 * @Description: TODO(随机生成19位UUID)
+		 * @return
+		 * @return String 返回值类型
+		 */
+		public static String generateNineteenUUID() {
+			UUID uuid = UUID.randomUUID();
+			STRBUI_THREAD_LOCAL.set(new StringBuilder());
+			System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了set(new StringBuilder())方法！");
+			StringBuilder strBui = STRBUI_THREAD_LOCAL.get();
+			try {
+				strBui.append(digits(uuid.getMostSignificantBits() >> 32, 8));
+				strBui.append(digits(uuid.getMostSignificantBits() >> 16, 4));
+				strBui.append(digits(uuid.getMostSignificantBits(), 4));
+				strBui.append(digits(uuid.getLeastSignificantBits() >> 48, 4));
+				strBui.append(digits(uuid.getLeastSignificantBits(), 12));
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				STRBUI_THREAD_LOCAL.remove();
+				System.out.println(Thread.currentThread().getName() + "--ThreadLocal<StringBuilder>执行了remove()方法！");
+			}
+			return strBui.toString();
+		}
+
+		private static String digits(long val, int digits) {
+			long hi = 1L << (digits * 4);
+			return Numbers.toString(hi | (val & (hi - 1)), Numbers.MAX_RADIX).substring(1);
 		}
 	}
 
