@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.fastjson.JSON;
 
 import cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
