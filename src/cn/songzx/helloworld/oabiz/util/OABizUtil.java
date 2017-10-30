@@ -19,7 +19,9 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
@@ -106,6 +108,36 @@ public class OABizUtil implements Serializable {
 	 */
 	public static void copyProperties(Object source, Object target) {
 		org.springframework.beans.BeanUtils.copyProperties(source, target);
+	}
+
+	/**
+	 *
+	 * @Date: 2017年10月30日下午4:51:39
+	 * @Title: copyProperties
+	 * @Description: TODO(复制源List<S>和目标List<T>中每一个元素对象的相同名称的属性值)
+	 * @param sources
+	 *            被复制的源List集合
+	 * @param targets
+	 *            复制后的目标对象List集合
+	 * @param targetClazz
+	 *            目标对象class类型
+	 * @return void 返回值类型
+	 */
+	public static <S, T> void copyProperties(List<S> sources, List<T> targets, Class<T> targetClazz) {
+		if (targets == null) {
+			targets = new ArrayList<T>();
+		}
+		if (sources != null && sources.size() > 0) {
+			for (S source : sources) {
+				try {
+					T target = targetClazz.newInstance();
+					org.springframework.beans.BeanUtils.copyProperties(source, target);
+					targets.add(target);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**

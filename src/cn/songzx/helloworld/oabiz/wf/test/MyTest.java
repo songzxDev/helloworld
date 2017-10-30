@@ -8,6 +8,14 @@
 */
 package cn.songzx.helloworld.oabiz.wf.test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -18,6 +26,9 @@ import com.alibaba.druid.pool.DruidDataSource;
 
 import cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
+import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
 
@@ -46,17 +57,13 @@ public class MyTest {
 			public void runTest() throws Throwable {
 				// 测试内容
 				try {
-					DruidDataSource dataSource = OABizSpringContextUtil.getBean("wfActbpm518DBS", DruidDataSource.class);
-					System.out.println("流程引擎数据源的对象json信息：\r\n");
-					System.out.println(OABizUtil.getTargetObjectToString(dataSource));
-				} catch (BeansException e) {
-					e.printStackTrace();
+					testMethodB();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		};
-		int runnerCount = 10;
+		int runnerCount = 1;
 		// Rnner数组，想当于并发多少个。
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
@@ -85,27 +92,119 @@ public class MyTest {
 		}
 	}
 
-	public static void main(String[] args) {
-		// final String str = "孙悟空";
-		// Thread[] threadsA = new Thread[1];
-		// for (int i = 0; i < threadsA.length; i++) {
-		// threadsA[i] = new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// System.out.println(OABizUtil.generateNineteenUUIDPK());
-		// System.out.println(OABizUtil.getTargetObjectToString(str));
-		// }
-		//
-		// });
-		// }
-		// for (int i = 0; i < threadsA.length; i++) {
-		// threadsA[i].start();
-		// }
-		ThreadLocal<String> tl = new ThreadLocal<String>();
-		for (int i = 0; i < 100; i++) {
-			tl.remove();
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	private void testMethodB() {
+		FutureTask<String> futureTaskA = new FutureTask<String>(new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				System.out.println(Thread.currentThread().getName() + "开始执行！" + System.currentTimeMillis());
+				Thread.sleep(5000L);
+				System.out.println(Thread.currentThread().getName() + "执行完了！" + System.currentTimeMillis());
+				return CommonExecuteStatus.SUCCESS.name();
+			}
+		});
+		FutureTask<String> futureTaskB = new FutureTask<String>(new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				System.out.println(Thread.currentThread().getName() + "开始执行！" + System.currentTimeMillis());
+				Thread.sleep(11000L);
+				System.out.println(Thread.currentThread().getName() + "执行完了！" + System.currentTimeMillis());
+				return CommonExecuteStatus.FAILURE.name();
+			}
+		});
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		long startTime = System.currentTimeMillis();
+		executorService.submit(futureTaskA);
+		executorService.submit(futureTaskB);
+		try {
+			String flagA = futureTaskA.get();
+			String flagB = futureTaskB.get();
+			System.out.println(flagA + "☆★☆★☆★☆★☆★☆★" + flagB);
+			long endTime = System.currentTimeMillis();
+			System.out.println("程序执行了：" + ((endTime - startTime) / 1000) + "秒！");
+			System.out.println(executorService.isShutdown());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} finally {
+			if (executorService.isShutdown() == false) {
+				executorService.shutdown();
+			}
 		}
 
 	}
+
+	public static void main(String[] args) throws Exception {
+		FutureTask<String> futureTaskA = new FutureTask<String>(new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				String flag = CommonExecuteStatus.SUCCESS.name();
+				try {
+					System.out.println(Thread.currentThread().getName() + "开始执行！" + System.currentTimeMillis());
+					Thread.sleep(5000L);
+					System.out.println(new ArrayList<String>().get(0));
+					System.out.println(Thread.currentThread().getName() + "执行完了！" + System.currentTimeMillis());
+				} catch (Exception e) {
+					System.out.println(Thread.currentThread().getName() + "出现异常了！\r\n" + e.getMessage());
+					Thread.currentThread().interrupt();
+					System.out.println(Thread.currentThread().getName() + "被【interrupt】了！");
+					flag = CommonExecuteStatus.FAILURE.name();
+				}
+				return flag;
+			}
+
+		});
+		FutureTask<String> futureTaskB = new FutureTask<String>(new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+				String flag = CommonExecuteStatus.SUCCESS.name();
+				try {
+					System.out.println(Thread.currentThread().getName() + "开始执行！" + System.currentTimeMillis());
+					Thread.sleep(11000L);
+					System.out.println(Thread.currentThread().getName() + "执行完了！" + System.currentTimeMillis());
+				} catch (Exception e) {
+					System.out.println(Thread.currentThread().getName() + "出现异常了！\r\n" + e.getMessage());
+					Thread.currentThread().interrupt();
+					flag = CommonExecuteStatus.FAILURE.name();
+				}
+				return flag;
+			}
+		});
+
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		long startTime = System.currentTimeMillis();
+		executorService.submit(futureTaskA);
+		executorService.submit(futureTaskB);
+		String flagA = "☆";
+		String flagB = "★";
+		if (futureTaskA.isDone()) {
+			flagA += futureTaskA.get();
+			System.out.println("futureTaskA☆★☆★☆★☆★☆★☆★" + flagA);
+		}
+		if (futureTaskB.isDone()) {
+			flagB += futureTaskB.get();
+			System.out.println("futureTaskB☆★☆★☆★☆★☆★☆★" + flagB);
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.println("程序执行了：" + ((endTime - startTime) / 1000) + "秒！");
+		System.out.println(executorService.isShutdown());
+		executorService.shutdown();
+		System.out.println("调度器已释放资源！");
+	}
+
+	@Test
+	public void testMethodC() {
+		WFBizData wfBizData = new WFBizData();
+		wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());
+		List<WFBizData> sources = new ArrayList<WFBizData>();
+		sources.add(wfBizData);
+		List<WFBizDataPM> targets = new ArrayList<WFBizDataPM>();
+		OABizUtil.copyProperties(sources, targets, WFBizDataPM.class);
+		if (targets != null && targets.size() > 0) {
+			for (WFBizDataPM wfBizDataPM : targets) {
+				System.out.println("◇" + wfBizDataPM.getWfBizDataId());
+			}
+		}
+	}
+
 }

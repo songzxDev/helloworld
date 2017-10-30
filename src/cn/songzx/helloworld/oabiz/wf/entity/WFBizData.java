@@ -2,6 +2,7 @@ package cn.songzx.helloworld.oabiz.wf.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class WFBizData implements Serializable {
 
@@ -57,6 +58,16 @@ public class WFBizData implements Serializable {
 	private String reservedAttribute4;
 
 	private String reservedAttribute5;
+
+	/**
+	 * 当前业务系统审批流程模块流程实例关联的工作项集合
+	 */
+	private List<WFWorkitem> wfWorkitems;
+
+	/**
+	 * 当前业务系统审批流程模块流程实例关联的审批记录集合
+	 */
+	private List<WFAuditRecord> wfAuditRecords;
 
 	public String getWfBizDataId() {
 		return wfBizDataId;
@@ -249,4 +260,21 @@ public class WFBizData implements Serializable {
 	public void setReservedAttribute5(String reservedAttribute5) {
 		this.reservedAttribute5 = reservedAttribute5 == null ? null : reservedAttribute5.trim();
 	}
+
+	public List<WFWorkitem> getWfWorkitems() {
+		return wfWorkitems;
+	}
+
+	public void setWfWorkitems(List<WFWorkitem> wfWorkitems) {
+		this.wfWorkitems = wfWorkitems;
+	}
+
+	public List<WFAuditRecord> getWfAuditRecords() {
+		return wfAuditRecords;
+	}
+
+	public void setWfAuditRecords(List<WFAuditRecord> wfAuditRecords) {
+		this.wfAuditRecords = wfAuditRecords;
+	}
+
 }

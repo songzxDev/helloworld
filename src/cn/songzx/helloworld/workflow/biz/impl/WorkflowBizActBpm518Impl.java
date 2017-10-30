@@ -140,10 +140,11 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		System.out.println("警告：当前数据源☆【" + DataSourceContextHolder.getCustomerType() + "】★类型为业务系统，非流程系统指定数据源！");
 		try {
 			ProcessInstance newProcessInstance = workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey, variables);
+			String newProcessInstanceId = newProcessInstance.getProcessInstanceId();
 			if (newProcessInstance != null) {
 				wfBizData = new WFBizData();
 				wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());// 数据主键
-				wfBizData.setProcessInstanceId(newProcessInstance.getProcessInstanceId());// 流程实例ID
+				wfBizData.setProcessInstanceId(newProcessInstanceId);// 流程实例ID
 				wfBizData.setProcessDefinitionKey(processDefinitionKey);// 流程定义Key
 				wfBizData.setProcessDefinitionName(processDefinitionKey);// 流程定义名称，即：流程名称
 				wfBizData.setCreateDatetime(OABizUtil.getCurrentTimestamp());// 数据创建日期
@@ -162,9 +163,13 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 					wfBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
 					wfBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
 				}
+				List<WFWorkitem> currentWFWorkitems = getWFWorkitemsByProcInstId(newProcessInstanceId, false);
+				if (currentWFWorkitems != null && currentWFWorkitems.size() > 0) {
+					wfBizData.setWfWorkitems(currentWFWorkitems);// 设置业务模块当前流程实例关联的待办信息集合
+				}
 			}
 		} catch (Exception e) {
-			throw e;
+			throw new RuntimeException(e);
 		}
 		return wfBizData;
 	}

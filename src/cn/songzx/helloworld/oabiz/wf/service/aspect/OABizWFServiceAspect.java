@@ -8,10 +8,22 @@
 */
 package cn.songzx.helloworld.oabiz.wf.service.aspect;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFAuditRecordPM;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFWorkitemPM;
+import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 
 /**
  * @ClassName: OABizWFServiceAspect
@@ -24,33 +36,68 @@ import org.springframework.stereotype.Component;
 @Component
 public class OABizWFServiceAspect {
 
+	@Resource(name = "oaBizWFService")
+	private OABizWFServiceI oaBizWFService;
+
 	/**
 	 *
-	 * @Date: 2017年10月26日下午2:42:23
-	 * @Title: startKindMethodAround
-	 * @Description: TODO(对启动流程实例方法进行环绕通知)
-	 * @param pjp
-	 * @return
-	 * @return Object 返回值类型
+	 * @Date: 2017年10月30日下午5:58:02
+	 * @Title: startKindMethodAfterReturning
+	 * @Description: TODO(启动流程方法执行后的增强处理方法)
+	 * @param newWFBizData
+	 *            目标方法的返回值
+	 * @return void 返回值类型
 	 */
-	@Around(value = "execution(* cn.songzx.helloworld.oabiz.wf.service..*.startProcessInstance*(..))")
-	public Object startKindMethodAround(ProceedingJoinPoint pjp) {
-		String methodName = pjp.getSignature().getName();// 方法名称
-		Object[] args = pjp.getArgs();// 方法调用参数
-		Object methodResult = null;// 方法调用后的返回值
-		try {
-			// before
-			System.out.println("method:  " + methodName + "  begins");
-			// AfterReturning
-			methodResult = pjp.proceed(args);
-			System.out.println("method:  " + methodName + "  return result:" + methodResult);
-		} catch (Throwable e) {
-			// AfterThrowing
-			System.out.println("method:  " + methodName + "occurs exception:" + e);
+	@AfterReturning(returning = "newWFBizDataPM", pointcut = "execution(* cn.songzx.helloworld.oabiz.wf.service..*.startProcessInstance*(..))")
+	public void startKindMethodAfterReturning(final WFBizDataPM newWFBizDataPM) {
+		/*
+		 * AfterReturning增强处理可以访问到方法的返回值，但它无法改变目标方法的返回值
+		 */
+		System.out.println("启动流程方法执行后的增强处理方法【startKindMethodAfterReturning(..)】开始执行了!");
+		if (newWFBizDataPM != null) {
+			Thread addWFWorkitemThread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					List<WFWorkitemPM> wfWorkitems = newWFBizDataPM.getWfWorkitems();
+					if (wfWorkitems != null && wfWorkitems.size() > 0) {
+						List<WFWorkitem> toAddWFWorkitems = new ArrayList<WFWorkitem>();
+						OABizUtil.copyProperties(wfWorkitems, toAddWFWorkitems, WFWorkitem.class);
+						for (WFWorkitem wfWorkitem : toAddWFWorkitems) {
+							try {
+								oaBizWFService.addWFWorkitem(wfWorkitem);
+							} catch (Exception e) {
+								e.printStackTrace();
+								if (Thread.currentThread().isInterrupted() == false)
+									Thread.currentThread().interrupt();
+							}
+						}
+					}
+				}
+			}, "AddWFWorkitemThread");
+			Thread addWFAuditRecordThread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					List<WFAuditRecordPM> wfAuditRecords = newWFBizDataPM.getWfAuditRecords();
+					if (wfAuditRecords != null && wfAuditRecords.size() > 0) {
+						List<WFAuditRecord> toAddWFAuditRecords = new ArrayList<WFAuditRecord>();
+						OABizUtil.copyProperties(wfAuditRecords, toAddWFAuditRecords, WFAuditRecord.class);
+						for (WFAuditRecord wfAuditRecord : toAddWFAuditRecords) {
+							try {
+								oaBizWFService.addWFAuditRecord(wfAuditRecord);
+							} catch (Exception e) {
+								e.printStackTrace();
+								if (Thread.currentThread().isInterrupted() == false)
+									Thread.currentThread().interrupt();
+							}
+						}
+					}
+				}
+			}, "AddWFAuditRecordThread");
+			addWFWorkitemThread.start();
+			addWFAuditRecordThread.start();
+			System.out.println("启动流程方法执行后的增强处理方法【startKindMethodAfterReturning(..)】执行结束了!");
 		}
-		// After
-		System.out.println("method:  " + methodName + "  ends");
-		return methodResult;
+
 	}
 
 }

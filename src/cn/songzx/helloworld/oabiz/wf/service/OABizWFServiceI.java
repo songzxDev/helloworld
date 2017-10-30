@@ -10,6 +10,9 @@ package cn.songzx.helloworld.oabiz.wf.service;
 
 import java.util.Map;
 
+import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
+import cn.songzx.helloworld.oabiz.wf.pagemodel.WFAuditRecordPM;
 import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
 import cn.songzx.helloworld.oabiz.wf.pagemodel.WFWorkitemPM;
 
@@ -65,4 +68,27 @@ public interface OABizWFServiceI {
 	 */
 	public WFWorkitemPM completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception;
 
+	/**
+	 *
+	 * @Date: 2017年10月30日下午6:33:13
+	 * @Title: addWFWorkitem
+	 * @Description: TODO(新增工作项信息)
+	 * @param wfWorkitem
+	 * @return
+	 * @throws Exception
+	 * @return WFWorkitemPM 返回值类型
+	 */
+	public WFWorkitemPM addWFWorkitem(WFWorkitem wfWorkitem) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年10月30日下午6:33:19
+	 * @Title: addWFAuditRecord
+	 * @Description: TODO(新增审批记录信息)
+	 * @param wfAuditRecord
+	 * @return
+	 * @throws Exception
+	 * @return WFAuditRecordPM 返回值类型
+	 */
+	public WFAuditRecordPM addWFAuditRecord(WFAuditRecord wfAuditRecord) throws Exception;
 }
