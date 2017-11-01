@@ -11,6 +11,7 @@ create table WF_AUDIT_RECORD
    PROCESS_INSTANCE_ID  varchar(40) not null,
    PROCESS_NAME         varchar(300) not null,
    CURRENT_STEP_ID      varchar(40) not null,
+   CURRENT_WORKITEM_ID  varchar(40) not null,
    CURRENT_STEP_NAME    varchar(100) not null,
    CURRENT_STEP_TYPE    varchar(30) not null,
    CURRENT_APPROVER_NAME varchar(100) not null,

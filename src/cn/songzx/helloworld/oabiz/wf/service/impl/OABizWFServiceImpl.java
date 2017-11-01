@@ -8,6 +8,8 @@
 */
 package cn.songzx.helloworld.oabiz.wf.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -106,19 +108,33 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	@Override
 	public WFBizDataPM startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
 		WFBizDataPM newWFBizDataPM = new WFBizDataPM();
+		List<WFWorkitemPM> newWFWorkitemsPM = new ArrayList<WFWorkitemPM>();
+		List<WFAuditRecordPM> newWFAuditRecordsPM = new ArrayList<WFAuditRecordPM>();
 		// step1.调用流程引擎服务新增一个流程实例
 		WFBizData newWFBizData = workflowBiz.startProcessInstanceByKey(processDefinitionKey, variables);
 		// step2.将新增的流程实例数据同步到业务系统的流程业务关联信息表中，并加工前端页面展示所需要的PageModel
 		if (newWFBizData != null) {
 			try {
-				wfBizDataMapper.insertSelective(newWFBizData);
+				wfBizDataMapper.insertSelective(newWFBizData);// 新增业务模块和流程实例关联信息
+				List<WFWorkitem> newWFWorkitems = newWFBizData.getWfWorkitems();
+				if (newWFWorkitems != null && newWFWorkitems.size() == 1) {// 启动流程成功后，当前流程实例新增的工作项数目只能是一个
+					wfWorkitemMapper.insert(newWFWorkitems.get(0));// 新增当前流程实例的工作项信息
+					OABizUtil.copyProperties(newWFWorkitems, newWFWorkitemsPM, WFWorkitemPM.class);
+				}
+				List<WFAuditRecord> newWFAuditRecords = newWFBizData.getWfAuditRecords();
+				if (newWFAuditRecords != null && newWFAuditRecords.size() == 2) {// 启动流程成功后，当前流程实例新增的审批记录数目为两个
+					for (WFAuditRecord wfAuditRecord : newWFAuditRecords) {
+						wfAuditRecordMapper.insertSelective(wfAuditRecord);// 新增当前流程实例的审批记录信息
+					}
+					OABizUtil.copyProperties(newWFAuditRecords, newWFAuditRecordsPM, WFAuditRecordPM.class);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				// 如果出现异常，也要保证页面正常显示，异常由后台进行处理
 				OABizUtil.copyProperties(newWFBizData, newWFBizDataPM);
-				// TODO 加工PageModel......................
-				Thread.sleep(50L);// 模拟加工，后续需要根据实际业务逻辑编写
+				newWFBizDataPM.setWfWorkitemsPM(newWFWorkitemsPM);
+				newWFBizDataPM.setWfAuditRecordsPM(newWFAuditRecordsPM);
 			}
 		}
 		return newWFBizDataPM;

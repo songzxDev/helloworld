@@ -10,6 +10,8 @@ package cn.songzx.helloworld.workflow.biz.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -127,6 +129,27 @@ public class TestWorkflowBiz {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	public void testGetWFAuditRecordsByProcInstId() {
+		try {
+			workflowBiz.getWFAuditRecordsByProcInstId("06fff7f0-ba39-11e7-8982-c85b76a3c17b", "0717297d-ba39-11e7-8982-c85b76a3c17b");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testProcInstVariablesByProcInstId() {
+		try {
+			Map<String, Object> variables = workflowBiz.getProcInstVariablesByProcInstId("06fff7f0-ba39-11e7-8982-c85b76a3c17b");
+			for (Entry<String, Object> variable : variables.entrySet()) {
+				System.out.println("key = " + variable.getKey() + ", value = " + variable.getValue());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

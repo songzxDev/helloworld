@@ -8,7 +8,7 @@ public class WFAuditRecord implements Serializable {
 	/**
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
 	 */
-	private static final long serialVersionUID = -2777297483591242116L;
+	private static final long serialVersionUID = 7801275814071028403L;
 
 	private String wfAuditRecordId;
 
@@ -17,6 +17,8 @@ public class WFAuditRecord implements Serializable {
 	private String processName;
 
 	private String currentStepId;
+
+	private String currentWorkitemId;
 
 	private String currentStepName;
 
@@ -102,6 +104,14 @@ public class WFAuditRecord implements Serializable {
 
 	public void setCurrentStepId(String currentStepId) {
 		this.currentStepId = currentStepId == null ? null : currentStepId.trim();
+	}
+
+	public String getCurrentWorkitemId() {
+		return currentWorkitemId;
+	}
+
+	public void setCurrentWorkitemId(String currentWorkitemId) {
+		this.currentWorkitemId = currentWorkitemId == null ? null : currentWorkitemId.trim();
 	}
 
 	public String getCurrentStepName() {

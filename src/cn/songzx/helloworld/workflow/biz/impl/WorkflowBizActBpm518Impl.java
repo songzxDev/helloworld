@@ -11,7 +11,6 @@ import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -23,7 +22,6 @@ import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
 import cn.songzx.helloworld.workflow.dao.enmu.WFEngineType;
-import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 
 /**
  *
@@ -137,7 +135,6 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 	@Override
 	public WFBizData startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) throws Exception {
 		WFBizData wfBizData = null;
-		System.out.println("警告：当前数据源☆【" + DataSourceContextHolder.getCustomerType() + "】★类型为业务系统，非流程系统指定数据源！");
 		try {
 			ProcessInstance newProcessInstance = workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey, variables);
 			String newProcessInstanceId = newProcessInstance.getProcessInstanceId();
@@ -163,30 +160,11 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 					wfBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
 					wfBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
 				}
-				List<WFWorkitem> currentWFWorkitems = getWFWorkitemsByProcInstId(newProcessInstanceId, false);
-				if (currentWFWorkitems != null && currentWFWorkitems.size() > 0) {
-					wfBizData.setWfWorkitems(currentWFWorkitems);// 设置业务模块当前流程实例关联的待办信息集合
-				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return wfBizData;
-	}
-
-	/**
-	 * @Date: 2017年10月23日上午10:21:07
-	 * @Title: getWFWorkitemByPK
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param workitemId
-	 * @return
-	 * @throws Exception
-	 * @return 返回值类型
-	 */
-	@Override
-	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -239,78 +217,27 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		return deployStatus;
 	}
 
-	/**
-	 * @Date: 2017年10月26日下午7:36:35
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param procInstId
-	 * @param doneFlag
-	 * @return
-	 * @throws Exception
-	 * @return 返回值类型
-	 */
-	@Override
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, boolean doneFlag) throws Exception {
-		List<WFWorkitem> wfWorkitems = new ArrayList<WFWorkitem>();// 工作项集合
-		if (doneFlag == false) {// 查询该流程实例下的待办信息
-			String queryCurrentTaskSql = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
-			Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryCurrentTaskSql).parameter("processInstanceId", procInstId).singleResult();
-			System.out.println();
-			if (currentTask != null) {
-				StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】待办事项信息如下：\r\n" + "\r\n");
-				stbu.append("流程实例ID: " + procInstId + "\r\n");
-				stbu.append("待办ID: " + currentTask.getId() + "\r\n");
-				stbu.append("当前处理环节ID: " + currentTask.getTaskDefinitionKey() + ", 当前处理环节名称: " + currentTask.getName() + "\r\n");
-				System.out.println(stbu.toString());
-			}
-
-		} else {// 查询该流程实例下的已办信息
-			String queryHistoryTasksSql = "SELECT * FROM " + workflowManagementBiz.getTableName(HistoricTaskInstance.class) + " WHERE PROC_INST_ID_=#{processInstanceId} AND END_TIME_ != NULL ORDER BY START_TIME_ DESC";
-			List<HistoricTaskInstance> historyTasks = workflowHistoryBiz.createNativeHistoricTaskInstanceQuery().sql(queryHistoryTasksSql).parameter("processInstanceId", procInstId).list();
-			if (historyTasks != null && historyTasks.size() > 0) {
-				for (HistoricTaskInstance historicTaskInstance : historyTasks) {
-					StringBuilder stbu = new StringBuilder("流程实例：【" + procInstId + "】已办事项信息如下：\r\n" + "\r\n");
-					stbu.append("流程实例ID: " + procInstId + "\r\n");
-					stbu.append("已办ID: " + historicTaskInstance.getId() + "\r\n");
-					stbu.append("历史处理环节ID: " + historicTaskInstance.getTaskDefinitionKey() + ", 历史处理环节名称: " + historicTaskInstance.getName() + "\r\n");
-					System.out.println(stbu.toString());
-				}
-			}
+	private List<WFWorkitem> afterStartGetWFWorkitemsRefCurrentTask(String procInstId) {
+		List<WFWorkitem> newWFWorkitems = new ArrayList<WFWorkitem>();
+		String queryCurrentTask = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
+		Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryCurrentTask).singleResult();
+		Map<String, Object> globalVariables = workflowRuntimeBiz.getVariables(procInstId);
+		if (currentTask != null) {
+			WFWorkitem newWFWorkitem = new WFWorkitem();
+			newWFWorkitem.setWfWorkitemId(currentTask.getId());
+			newWFWorkitem.setProcessInstanceId(procInstId);
+			newWFWorkitem.setCreateDatetime(currentTask.getCreateTime());
+			newWFWorkitem.setSenderName((String) globalVariables.get("dynamic_participant_name"));
+			newWFWorkitem.setSenderPartyid((String) globalVariables.get("dynamic_participant_partyid"));
+			newWFWorkitem.setSenderCode((String) globalVariables.get("dynamic_participant_code"));
+			newWFWorkitem.setPerformerName((String) globalVariables.get("dynamic_participant_name"));
+			newWFWorkitem.setPerformerPartyid((String) globalVariables.get("dynamic_participant_partyid"));
+			newWFWorkitem.setPerformerCode((String) globalVariables.get("dynamic_participant_code"));
+			newWFWorkitem.setUsableStatus("1");
+			newWFWorkitem.setDoneStatus("0");
+			newWFWorkitems.add(newWFWorkitem);
 		}
-
-		return wfWorkitems;
-	}
-
-	/**
-	 * @Date: 2017年10月27日上午11:45:10
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param procInstId
-	 * @return
-	 * @throws Exception
-	 * @return 返回值类型
-	 */
-	@Override
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @Date: 2017年10月27日上午11:45:11
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param procInstId
-	 * @param executionId
-	 * @param doneFlag
-	 * @return
-	 * @throws Exception
-	 * @return 返回值类型
-	 */
-	@Override
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, String executionId, boolean doneFlag) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return newWFWorkitems;
 	}
 
 }

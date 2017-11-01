@@ -59,15 +59,9 @@ public class WFBizData implements Serializable {
 
 	private String reservedAttribute5;
 
-	/**
-	 * 当前业务系统审批流程模块流程实例关联的工作项集合
-	 */
-	private List<WFWorkitem> wfWorkitems;
-
-	/**
-	 * 当前业务系统审批流程模块流程实例关联的审批记录集合
-	 */
 	private List<WFAuditRecord> wfAuditRecords;
+
+	private List<WFWorkitem> wfWorkitems;
 
 	public String getWfBizDataId() {
 		return wfBizDataId;
@@ -261,20 +255,34 @@ public class WFBizData implements Serializable {
 		this.reservedAttribute5 = reservedAttribute5 == null ? null : reservedAttribute5.trim();
 	}
 
-	public List<WFWorkitem> getWfWorkitems() {
-		return wfWorkitems;
-	}
-
-	public void setWfWorkitems(List<WFWorkitem> wfWorkitems) {
-		this.wfWorkitems = wfWorkitems;
-	}
-
+	/**
+	 * @return the wfAuditRecords
+	 */
 	public List<WFAuditRecord> getWfAuditRecords() {
 		return wfAuditRecords;
 	}
 
+	/**
+	 * @param wfAuditRecords
+	 *            the wfAuditRecords to set
+	 */
 	public void setWfAuditRecords(List<WFAuditRecord> wfAuditRecords) {
 		this.wfAuditRecords = wfAuditRecords;
+	}
+
+	/**
+	 * @return the wfWorkitems
+	 */
+	public List<WFWorkitem> getWfWorkitems() {
+		return wfWorkitems;
+	}
+
+	/**
+	 * @param wfWorkitems
+	 *            the wfWorkitems to set
+	 */
+	public void setWfWorkitems(List<WFWorkitem> wfWorkitems) {
+		this.wfWorkitems = wfWorkitems;
 	}
 
 }

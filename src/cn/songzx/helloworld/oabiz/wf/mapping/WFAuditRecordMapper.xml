@@ -6,6 +6,7 @@
     <result column="PROCESS_INSTANCE_ID" property="processInstanceId" jdbcType="VARCHAR" />
     <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
     <result column="CURRENT_STEP_ID" property="currentStepId" jdbcType="VARCHAR" />
+    <result column="CURRENT_WORKITEM_ID" property="currentWorkitemId" jdbcType="VARCHAR" />
     <result column="CURRENT_STEP_NAME" property="currentStepName" jdbcType="VARCHAR" />
     <result column="CURRENT_STEP_TYPE" property="currentStepType" jdbcType="VARCHAR" />
     <result column="CURRENT_APPROVER_NAME" property="currentApproverName" jdbcType="VARCHAR" />
@@ -35,9 +36,9 @@
     <result column="RESERVED_ATTRIBUTE_5" property="reservedAttribute5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    WF_AUDIT_RECORD_ID, PROCESS_INSTANCE_ID, PROCESS_NAME, CURRENT_STEP_ID, CURRENT_STEP_NAME, 
-    CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, CURRENT_APPROVER_PARTYID, CURRENT_APPROVER_CODE, 
-    CURRENT_APPROVER_DEPT_NAME, CURRENT_APPROVER_DEPT_CODE, CURRENT_APPROVER_AUDIT_TIME, 
+    WF_AUDIT_RECORD_ID, PROCESS_INSTANCE_ID, PROCESS_NAME, CURRENT_STEP_ID, CURRENT_WORKITEM_ID, 
+    CURRENT_STEP_NAME, CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, CURRENT_APPROVER_PARTYID, 
+    CURRENT_APPROVER_CODE, CURRENT_APPROVER_DEPT_NAME, CURRENT_APPROVER_DEPT_CODE, CURRENT_APPROVER_AUDIT_TIME, 
     CURRENT_APPROVER_AUDIT_IDEA, NEXT_STEP_ID, NEXT_STEP_NAME, NEXT_STEP_TYPE, NEXT_APPROVER_NAME, 
     NEXT_APPROVER_PARTYID, NEXT_APPROVER_CODE, WF_AUTHORIZE_TYPE, WF_AUTHORIZE_NAME, 
     WF_AUTHORIZE_PARTYID, WF_AUTHORIZE_CODE, USABLE_STATUS, CREATE_DATETIME, MODIFY_DATETIME, 
@@ -56,24 +57,26 @@
   </delete>
   <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord" >
     insert into wf_audit_record (WF_AUDIT_RECORD_ID, PROCESS_INSTANCE_ID, 
-      PROCESS_NAME, CURRENT_STEP_ID, CURRENT_STEP_NAME, 
-      CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, CURRENT_APPROVER_PARTYID, 
-      CURRENT_APPROVER_CODE, CURRENT_APPROVER_DEPT_NAME, 
-      CURRENT_APPROVER_DEPT_CODE, CURRENT_APPROVER_AUDIT_TIME, 
-      CURRENT_APPROVER_AUDIT_IDEA, NEXT_STEP_ID, NEXT_STEP_NAME, 
-      NEXT_STEP_TYPE, NEXT_APPROVER_NAME, NEXT_APPROVER_PARTYID, 
+      PROCESS_NAME, CURRENT_STEP_ID, CURRENT_WORKITEM_ID, 
+      CURRENT_STEP_NAME, CURRENT_STEP_TYPE, CURRENT_APPROVER_NAME, 
+      CURRENT_APPROVER_PARTYID, CURRENT_APPROVER_CODE, 
+      CURRENT_APPROVER_DEPT_NAME, CURRENT_APPROVER_DEPT_CODE, 
+      CURRENT_APPROVER_AUDIT_TIME, CURRENT_APPROVER_AUDIT_IDEA, 
+      NEXT_STEP_ID, NEXT_STEP_NAME, NEXT_STEP_TYPE, 
+      NEXT_APPROVER_NAME, NEXT_APPROVER_PARTYID, 
       NEXT_APPROVER_CODE, WF_AUTHORIZE_TYPE, WF_AUTHORIZE_NAME, 
       WF_AUTHORIZE_PARTYID, WF_AUTHORIZE_CODE, USABLE_STATUS, 
       CREATE_DATETIME, MODIFY_DATETIME, RESERVED_ATTRIBUTE_1, 
       RESERVED_ATTRIBUTE_2, RESERVED_ATTRIBUTE_3, 
       RESERVED_ATTRIBUTE_4, RESERVED_ATTRIBUTE_5)
     values (#{wfAuditRecordId,jdbcType=VARCHAR}, #{processInstanceId,jdbcType=VARCHAR}, 
-      #{processName,jdbcType=VARCHAR}, #{currentStepId,jdbcType=VARCHAR}, #{currentStepName,jdbcType=VARCHAR}, 
-      #{currentStepType,jdbcType=VARCHAR}, #{currentApproverName,jdbcType=VARCHAR}, #{currentApproverPartyid,jdbcType=VARCHAR}, 
-      #{currentApproverCode,jdbcType=VARCHAR}, #{currentApproverDeptName,jdbcType=VARCHAR}, 
-      #{currentApproverDeptCode,jdbcType=VARCHAR}, #{currentApproverAuditTime,jdbcType=TIMESTAMP}, 
-      #{currentApproverAuditIdea,jdbcType=VARCHAR}, #{nextStepId,jdbcType=VARCHAR}, #{nextStepName,jdbcType=VARCHAR}, 
-      #{nextStepType,jdbcType=VARCHAR}, #{nextApproverName,jdbcType=VARCHAR}, #{nextApproverPartyid,jdbcType=VARCHAR}, 
+      #{processName,jdbcType=VARCHAR}, #{currentStepId,jdbcType=VARCHAR}, #{currentWorkitemId,jdbcType=VARCHAR}, 
+      #{currentStepName,jdbcType=VARCHAR}, #{currentStepType,jdbcType=VARCHAR}, #{currentApproverName,jdbcType=VARCHAR}, 
+      #{currentApproverPartyid,jdbcType=VARCHAR}, #{currentApproverCode,jdbcType=VARCHAR}, 
+      #{currentApproverDeptName,jdbcType=VARCHAR}, #{currentApproverDeptCode,jdbcType=VARCHAR}, 
+      #{currentApproverAuditTime,jdbcType=TIMESTAMP}, #{currentApproverAuditIdea,jdbcType=VARCHAR}, 
+      #{nextStepId,jdbcType=VARCHAR}, #{nextStepName,jdbcType=VARCHAR}, #{nextStepType,jdbcType=VARCHAR}, 
+      #{nextApproverName,jdbcType=VARCHAR}, #{nextApproverPartyid,jdbcType=VARCHAR}, 
       #{nextApproverCode,jdbcType=VARCHAR}, #{wfAuthorizeType,jdbcType=VARCHAR}, #{wfAuthorizeName,jdbcType=VARCHAR}, 
       #{wfAuthorizePartyid,jdbcType=VARCHAR}, #{wfAuthorizeCode,jdbcType=VARCHAR}, #{usableStatus,jdbcType=CHAR}, 
       #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{reservedAttribute1,jdbcType=VARCHAR}, 
@@ -94,6 +97,9 @@
       </if>
       <if test="currentStepId != null" >
         CURRENT_STEP_ID,
+      </if>
+      <if test="currentWorkitemId != null" >
+        CURRENT_WORKITEM_ID,
       </if>
       <if test="currentStepName != null" >
         CURRENT_STEP_NAME,
@@ -190,6 +196,9 @@
       <if test="currentStepId != null" >
         #{currentStepId,jdbcType=VARCHAR},
       </if>
+      <if test="currentWorkitemId != null" >
+        #{currentWorkitemId,jdbcType=VARCHAR},
+      </if>
       <if test="currentStepName != null" >
         #{currentStepName,jdbcType=VARCHAR},
       </if>
@@ -285,6 +294,9 @@
       <if test="currentStepId != null" >
         CURRENT_STEP_ID = #{currentStepId,jdbcType=VARCHAR},
       </if>
+      <if test="currentWorkitemId != null" >
+        CURRENT_WORKITEM_ID = #{currentWorkitemId,jdbcType=VARCHAR},
+      </if>
       <if test="currentStepName != null" >
         CURRENT_STEP_NAME = #{currentStepName,jdbcType=VARCHAR},
       </if>
@@ -374,6 +386,7 @@
     set PROCESS_INSTANCE_ID = #{processInstanceId,jdbcType=VARCHAR},
       PROCESS_NAME = #{processName,jdbcType=VARCHAR},
       CURRENT_STEP_ID = #{currentStepId,jdbcType=VARCHAR},
+      CURRENT_WORKITEM_ID = #{currentWorkitemId,jdbcType=VARCHAR},
       CURRENT_STEP_NAME = #{currentStepName,jdbcType=VARCHAR},
       CURRENT_STEP_TYPE = #{currentStepType,jdbcType=VARCHAR},
       CURRENT_APPROVER_NAME = #{currentApproverName,jdbcType=VARCHAR},

@@ -55,12 +55,12 @@ public class WFBizDataPM {
 	/**
 	 * 当前业务系统审批流程模块流程实例关联的工作项集合
 	 */
-	private List<WFWorkitemPM> wfWorkitems;
+	private List<WFWorkitemPM> wfWorkitemsPM;
 
 	/**
 	 * 当前业务系统审批流程模块流程实例关联的审批记录集合
 	 */
-	private List<WFAuditRecordPM> wfAuditRecords;
+	private List<WFAuditRecordPM> wfAuditRecordsPM;
 
 	public String getWfBizDataId() {
 		return wfBizDataId;
@@ -255,33 +255,33 @@ public class WFBizDataPM {
 	}
 
 	/**
-	 * @return the wfWorkitems
+	 * @return the wfWorkitemsPM
 	 */
-	public List<WFWorkitemPM> getWfWorkitems() {
-		return wfWorkitems;
+	public List<WFWorkitemPM> getWfWorkitemsPM() {
+		return wfWorkitemsPM;
 	}
 
 	/**
-	 * @param wfWorkitems
-	 *            the wfWorkitems to set
+	 * @param wfWorkitemsPM
+	 *            the wfWorkitemsPM to set
 	 */
-	public void setWfWorkitems(List<WFWorkitemPM> wfWorkitems) {
-		this.wfWorkitems = wfWorkitems;
+	public void setWfWorkitemsPM(List<WFWorkitemPM> wfWorkitemsPM) {
+		this.wfWorkitemsPM = wfWorkitemsPM;
 	}
 
 	/**
-	 * @return the wfAuditRecords
+	 * @return the wfAuditRecordsPM
 	 */
-	public List<WFAuditRecordPM> getWfAuditRecords() {
-		return wfAuditRecords;
+	public List<WFAuditRecordPM> getWfAuditRecordsPM() {
+		return wfAuditRecordsPM;
 	}
 
 	/**
-	 * @param wfAuditRecords
-	 *            the wfAuditRecords to set
+	 * @param wfAuditRecordsPM
+	 *            the wfAuditRecordsPM to set
 	 */
-	public void setWfAuditRecords(List<WFAuditRecordPM> wfAuditRecords) {
-		this.wfAuditRecords = wfAuditRecords;
+	public void setWfAuditRecordsPM(List<WFAuditRecordPM> wfAuditRecordsPM) {
+		this.wfAuditRecordsPM = wfAuditRecordsPM;
 	}
 
 }

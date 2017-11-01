@@ -8,7 +8,6 @@
 */
 package cn.songzx.helloworld.workflow.biz;
 
-import java.util.List;
 import java.util.Map;
 
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
@@ -46,63 +45,6 @@ public interface WorkflowBizI {
 
 	/**
 	 *
-	 * @Date: 2017年10月23日上午9:33:44
-	 * @Title: getWFWorkitemByPK
-	 * @Description: TODO(根据工作项的主键获取工作项的信息)
-	 * @param workitemId
-	 *            工作项的主键
-	 * @return
-	 * @throws Exception
-	 * @return WFWorkitem 工作项详细信息
-	 */
-	public WFWorkitem getWFWorkitemByPK(String workitemId) throws Exception;
-
-	/**
-	 *
-	 * @Date: 2017年10月27日上午11:42:55
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(根据流程实例ID查询该实例下的所有工作项信息)
-	 * @param procInstId
-	 * @return
-	 * @throws Exception
-	 * @return List<WFWorkitem> 返回值类型
-	 */
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId) throws Exception;
-
-	/**
-	 *
-	 * @Date: 2017年10月26日下午7:33:35
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(根据流程实例ID和待办处理标记查询该实例下的工作项集合)
-	 * @param procInstId
-	 *            流程实例ID
-	 * @param doneFlag
-	 *            false表示"待处理"，true表示"已处理"
-	 * @return
-	 * @throws Exception
-	 * @return List<WFWorkitem> 返回值类型
-	 */
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, boolean doneFlag) throws Exception;
-
-	/**
-	 *
-	 * @Date: 2017年10月27日上午11:42:45
-	 * @Title: getWFWorkitemsByProcInstId
-	 * @Description: TODO(根据流程实例ID和流程实例分支ID和待办处理标记查询该实例下的工作项集合)
-	 * @param procInstId
-	 *            流程实例ID
-	 * @param executionId
-	 *            流程实例下的分支ID
-	 * @param doneFlag
-	 *            false表示"待处理"，true表示"已处理"
-	 * @return
-	 * @throws Exception
-	 * @return List<WFWorkitem> 返回值类型
-	 */
-	public List<WFWorkitem> getWFWorkitemsByProcInstId(String procInstId, String executionId, boolean doneFlag) throws Exception;
-
-	/**
-	 *
 	 * @Date: 2017年10月23日上午10:00:47
 	 * @Title: completeWorkitemByPK
 	 * @Description: TODO(提交当前工作项，并返回新增的工作项)
@@ -130,4 +72,5 @@ public interface WorkflowBizI {
 	 * @return String 返回值类型
 	 */
 	public String deployDiagramByZipFile(String zipFilePath, String zipFileName) throws Exception;
+
 }
