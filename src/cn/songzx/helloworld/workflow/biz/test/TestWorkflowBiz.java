@@ -20,6 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
+import cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl;
+import cn.songzx.helloworld.workflow.dao.enmu.WFStepType;
 import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
@@ -33,7 +35,7 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring-lazy-wf.xml", "classpath:/spring-lazy-biz.xml" })
-public class TestWorkflowBiz {
+public class TestWorkflowBiz extends WorkflowBizActBpm518Impl {
 
 	@Resource(name = "workflowBizActBpm518")
 	private WorkflowBizI workflowBiz;
@@ -117,6 +119,13 @@ public class TestWorkflowBiz {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public static void main(String[] args) {
+		System.out.println(WFStepType.GENERALSIGN.getIndex());
+		System.out.println(WFStepType.COUNTERSIGN.getIndex());
+		System.out.println(WFStepType.PARALLELSIGN.getIndex());
 	}
 
 }

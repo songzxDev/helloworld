@@ -1,8 +1,6 @@
 package cn.songzx.helloworld.workflow.biz.impl;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
@@ -13,15 +11,12 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 
-import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.util.WFInitializingBean;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
-import cn.songzx.helloworld.workflow.dao.enmu.WFEngineType;
 
 /**
  *
@@ -137,29 +132,16 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 		WFBizData wfBizData = null;
 		try {
 			ProcessInstance newProcessInstance = workflowRuntimeBiz.startProcessInstanceByKey(processDefinitionKey, variables);
-			String newProcessInstanceId = newProcessInstance.getProcessInstanceId();
 			if (newProcessInstance != null) {
+				String newProcessInstanceId = newProcessInstance.getProcessInstanceId();
 				wfBizData = new WFBizData();
-				wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());// 数据主键
-				wfBizData.setProcessInstanceId(newProcessInstanceId);// 流程实例ID
-				wfBizData.setProcessDefinitionKey(processDefinitionKey);// 流程定义Key
-				wfBizData.setProcessDefinitionName(processDefinitionKey);// 流程定义名称，即：流程名称
-				wfBizData.setCreateDatetime(OABizUtil.getCurrentTimestamp());// 数据创建日期
-				wfBizData.setUsableStatus("1");// 逻辑删除标识，1是否，0是被标记为逻辑删除
-				wfBizData.setWfEngineType(WFEngineType.ACTIVITI518.name());// 流程引擎类型
-				wfBizData.setBizBillAuditStatus(WorkflowBizI.APPROVAL_UNDERWAY);// 流程实例审批状态为：进行中
-				if (variables != null && !variables.isEmpty()) {
-					wfBizData.setBizBillEditorName((String) variables.get("dynamic_participant_name"));// 参与者人员姓名
-					wfBizData.setBizBillEditorPartyid((String) variables.get("dynamic_participant_partyid"));// 参与者人员partyid
-					wfBizData.setBizBillEditorCode((String) variables.get("dynamic_participant_code"));// 参与者人员CODE
-					wfBizData.setBizBillEditorDeptName((String) variables.get("dynamic_participant_dept_name"));// 参与者所在部门名称
-					wfBizData.setBizBillEditorDeptCode((String) variables.get("dynamic_participant_dept_code"));// 参与者所在部门CODE
-					wfBizData.setBizBillId((String) variables.get("business_bill_id"));// 业务单据主键
-					wfBizData.setBizBillName((String) variables.get("business_bill_name"));// 业务单据名称
-					wfBizData.setBizBillNo((String) variables.get("business_bill_no"));// 业务单据编号
-					wfBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
-					wfBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
-				}
+				/*
+				 * 后续初始化相关操作由切面类：
+				 * 【cn.songzx.helloworld.workflow.biz.aspect.WorkflowBizAspect】
+				 * 的环绕通知方法：aroundStartKindMethod(ProceedingJoinPoint pjp)实现
+				 */
+				wfBizData.setProcessInstanceId(newProcessInstanceId);
+
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -215,29 +197,6 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 			}
 		}
 		return deployStatus;
-	}
-
-	private List<WFWorkitem> afterStartGetWFWorkitemsRefCurrentTask(String procInstId) {
-		List<WFWorkitem> newWFWorkitems = new ArrayList<WFWorkitem>();
-		String queryCurrentTask = "SELECT * FROM " + workflowManagementBiz.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
-		Task currentTask = workflowTaskBiz.createNativeTaskQuery().sql(queryCurrentTask).singleResult();
-		Map<String, Object> globalVariables = workflowRuntimeBiz.getVariables(procInstId);
-		if (currentTask != null) {
-			WFWorkitem newWFWorkitem = new WFWorkitem();
-			newWFWorkitem.setWfWorkitemId(currentTask.getId());
-			newWFWorkitem.setProcessInstanceId(procInstId);
-			newWFWorkitem.setCreateDatetime(currentTask.getCreateTime());
-			newWFWorkitem.setSenderName((String) globalVariables.get("dynamic_participant_name"));
-			newWFWorkitem.setSenderPartyid((String) globalVariables.get("dynamic_participant_partyid"));
-			newWFWorkitem.setSenderCode((String) globalVariables.get("dynamic_participant_code"));
-			newWFWorkitem.setPerformerName((String) globalVariables.get("dynamic_participant_name"));
-			newWFWorkitem.setPerformerPartyid((String) globalVariables.get("dynamic_participant_partyid"));
-			newWFWorkitem.setPerformerCode((String) globalVariables.get("dynamic_participant_code"));
-			newWFWorkitem.setUsableStatus("1");
-			newWFWorkitem.setDoneStatus("0");
-			newWFWorkitems.add(newWFWorkitem);
-		}
-		return newWFWorkitems;
 	}
 
 }
