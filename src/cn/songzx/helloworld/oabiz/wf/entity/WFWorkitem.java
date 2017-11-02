@@ -62,6 +62,8 @@ public class WFWorkitem implements Serializable {
 
 	private String reservedAttribute5;
 
+	private WFAuditRecord ownWFAuditRecord;
+
 	public String getWfWorkitemId() {
 		return wfWorkitemId;
 	}
@@ -269,4 +271,13 @@ public class WFWorkitem implements Serializable {
 	public void setReservedAttribute5(String reservedAttribute5) {
 		this.reservedAttribute5 = reservedAttribute5 == null ? null : reservedAttribute5.trim();
 	}
+
+	public WFAuditRecord getOwnWFAuditRecord() {
+		return ownWFAuditRecord;
+	}
+
+	public void setOwnWFAuditRecord(WFAuditRecord ownWFAuditRecord) {
+		this.ownWFAuditRecord = ownWFAuditRecord;
+	}
+
 }
