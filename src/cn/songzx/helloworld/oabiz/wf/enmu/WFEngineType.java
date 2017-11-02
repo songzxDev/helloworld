@@ -6,7 +6,7 @@
 * @date 2017年10月23日 下午3:02:59
 * @version V1.0
 */
-package cn.songzx.helloworld.workflow.dao.enmu;
+package cn.songzx.helloworld.oabiz.wf.enmu;
 
 /**
  * @ClassName: WFEngineType

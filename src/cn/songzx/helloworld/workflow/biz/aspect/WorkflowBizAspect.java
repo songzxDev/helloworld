@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.task.Task;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,12 +12,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFEngineType;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFStepType;
+import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl;
-import cn.songzx.helloworld.workflow.dao.enmu.WFEngineType;
-import cn.songzx.helloworld.workflow.dao.enmu.WFStepType;
 
 @Aspect
 @Component
@@ -94,12 +96,62 @@ public class WorkflowBizAspect {
 				newWFWorkitem.setDoneStatus("0");
 				newWFWorkitem.setReadStatus("1");
 				newWFWorkitem.setAuthorizeStatus("0");
+				/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
 				newWFWorkitems.add(newWFWorkitem);
 				newWFBizData.setWfWorkitems(newWFWorkitems);
 			}
 
 			/* step3.初始化业务模块流程实例关联的审批记录信息 */
 			// TODO ......
+			List<WFAuditRecord> newWFAuditRecords = new ArrayList<WFAuditRecord>();
+			List<HistoricActivityInstance> histActiInsts = targetObj.getWorkflowHistoryBiz().createHistoricActivityInstanceQuery().processInstanceId(newProcInstId).orderByHistoricActivityInstanceStartTime().asc().list();
+			if (histActiInsts != null && histActiInsts.size() == 2) {
+				HistoricActivityInstance firstRecord = histActiInsts.get(0);
+				HistoricActivityInstance secondRecord = histActiInsts.get(1);
+				/* 业务模块流程实例关联的审批记录第一条数据 */
+				WFAuditRecord newFirstWFAuditRecord = new WFAuditRecord();
+				newFirstWFAuditRecord.setCreateDatetime(firstRecord.getStartTime());
+				newFirstWFAuditRecord.setCurrentApproverAuditTime(firstRecord.getEndTime());
+				newFirstWFAuditRecord.setWfAuditRecordId(firstRecord.getId());
+				newFirstWFAuditRecord.setProcessInstanceId(newProcInstId);
+				newFirstWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(firstRecord.getProcessDefinitionId()).getName());
+				newFirstWFAuditRecord.setCurrentStepId(firstRecord.getActivityId());
+				newFirstWFAuditRecord.setCurrentStepName(firstRecord.getActivityName());
+				newFirstWFAuditRecord.setCurrentStepType(firstRecord.getActivityType());
+				newFirstWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
+				newFirstWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
+				newFirstWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
+				newFirstWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
+				newFirstWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+				newFirstWFAuditRecord.setCurrentWorkitemId("PLACEHOLDER-" + OABizUtil.generateNineteenUUIDPK());
+				newFirstWFAuditRecord.setNextStepId(secondRecord.getActivityId());
+				newFirstWFAuditRecord.setNextStepName(secondRecord.getActivityName());
+				newFirstWFAuditRecord.setNextStepType(secondRecord.getActivityType());
+				newFirstWFAuditRecord.setNextApproverName((String) variables.get("dynamic_participant_name"));
+				newFirstWFAuditRecord.setNextApproverPartyid((String) variables.get("dynamic_participant_partyid"));
+				newFirstWFAuditRecord.setNextApproverCode((String) variables.get("dynamic_participant_code"));
+				newFirstWFAuditRecord.setUsableStatus("1");
+				/* 业务模块流程实例关联的审批记录第二条数据 */
+				WFAuditRecord newSecondWFAuditRecord = new WFAuditRecord();
+				newSecondWFAuditRecord.setWfAuditRecordId(secondRecord.getId());
+				newSecondWFAuditRecord.setCreateDatetime(secondRecord.getStartTime());
+				newSecondWFAuditRecord.setProcessInstanceId(newProcInstId);
+				newSecondWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(secondRecord.getProcessDefinitionId()).getName());
+				newSecondWFAuditRecord.setCurrentStepId(secondRecord.getActivityId());
+				newSecondWFAuditRecord.setCurrentStepName(secondRecord.getActivityName());
+				newSecondWFAuditRecord.setCurrentStepType(secondRecord.getActivityType());
+				newSecondWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
+				newSecondWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
+				newSecondWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
+				newSecondWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
+				newSecondWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+				newSecondWFAuditRecord.setCurrentWorkitemId(secondRecord.getTaskId());
+				newSecondWFAuditRecord.setUsableStatus("1");
+				/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+				newWFAuditRecords.add(newFirstWFAuditRecord);
+				newWFAuditRecords.add(newSecondWFAuditRecord);
+				newWFBizData.setWfAuditRecords(newWFAuditRecords);
+			}
 		}
 		return newWFBizData;
 	}

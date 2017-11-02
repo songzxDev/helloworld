@@ -6,7 +6,7 @@
 * @date 2017年11月1日 上午10:21:23
 * @version V1.0
 */
-package cn.songzx.helloworld.workflow.dao.enmu;
+package cn.songzx.helloworld.oabiz.wf.enmu;
 
 /**
  * @ClassName: WFStepType

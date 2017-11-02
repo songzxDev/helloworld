@@ -19,9 +19,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cn.songzx.helloworld.oabiz.wf.enmu.WFStepType;
 import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 import cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl;
-import cn.songzx.helloworld.workflow.dao.enmu.WFStepType;
 import cn.songzx.helloworld.workflow.dao.holder.DataSourceContextHolder;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
 import net.sourceforge.groboutils.junit.v1.TestRunnable;
