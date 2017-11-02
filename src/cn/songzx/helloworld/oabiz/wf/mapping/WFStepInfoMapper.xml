@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFStepInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFStepInfo" >
+    <id column="WF_STEP_INFO_ID" property="wfStepInfoId" jdbcType="VARCHAR" />
+    <result column="PROCESS_KEY" property="processKey" jdbcType="VARCHAR" />
+    <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
+    <result column="STEP_ID" property="stepId" jdbcType="VARCHAR" />
+    <result column="STEP_NAME" property="stepName" jdbcType="VARCHAR" />
+    <result column="STEP_TYPE" property="stepType" jdbcType="CHAR" />
+    <result column="STEP_FILTER_USER_TYPE" property="stepFilterUserType" jdbcType="CHAR" />
+    <result column="STEP_FILTER_ROLE_ID" property="stepFilterRoleId" jdbcType="VARCHAR" />
+    <result column="STEP_FILTER_ROLE_NAME" property="stepFilterRoleName" jdbcType="VARCHAR" />
+    <result column="STEP_DEPT_CODE" property="stepDeptCode" jdbcType="VARCHAR" />
+    <result column="STEP_DEPT_NAME" property="stepDeptName" jdbcType="VARCHAR" />
+    <result column="STEP_DEPT_TYPE" property="stepDeptType" jdbcType="VARCHAR" />
+    <result column="STEP_DEPT_LEVEL" property="stepDeptLevel" jdbcType="VARCHAR" />
+    <result column="STEP_PATH" property="stepPath" jdbcType="VARCHAR" />
+    <result column="STEP_FURTHER_PATH" property="stepFurtherPath" jdbcType="VARCHAR" />
+    <result column="BIZ_FORM_URL" property="bizFormUrl" jdbcType="VARCHAR" />
+    <result column="IS_IMPORTANCE" property="isImportance" jdbcType="CHAR" />
+    <result column="FILTER_PERSONS_TEAM_ID" property="filterPersonsTeamId" jdbcType="VARCHAR" />
+    <result column="FILTER_PERSONS_TEAM_NAME" property="filterPersonsTeamName" jdbcType="VARCHAR" />
+    <result column="SWITCHE_ID" property="switcheId" jdbcType="VARCHAR" />
+    <result column="SWITCHE_NAME" property="switcheName" jdbcType="VARCHAR" />
+    <result column="MUST_AUDIT_PERSON_NAME" property="mustAuditPersonName" jdbcType="VARCHAR" />
+    <result column="MUST_AUDIT_PERSON_CODE" property="mustAuditPersonCode" jdbcType="VARCHAR" />
+    <result column="MUST_AUDIT_PERSON_PARTYID" property="mustAuditPersonPartyid" jdbcType="VARCHAR" />
+    <result column="IS_MUST_WRITE_AUDIT_IDEA" property="isMustWriteAuditIdea" jdbcType="CHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="RESERVED_ATTRIBUTE1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE5" property="reservedAttribute5" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE6" property="reservedAttribute6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_STEP_INFO_ID, PROCESS_KEY, PROCESS_NAME, STEP_ID, STEP_NAME, STEP_TYPE, STEP_FILTER_USER_TYPE, 
+    STEP_FILTER_ROLE_ID, STEP_FILTER_ROLE_NAME, STEP_DEPT_CODE, STEP_DEPT_NAME, STEP_DEPT_TYPE, 
+    STEP_DEPT_LEVEL, STEP_PATH, STEP_FURTHER_PATH, BIZ_FORM_URL, IS_IMPORTANCE, FILTER_PERSONS_TEAM_ID, 
+    FILTER_PERSONS_TEAM_NAME, SWITCHE_ID, SWITCHE_NAME, MUST_AUDIT_PERSON_NAME, MUST_AUDIT_PERSON_CODE, 
+    MUST_AUDIT_PERSON_PARTYID, IS_MUST_WRITE_AUDIT_IDEA, CREATE_DATETIME, MODIFY_DATETIME, 
+    USABLE_STATUS, RESERVED_ATTRIBUTE1, RESERVED_ATTRIBUTE2, RESERVED_ATTRIBUTE3, RESERVED_ATTRIBUTE4, 
+    RESERVED_ATTRIBUTE5, RESERVED_ATTRIBUTE6
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_step_info
+    where WF_STEP_INFO_ID = #{wfStepInfoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_step_info
+    where WF_STEP_INFO_ID = #{wfStepInfoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFStepInfo" >
+    insert into wf_step_info (WF_STEP_INFO_ID, PROCESS_KEY, PROCESS_NAME, 
+      STEP_ID, STEP_NAME, STEP_TYPE, 
+      STEP_FILTER_USER_TYPE, STEP_FILTER_ROLE_ID, STEP_FILTER_ROLE_NAME, 
+      STEP_DEPT_CODE, STEP_DEPT_NAME, STEP_DEPT_TYPE, 
+      STEP_DEPT_LEVEL, STEP_PATH, STEP_FURTHER_PATH, 
+      BIZ_FORM_URL, IS_IMPORTANCE, FILTER_PERSONS_TEAM_ID, 
+      FILTER_PERSONS_TEAM_NAME, SWITCHE_ID, SWITCHE_NAME, 
+      MUST_AUDIT_PERSON_NAME, MUST_AUDIT_PERSON_CODE, 
+      MUST_AUDIT_PERSON_PARTYID, IS_MUST_WRITE_AUDIT_IDEA, 
+      CREATE_DATETIME, MODIFY_DATETIME, USABLE_STATUS, 
+      RESERVED_ATTRIBUTE1, RESERVED_ATTRIBUTE2, 
+      RESERVED_ATTRIBUTE3, RESERVED_ATTRIBUTE4, 
+      RESERVED_ATTRIBUTE5, RESERVED_ATTRIBUTE6)
+    values (#{wfStepInfoId,jdbcType=VARCHAR}, #{processKey,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}, 
+      #{stepId,jdbcType=VARCHAR}, #{stepName,jdbcType=VARCHAR}, #{stepType,jdbcType=CHAR}, 
+      #{stepFilterUserType,jdbcType=CHAR}, #{stepFilterRoleId,jdbcType=VARCHAR}, #{stepFilterRoleName,jdbcType=VARCHAR}, 
+      #{stepDeptCode,jdbcType=VARCHAR}, #{stepDeptName,jdbcType=VARCHAR}, #{stepDeptType,jdbcType=VARCHAR}, 
+      #{stepDeptLevel,jdbcType=VARCHAR}, #{stepPath,jdbcType=VARCHAR}, #{stepFurtherPath,jdbcType=VARCHAR}, 
+      #{bizFormUrl,jdbcType=VARCHAR}, #{isImportance,jdbcType=CHAR}, #{filterPersonsTeamId,jdbcType=VARCHAR}, 
+      #{filterPersonsTeamName,jdbcType=VARCHAR}, #{switcheId,jdbcType=VARCHAR}, #{switcheName,jdbcType=VARCHAR}, 
+      #{mustAuditPersonName,jdbcType=VARCHAR}, #{mustAuditPersonCode,jdbcType=VARCHAR}, 
+      #{mustAuditPersonPartyid,jdbcType=VARCHAR}, #{isMustWriteAuditIdea,jdbcType=CHAR}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, #{usableStatus,jdbcType=CHAR}, 
+      #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
+      #{reservedAttribute3,jdbcType=VARCHAR}, #{reservedAttribute4,jdbcType=VARCHAR}, 
+      #{reservedAttribute5,jdbcType=VARCHAR}, #{reservedAttribute6,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFStepInfo" >
+    insert into wf_step_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfStepInfoId != null" >
+        WF_STEP_INFO_ID,
+      </if>
+      <if test="processKey != null" >
+        PROCESS_KEY,
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME,
+      </if>
+      <if test="stepId != null" >
+        STEP_ID,
+      </if>
+      <if test="stepName != null" >
+        STEP_NAME,
+      </if>
+      <if test="stepType != null" >
+        STEP_TYPE,
+      </if>
+      <if test="stepFilterUserType != null" >
+        STEP_FILTER_USER_TYPE,
+      </if>
+      <if test="stepFilterRoleId != null" >
+        STEP_FILTER_ROLE_ID,
+      </if>
+      <if test="stepFilterRoleName != null" >
+        STEP_FILTER_ROLE_NAME,
+      </if>
+      <if test="stepDeptCode != null" >
+        STEP_DEPT_CODE,
+      </if>
+      <if test="stepDeptName != null" >
+        STEP_DEPT_NAME,
+      </if>
+      <if test="stepDeptType != null" >
+        STEP_DEPT_TYPE,
+      </if>
+      <if test="stepDeptLevel != null" >
+        STEP_DEPT_LEVEL,
+      </if>
+      <if test="stepPath != null" >
+        STEP_PATH,
+      </if>
+      <if test="stepFurtherPath != null" >
+        STEP_FURTHER_PATH,
+      </if>
+      <if test="bizFormUrl != null" >
+        BIZ_FORM_URL,
+      </if>
+      <if test="isImportance != null" >
+        IS_IMPORTANCE,
+      </if>
+      <if test="filterPersonsTeamId != null" >
+        FILTER_PERSONS_TEAM_ID,
+      </if>
+      <if test="filterPersonsTeamName != null" >
+        FILTER_PERSONS_TEAM_NAME,
+      </if>
+      <if test="switcheId != null" >
+        SWITCHE_ID,
+      </if>
+      <if test="switcheName != null" >
+        SWITCHE_NAME,
+      </if>
+      <if test="mustAuditPersonName != null" >
+        MUST_AUDIT_PERSON_NAME,
+      </if>
+      <if test="mustAuditPersonCode != null" >
+        MUST_AUDIT_PERSON_CODE,
+      </if>
+      <if test="mustAuditPersonPartyid != null" >
+        MUST_AUDIT_PERSON_PARTYID,
+      </if>
+      <if test="isMustWriteAuditIdea != null" >
+        IS_MUST_WRITE_AUDIT_IDEA,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5,
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfStepInfoId != null" >
+        #{wfStepInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="processKey != null" >
+        #{processKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null" >
+        #{stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepName != null" >
+        #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepType != null" >
+        #{stepType,jdbcType=CHAR},
+      </if>
+      <if test="stepFilterUserType != null" >
+        #{stepFilterUserType,jdbcType=CHAR},
+      </if>
+      <if test="stepFilterRoleId != null" >
+        #{stepFilterRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepFilterRoleName != null" >
+        #{stepFilterRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptCode != null" >
+        #{stepDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptName != null" >
+        #{stepDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptType != null" >
+        #{stepDeptType,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptLevel != null" >
+        #{stepDeptLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="stepPath != null" >
+        #{stepPath,jdbcType=VARCHAR},
+      </if>
+      <if test="stepFurtherPath != null" >
+        #{stepFurtherPath,jdbcType=VARCHAR},
+      </if>
+      <if test="bizFormUrl != null" >
+        #{bizFormUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isImportance != null" >
+        #{isImportance,jdbcType=CHAR},
+      </if>
+      <if test="filterPersonsTeamId != null" >
+        #{filterPersonsTeamId,jdbcType=VARCHAR},
+      </if>
+      <if test="filterPersonsTeamName != null" >
+        #{filterPersonsTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="switcheId != null" >
+        #{switcheId,jdbcType=VARCHAR},
+      </if>
+      <if test="switcheName != null" >
+        #{switcheName,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonName != null" >
+        #{mustAuditPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonCode != null" >
+        #{mustAuditPersonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonPartyid != null" >
+        #{mustAuditPersonPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="isMustWriteAuditIdea != null" >
+        #{isMustWriteAuditIdea,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFStepInfo" >
+    update wf_step_info
+    <set >
+      <if test="processKey != null" >
+        PROCESS_KEY = #{processKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepId != null" >
+        STEP_ID = #{stepId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepName != null" >
+        STEP_NAME = #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepType != null" >
+        STEP_TYPE = #{stepType,jdbcType=CHAR},
+      </if>
+      <if test="stepFilterUserType != null" >
+        STEP_FILTER_USER_TYPE = #{stepFilterUserType,jdbcType=CHAR},
+      </if>
+      <if test="stepFilterRoleId != null" >
+        STEP_FILTER_ROLE_ID = #{stepFilterRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="stepFilterRoleName != null" >
+        STEP_FILTER_ROLE_NAME = #{stepFilterRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptCode != null" >
+        STEP_DEPT_CODE = #{stepDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptName != null" >
+        STEP_DEPT_NAME = #{stepDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptType != null" >
+        STEP_DEPT_TYPE = #{stepDeptType,jdbcType=VARCHAR},
+      </if>
+      <if test="stepDeptLevel != null" >
+        STEP_DEPT_LEVEL = #{stepDeptLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="stepPath != null" >
+        STEP_PATH = #{stepPath,jdbcType=VARCHAR},
+      </if>
+      <if test="stepFurtherPath != null" >
+        STEP_FURTHER_PATH = #{stepFurtherPath,jdbcType=VARCHAR},
+      </if>
+      <if test="bizFormUrl != null" >
+        BIZ_FORM_URL = #{bizFormUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isImportance != null" >
+        IS_IMPORTANCE = #{isImportance,jdbcType=CHAR},
+      </if>
+      <if test="filterPersonsTeamId != null" >
+        FILTER_PERSONS_TEAM_ID = #{filterPersonsTeamId,jdbcType=VARCHAR},
+      </if>
+      <if test="filterPersonsTeamName != null" >
+        FILTER_PERSONS_TEAM_NAME = #{filterPersonsTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="switcheId != null" >
+        SWITCHE_ID = #{switcheId,jdbcType=VARCHAR},
+      </if>
+      <if test="switcheName != null" >
+        SWITCHE_NAME = #{switcheName,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonName != null" >
+        MUST_AUDIT_PERSON_NAME = #{mustAuditPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonCode != null" >
+        MUST_AUDIT_PERSON_CODE = #{mustAuditPersonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mustAuditPersonPartyid != null" >
+        MUST_AUDIT_PERSON_PARTYID = #{mustAuditPersonPartyid,jdbcType=VARCHAR},
+      </if>
+      <if test="isMustWriteAuditIdea != null" >
+        IS_MUST_WRITE_AUDIT_IDEA = #{isMustWriteAuditIdea,jdbcType=CHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_STEP_INFO_ID = #{wfStepInfoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFStepInfo" >
+    update wf_step_info
+    set PROCESS_KEY = #{processKey,jdbcType=VARCHAR},
+      PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      STEP_ID = #{stepId,jdbcType=VARCHAR},
+      STEP_NAME = #{stepName,jdbcType=VARCHAR},
+      STEP_TYPE = #{stepType,jdbcType=CHAR},
+      STEP_FILTER_USER_TYPE = #{stepFilterUserType,jdbcType=CHAR},
+      STEP_FILTER_ROLE_ID = #{stepFilterRoleId,jdbcType=VARCHAR},
+      STEP_FILTER_ROLE_NAME = #{stepFilterRoleName,jdbcType=VARCHAR},
+      STEP_DEPT_CODE = #{stepDeptCode,jdbcType=VARCHAR},
+      STEP_DEPT_NAME = #{stepDeptName,jdbcType=VARCHAR},
+      STEP_DEPT_TYPE = #{stepDeptType,jdbcType=VARCHAR},
+      STEP_DEPT_LEVEL = #{stepDeptLevel,jdbcType=VARCHAR},
+      STEP_PATH = #{stepPath,jdbcType=VARCHAR},
+      STEP_FURTHER_PATH = #{stepFurtherPath,jdbcType=VARCHAR},
+      BIZ_FORM_URL = #{bizFormUrl,jdbcType=VARCHAR},
+      IS_IMPORTANCE = #{isImportance,jdbcType=CHAR},
+      FILTER_PERSONS_TEAM_ID = #{filterPersonsTeamId,jdbcType=VARCHAR},
+      FILTER_PERSONS_TEAM_NAME = #{filterPersonsTeamName,jdbcType=VARCHAR},
+      SWITCHE_ID = #{switcheId,jdbcType=VARCHAR},
+      SWITCHE_NAME = #{switcheName,jdbcType=VARCHAR},
+      MUST_AUDIT_PERSON_NAME = #{mustAuditPersonName,jdbcType=VARCHAR},
+      MUST_AUDIT_PERSON_CODE = #{mustAuditPersonCode,jdbcType=VARCHAR},
+      MUST_AUDIT_PERSON_PARTYID = #{mustAuditPersonPartyid,jdbcType=VARCHAR},
+      IS_MUST_WRITE_AUDIT_IDEA = #{isMustWriteAuditIdea,jdbcType=CHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR}
+    where WF_STEP_INFO_ID = #{wfStepInfoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFBaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFBaseInfo" >
+    <id column="WF_BASE_INFO" property="wfBaseInfo" jdbcType="VARCHAR" />
+    <result column="PROCESS_KEY" property="processKey" jdbcType="VARCHAR" />
+    <result column="PROCESS_NAME" property="processName" jdbcType="VARCHAR" />
+    <result column="PROCESS_TYPE_ID" property="processTypeId" jdbcType="VARCHAR" />
+    <result column="PROCESS_TYPE_NAME" property="processTypeName" jdbcType="VARCHAR" />
+    <result column="PROCESS_AUTHORIZED_DEPT_NAME" property="processAuthorizedDeptName" jdbcType="VARCHAR" />
+    <result column="PROCESS_AUTHORIZED_DEPT_CODE" property="processAuthorizedDeptCode" jdbcType="VARCHAR" />
+    <result column="PROCESS_PUBLISH_STATUS" property="processPublishStatus" jdbcType="CHAR" />
+    <result column="PROCESS_NAMESPACE" property="processNamespace" jdbcType="VARCHAR" />
+    <result column="PROCESS_DESCRIPTION" property="processDescription" jdbcType="VARCHAR" />
+    <result column="PROCESS_ENGINE_TYPE" property="processEngineType" jdbcType="VARCHAR" />
+    <result column="PROCESS_URL" property="processUrl" jdbcType="VARCHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="RESERVED_ATTRIBUTE1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE5" property="reservedAttribute5" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE6" property="reservedAttribute6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_BASE_INFO, PROCESS_KEY, PROCESS_NAME, PROCESS_TYPE_ID, PROCESS_TYPE_NAME, PROCESS_AUTHORIZED_DEPT_NAME, 
+    PROCESS_AUTHORIZED_DEPT_CODE, PROCESS_PUBLISH_STATUS, PROCESS_NAMESPACE, PROCESS_DESCRIPTION, 
+    PROCESS_ENGINE_TYPE, PROCESS_URL, CREATE_DATETIME, MODIFY_DATETIME, USABLE_STATUS, 
+    RESERVED_ATTRIBUTE1, RESERVED_ATTRIBUTE2, RESERVED_ATTRIBUTE3, RESERVED_ATTRIBUTE4, 
+    RESERVED_ATTRIBUTE5, RESERVED_ATTRIBUTE6
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_base_info
+    where WF_BASE_INFO = #{wfBaseInfo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_base_info
+    where WF_BASE_INFO = #{wfBaseInfo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBaseInfo" >
+    insert into wf_base_info (WF_BASE_INFO, PROCESS_KEY, PROCESS_NAME, 
+      PROCESS_TYPE_ID, PROCESS_TYPE_NAME, PROCESS_AUTHORIZED_DEPT_NAME, 
+      PROCESS_AUTHORIZED_DEPT_CODE, PROCESS_PUBLISH_STATUS, 
+      PROCESS_NAMESPACE, PROCESS_DESCRIPTION, PROCESS_ENGINE_TYPE, 
+      PROCESS_URL, CREATE_DATETIME, MODIFY_DATETIME, 
+      USABLE_STATUS, RESERVED_ATTRIBUTE1, RESERVED_ATTRIBUTE2, 
+      RESERVED_ATTRIBUTE3, RESERVED_ATTRIBUTE4, 
+      RESERVED_ATTRIBUTE5, RESERVED_ATTRIBUTE6)
+    values (#{wfBaseInfo,jdbcType=VARCHAR}, #{processKey,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}, 
+      #{processTypeId,jdbcType=VARCHAR}, #{processTypeName,jdbcType=VARCHAR}, #{processAuthorizedDeptName,jdbcType=VARCHAR}, 
+      #{processAuthorizedDeptCode,jdbcType=VARCHAR}, #{processPublishStatus,jdbcType=CHAR}, 
+      #{processNamespace,jdbcType=VARCHAR}, #{processDescription,jdbcType=VARCHAR}, #{processEngineType,jdbcType=VARCHAR}, 
+      #{processUrl,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyDatetime,jdbcType=TIMESTAMP}, 
+      #{usableStatus,jdbcType=CHAR}, #{reservedAttribute1,jdbcType=VARCHAR}, #{reservedAttribute2,jdbcType=VARCHAR}, 
+      #{reservedAttribute3,jdbcType=VARCHAR}, #{reservedAttribute4,jdbcType=VARCHAR}, 
+      #{reservedAttribute5,jdbcType=VARCHAR}, #{reservedAttribute6,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBaseInfo" >
+    insert into wf_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfBaseInfo != null" >
+        WF_BASE_INFO,
+      </if>
+      <if test="processKey != null" >
+        PROCESS_KEY,
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME,
+      </if>
+      <if test="processTypeId != null" >
+        PROCESS_TYPE_ID,
+      </if>
+      <if test="processTypeName != null" >
+        PROCESS_TYPE_NAME,
+      </if>
+      <if test="processAuthorizedDeptName != null" >
+        PROCESS_AUTHORIZED_DEPT_NAME,
+      </if>
+      <if test="processAuthorizedDeptCode != null" >
+        PROCESS_AUTHORIZED_DEPT_CODE,
+      </if>
+      <if test="processPublishStatus != null" >
+        PROCESS_PUBLISH_STATUS,
+      </if>
+      <if test="processNamespace != null" >
+        PROCESS_NAMESPACE,
+      </if>
+      <if test="processDescription != null" >
+        PROCESS_DESCRIPTION,
+      </if>
+      <if test="processEngineType != null" >
+        PROCESS_ENGINE_TYPE,
+      </if>
+      <if test="processUrl != null" >
+        PROCESS_URL,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5,
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfBaseInfo != null" >
+        #{wfBaseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="processKey != null" >
+        #{processKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="processTypeId != null" >
+        #{processTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="processTypeName != null" >
+        #{processTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="processAuthorizedDeptName != null" >
+        #{processAuthorizedDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="processAuthorizedDeptCode != null" >
+        #{processAuthorizedDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="processPublishStatus != null" >
+        #{processPublishStatus,jdbcType=CHAR},
+      </if>
+      <if test="processNamespace != null" >
+        #{processNamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="processDescription != null" >
+        #{processDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="processEngineType != null" >
+        #{processEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="processUrl != null" >
+        #{processUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBaseInfo" >
+    update wf_base_info
+    <set >
+      <if test="processKey != null" >
+        PROCESS_KEY = #{processKey,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="processTypeId != null" >
+        PROCESS_TYPE_ID = #{processTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="processTypeName != null" >
+        PROCESS_TYPE_NAME = #{processTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="processAuthorizedDeptName != null" >
+        PROCESS_AUTHORIZED_DEPT_NAME = #{processAuthorizedDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="processAuthorizedDeptCode != null" >
+        PROCESS_AUTHORIZED_DEPT_CODE = #{processAuthorizedDeptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="processPublishStatus != null" >
+        PROCESS_PUBLISH_STATUS = #{processPublishStatus,jdbcType=CHAR},
+      </if>
+      <if test="processNamespace != null" >
+        PROCESS_NAMESPACE = #{processNamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="processDescription != null" >
+        PROCESS_DESCRIPTION = #{processDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="processEngineType != null" >
+        PROCESS_ENGINE_TYPE = #{processEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="processUrl != null" >
+        PROCESS_URL = #{processUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_BASE_INFO = #{wfBaseInfo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBaseInfo" >
+    update wf_base_info
+    set PROCESS_KEY = #{processKey,jdbcType=VARCHAR},
+      PROCESS_NAME = #{processName,jdbcType=VARCHAR},
+      PROCESS_TYPE_ID = #{processTypeId,jdbcType=VARCHAR},
+      PROCESS_TYPE_NAME = #{processTypeName,jdbcType=VARCHAR},
+      PROCESS_AUTHORIZED_DEPT_NAME = #{processAuthorizedDeptName,jdbcType=VARCHAR},
+      PROCESS_AUTHORIZED_DEPT_CODE = #{processAuthorizedDeptCode,jdbcType=VARCHAR},
+      PROCESS_PUBLISH_STATUS = #{processPublishStatus,jdbcType=CHAR},
+      PROCESS_NAMESPACE = #{processNamespace,jdbcType=VARCHAR},
+      PROCESS_DESCRIPTION = #{processDescription,jdbcType=VARCHAR},
+      PROCESS_ENGINE_TYPE = #{processEngineType,jdbcType=VARCHAR},
+      PROCESS_URL = #{processUrl,jdbcType=VARCHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR}
+    where WF_BASE_INFO = #{wfBaseInfo,jdbcType=VARCHAR}
+  </update>
+</mapper>
