@@ -24,6 +24,15 @@ import cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl;
 @Component
 public class WorkflowBizAspect {
 
+	/**
+	 *
+	 * @Date: 2017年11月2日上午10:30:17
+	 * @Title: aroundStartKindMethod
+	 * @Description: TODO(类WorkflowBizActBpm518Impl的启动流程方法的环绕通知方法)
+	 * @param pjp
+	 * @return
+	 * @return Object 返回值类型
+	 */
 	@SuppressWarnings("unchecked")
 	@Around(value = "execution(* cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl.startProcessInstance*(..))")
 	public Object aroundStartKindMethod(ProceedingJoinPoint pjp) {
@@ -47,6 +56,18 @@ public class WorkflowBizAspect {
 		return returnValue;
 	}
 
+	/**
+	 *
+	 * @Date: 2017年11月2日上午10:32:38
+	 * @Title: initWFBizDataRefNewProcInst
+	 * @Description: TODO(加工流程引擎回执的预处理数据)
+	 * @param processDefinitionKey
+	 * @param variables
+	 * @param newProcInstId
+	 * @param targetObj
+	 * @return
+	 * @return WFBizData 返回值类型
+	 */
 	private WFBizData initWFBizDataRefNewProcInst(String processDefinitionKey, Map<String, Object> variables, String newProcInstId, WorkflowBizActBpm518Impl targetObj) {
 		WFBizData newWFBizData = null;
 		if (newProcInstId != null && newProcInstId.length() > 0) {
@@ -70,7 +91,6 @@ public class WorkflowBizAspect {
 			newWFBizData.setBizBillNo((String) variables.get("business_bill_no"));// 业务单据编号
 			newWFBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
 			newWFBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
-
 			/* step2.初始化业务模块流程实例关联的工作项信息 */
 			List<WFWorkitem> newWFWorkitems = new ArrayList<WFWorkitem>();
 			String queryCurrentTask = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
@@ -100,9 +120,7 @@ public class WorkflowBizAspect {
 				newWFWorkitems.add(newWFWorkitem);
 				newWFBizData.setWfWorkitems(newWFWorkitems);
 			}
-
 			/* step3.初始化业务模块流程实例关联的审批记录信息 */
-			// TODO ......
 			List<WFAuditRecord> newWFAuditRecords = new ArrayList<WFAuditRecord>();
 			List<HistoricActivityInstance> histActiInsts = targetObj.getWorkflowHistoryBiz().createHistoricActivityInstanceQuery().processInstanceId(newProcInstId).orderByHistoricActivityInstanceStartTime().asc().list();
 			if (histActiInsts != null && histActiInsts.size() == 2) {
@@ -112,6 +130,7 @@ public class WorkflowBizAspect {
 				WFAuditRecord newFirstWFAuditRecord = new WFAuditRecord();
 				newFirstWFAuditRecord.setCreateDatetime(firstRecord.getStartTime());
 				newFirstWFAuditRecord.setCurrentApproverAuditTime(firstRecord.getEndTime());
+				newFirstWFAuditRecord.setModifyDatetime(OABizUtil.getCurrentTimestamp());
 				newFirstWFAuditRecord.setWfAuditRecordId(firstRecord.getId());
 				newFirstWFAuditRecord.setProcessInstanceId(newProcInstId);
 				newFirstWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(firstRecord.getProcessDefinitionId()).getName());

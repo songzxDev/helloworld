@@ -55,7 +55,7 @@ public class TestOABizWFService {
 				System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆【" + Thread.currentThread().getName() + "】★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			}
 		};
-		int runnerCount = 2;
+		int runnerCount = 200;
 		// Rnner数组，想当于并发多少个。
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
