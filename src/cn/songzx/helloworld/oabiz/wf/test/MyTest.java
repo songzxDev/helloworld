@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.fastjson.JSON;
 
 import cn.songzx.helloworld.oabiz.util.OABizSpringContextUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
@@ -196,13 +197,16 @@ public class MyTest {
 	public void testMethodC() {
 		WFBizData wfBizData = new WFBizData();
 		wfBizData.setWfBizDataId(OABizUtil.generateThirtySixUUIDPK());
+		wfBizData.setBizBillNo(OABizUtil.generateThirtySixUUIDPK());
 		List<WFBizData> sources = new ArrayList<WFBizData>();
 		sources.add(wfBizData);
 		List<WFBizDataPM> targets = new ArrayList<WFBizDataPM>();
 		OABizUtil.copyProperties(sources, targets, WFBizDataPM.class);
+		System.out.println(JSON.toJSONString(targets));
 		if (targets != null && targets.size() > 0) {
 			for (WFBizDataPM wfBizDataPM : targets) {
 				System.out.println("◇" + wfBizDataPM.getWfBizDataId());
+				System.out.println("◇" + wfBizDataPM.getBizBillNo());
 			}
 		}
 	}

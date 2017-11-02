@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
+import cn.songzx.helloworld.oabiz.wf.dao.WFBaseInfoMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBizDataMapper;
+import cn.songzx.helloworld.oabiz.wf.dao.WFStepInfoMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFWorkitemMapper;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
@@ -63,6 +65,16 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	 */
 	private WFAuditRecordMapper wfAuditRecordMapper;
 
+	/**
+	 * 业务系统：流程基本信息表
+	 */
+	private WFBaseInfoMapper wfBaseInfoMapper;
+
+	/**
+	 * 业务系统：流程环节信息表
+	 */
+	private WFStepInfoMapper wfStepInfoMapper;
+
 	// ☆☆☆☆☆☆☆☆☆☆【开始属性注入】☆☆☆☆☆☆☆☆☆☆
 	public WFBizDataMapper getWfBizDataMapper() {
 		return wfBizDataMapper;
@@ -89,6 +101,24 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	@Autowired
 	public void setWfAuditRecordMapper(WFAuditRecordMapper wfAuditRecordMapper) {
 		this.wfAuditRecordMapper = wfAuditRecordMapper;
+	}
+
+	public WFBaseInfoMapper getWfBaseInfoMapper() {
+		return wfBaseInfoMapper;
+	}
+
+	@Autowired
+	public void setWfBaseInfoMapper(WFBaseInfoMapper wfBaseInfoMapper) {
+		this.wfBaseInfoMapper = wfBaseInfoMapper;
+	}
+
+	public WFStepInfoMapper getWfStepInfoMapper() {
+		return wfStepInfoMapper;
+	}
+
+	@Autowired
+	public void setWfStepInfoMapper(WFStepInfoMapper wfStepInfoMapper) {
+		this.wfStepInfoMapper = wfStepInfoMapper;
 	}
 	// ★★★★★★★★★★【结束属性注入】★★★★★★★★★★
 
