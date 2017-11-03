@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.songzx.helloworld.oabiz.wf.dao.WFBpmnConfigVarRefMapper" >
+  <resultMap id="BaseResultMap" type="cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef" >
+    <id column="WF_BPMN_CONFIG_VAR_REF_ID" property="wfBpmnConfigVarRefId" jdbcType="VARCHAR" />
+    <result column="BPMN_VARIABLE_KEY" property="bpmnVariableKey" jdbcType="VARCHAR" />
+    <result column="BPMN_VARIABLE_NAME" property="bpmnVariableName" jdbcType="VARCHAR" />
+    <result column="BPMN_VARIABLE_INTRO" property="bpmnVariableIntro" jdbcType="VARCHAR" />
+    <result column="BPMN_ENGINE_TYPE" property="bpmnEngineType" jdbcType="VARCHAR" />
+    <result column="REF_BIZ_VARIABLE_KEY" property="refBizVariableKey" jdbcType="VARCHAR" />
+    <result column="REF_BIZ_VARIABLE_NAME" property="refBizVariableName" jdbcType="VARCHAR" />
+    <result column="REF_BIZ_VARIABLE_INTRO" property="refBizVariableIntro" jdbcType="VARCHAR" />
+    <result column="CREATE_DATETIME" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_DATETIME" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="USABLE_STATUS" property="usableStatus" jdbcType="CHAR" />
+    <result column="RESERVED_ATTRIBUTE1" property="reservedAttribute1" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE2" property="reservedAttribute2" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE3" property="reservedAttribute3" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE4" property="reservedAttribute4" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE5" property="reservedAttribute5" jdbcType="VARCHAR" />
+    <result column="RESERVED_ATTRIBUTE6" property="reservedAttribute6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WF_BPMN_CONFIG_VAR_REF_ID, BPMN_VARIABLE_KEY, BPMN_VARIABLE_NAME, BPMN_VARIABLE_INTRO, 
+    BPMN_ENGINE_TYPE, REF_BIZ_VARIABLE_KEY, REF_BIZ_VARIABLE_NAME, REF_BIZ_VARIABLE_INTRO, 
+    CREATE_DATETIME, MODIFY_DATETIME, USABLE_STATUS, RESERVED_ATTRIBUTE1, RESERVED_ATTRIBUTE2, 
+    RESERVED_ATTRIBUTE3, RESERVED_ATTRIBUTE4, RESERVED_ATTRIBUTE5, RESERVED_ATTRIBUTE6
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wf_bpmn_config_var_ref
+    where WF_BPMN_CONFIG_VAR_REF_ID = #{wfBpmnConfigVarRefId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wf_bpmn_config_var_ref
+    where WF_BPMN_CONFIG_VAR_REF_ID = #{wfBpmnConfigVarRefId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef" >
+    insert into wf_bpmn_config_var_ref (WF_BPMN_CONFIG_VAR_REF_ID, BPMN_VARIABLE_KEY, 
+      BPMN_VARIABLE_NAME, BPMN_VARIABLE_INTRO, BPMN_ENGINE_TYPE, 
+      REF_BIZ_VARIABLE_KEY, REF_BIZ_VARIABLE_NAME, 
+      REF_BIZ_VARIABLE_INTRO, CREATE_DATETIME, 
+      MODIFY_DATETIME, USABLE_STATUS, RESERVED_ATTRIBUTE1, 
+      RESERVED_ATTRIBUTE2, RESERVED_ATTRIBUTE3, 
+      RESERVED_ATTRIBUTE4, RESERVED_ATTRIBUTE5, 
+      RESERVED_ATTRIBUTE6)
+    values (#{wfBpmnConfigVarRefId,jdbcType=VARCHAR}, #{bpmnVariableKey,jdbcType=VARCHAR}, 
+      #{bpmnVariableName,jdbcType=VARCHAR}, #{bpmnVariableIntro,jdbcType=VARCHAR}, #{bpmnEngineType,jdbcType=VARCHAR}, 
+      #{refBizVariableKey,jdbcType=VARCHAR}, #{refBizVariableName,jdbcType=VARCHAR}, 
+      #{refBizVariableIntro,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{modifyDatetime,jdbcType=TIMESTAMP}, #{usableStatus,jdbcType=CHAR}, #{reservedAttribute1,jdbcType=VARCHAR}, 
+      #{reservedAttribute2,jdbcType=VARCHAR}, #{reservedAttribute3,jdbcType=VARCHAR}, 
+      #{reservedAttribute4,jdbcType=VARCHAR}, #{reservedAttribute5,jdbcType=VARCHAR}, 
+      #{reservedAttribute6,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef" >
+    insert into wf_bpmn_config_var_ref
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wfBpmnConfigVarRefId != null" >
+        WF_BPMN_CONFIG_VAR_REF_ID,
+      </if>
+      <if test="bpmnVariableKey != null" >
+        BPMN_VARIABLE_KEY,
+      </if>
+      <if test="bpmnVariableName != null" >
+        BPMN_VARIABLE_NAME,
+      </if>
+      <if test="bpmnVariableIntro != null" >
+        BPMN_VARIABLE_INTRO,
+      </if>
+      <if test="bpmnEngineType != null" >
+        BPMN_ENGINE_TYPE,
+      </if>
+      <if test="refBizVariableKey != null" >
+        REF_BIZ_VARIABLE_KEY,
+      </if>
+      <if test="refBizVariableName != null" >
+        REF_BIZ_VARIABLE_NAME,
+      </if>
+      <if test="refBizVariableIntro != null" >
+        REF_BIZ_VARIABLE_INTRO,
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME,
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS,
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1,
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2,
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3,
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4,
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5,
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wfBpmnConfigVarRefId != null" >
+        #{wfBpmnConfigVarRefId,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnVariableKey != null" >
+        #{bpmnVariableKey,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnVariableName != null" >
+        #{bpmnVariableName,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnVariableIntro != null" >
+        #{bpmnVariableIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnEngineType != null" >
+        #{bpmnEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableKey != null" >
+        #{refBizVariableKey,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableName != null" >
+        #{refBizVariableName,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableIntro != null" >
+        #{refBizVariableIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef" >
+    update wf_bpmn_config_var_ref
+    <set >
+      <if test="bpmnVariableKey != null" >
+        BPMN_VARIABLE_KEY = #{bpmnVariableKey,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnVariableName != null" >
+        BPMN_VARIABLE_NAME = #{bpmnVariableName,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnVariableIntro != null" >
+        BPMN_VARIABLE_INTRO = #{bpmnVariableIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmnEngineType != null" >
+        BPMN_ENGINE_TYPE = #{bpmnEngineType,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableKey != null" >
+        REF_BIZ_VARIABLE_KEY = #{refBizVariableKey,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableName != null" >
+        REF_BIZ_VARIABLE_NAME = #{refBizVariableName,jdbcType=VARCHAR},
+      </if>
+      <if test="refBizVariableIntro != null" >
+        REF_BIZ_VARIABLE_INTRO = #{refBizVariableIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDatetime != null" >
+        MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usableStatus != null" >
+        USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      </if>
+      <if test="reservedAttribute1 != null" >
+        RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute2 != null" >
+        RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute3 != null" >
+        RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute4 != null" >
+        RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute5 != null" >
+        RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedAttribute6 != null" >
+        RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WF_BPMN_CONFIG_VAR_REF_ID = #{wfBpmnConfigVarRefId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef" >
+    update wf_bpmn_config_var_ref
+    set BPMN_VARIABLE_KEY = #{bpmnVariableKey,jdbcType=VARCHAR},
+      BPMN_VARIABLE_NAME = #{bpmnVariableName,jdbcType=VARCHAR},
+      BPMN_VARIABLE_INTRO = #{bpmnVariableIntro,jdbcType=VARCHAR},
+      BPMN_ENGINE_TYPE = #{bpmnEngineType,jdbcType=VARCHAR},
+      REF_BIZ_VARIABLE_KEY = #{refBizVariableKey,jdbcType=VARCHAR},
+      REF_BIZ_VARIABLE_NAME = #{refBizVariableName,jdbcType=VARCHAR},
+      REF_BIZ_VARIABLE_INTRO = #{refBizVariableIntro,jdbcType=VARCHAR},
+      CREATE_DATETIME = #{createDatetime,jdbcType=TIMESTAMP},
+      MODIFY_DATETIME = #{modifyDatetime,jdbcType=TIMESTAMP},
+      USABLE_STATUS = #{usableStatus,jdbcType=CHAR},
+      RESERVED_ATTRIBUTE1 = #{reservedAttribute1,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE2 = #{reservedAttribute2,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE3 = #{reservedAttribute3,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE4 = #{reservedAttribute4,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE5 = #{reservedAttribute5,jdbcType=VARCHAR},
+      RESERVED_ATTRIBUTE6 = #{reservedAttribute6,jdbcType=VARCHAR}
+    where WF_BPMN_CONFIG_VAR_REF_ID = #{wfBpmnConfigVarRefId,jdbcType=VARCHAR}
+  </update>
+</mapper>
