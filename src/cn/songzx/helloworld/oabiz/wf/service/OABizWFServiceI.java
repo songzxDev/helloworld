@@ -11,6 +11,7 @@ package cn.songzx.helloworld.oabiz.wf.service;
 import java.util.Map;
 
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.oabiz.wf.pagemodel.WFAuditRecordPM;
 import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
@@ -70,6 +71,18 @@ public interface OABizWFServiceI {
 
 	/**
 	 *
+	 * @Date: 2017年11月3日下午12:33:12
+	 * @Title: addWFBizData
+	 * @Description: TODO(新增业务模块和流程模块关联信息)
+	 * @param wfBizData
+	 * @return
+	 * @throws Exception
+	 * @return WFBizDataPM 返回值类型
+	 */
+	public WFBizDataPM addWFBizData(WFBizData wfBizData) throws Exception;
+
+	/**
+	 *
 	 * @Date: 2017年10月30日下午6:33:13
 	 * @Title: addWFWorkitem
 	 * @Description: TODO(新增工作项信息)
@@ -91,4 +104,40 @@ public interface OABizWFServiceI {
 	 * @return WFAuditRecordPM 返回值类型
 	 */
 	public WFAuditRecordPM addWFAuditRecord(WFAuditRecord wfAuditRecord) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年11月3日上午11:56:28
+	 * @Title: modifyWFWorkitem
+	 * @Description: TODO(更新工作项的相关信息)
+	 * @param wfWorkitem
+	 * @return
+	 * @throws Exception
+	 * @return WFWorkitemPM 返回值类型
+	 */
+	public WFWorkitemPM modifyWFWorkitem(WFWorkitem wfWorkitem) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年11月3日上午11:56:33
+	 * @Title: modifyWFAuditRecord
+	 * @Description: TODO(更新审批记录的相关信息)
+	 * @param wfAuditRecord
+	 * @return
+	 * @throws Exception
+	 * @return WFAuditRecordPM 返回值类型
+	 */
+	public WFAuditRecordPM modifyWFAuditRecord(WFAuditRecord wfAuditRecord) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年11月3日下午12:33:02
+	 * @Title: modifyWFBizData
+	 * @Description: TODO(更新业务模块和流程模块关联信息)
+	 * @param wfBizData
+	 * @return
+	 * @throws Exception
+	 * @return WFBizDataPM 返回值类型
+	 */
+	public WFBizDataPM modifyWFBizData(WFBizData wfBizData) throws Exception;
 }

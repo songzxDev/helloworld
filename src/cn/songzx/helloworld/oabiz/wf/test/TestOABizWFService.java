@@ -16,10 +16,15 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
+import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
@@ -37,6 +42,28 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
 public class TestOABizWFService {
 	@Resource(name = "oaBizWFService")
 	private OABizWFServiceI oaBizWFService;
+
+	private WFAuditRecordMapper wfAuditRecordMapper;
+
+	public WFAuditRecordMapper getWfAuditRecordMapper() {
+		return wfAuditRecordMapper;
+	}
+
+	@Autowired
+	public void setWfAuditRecordMapper(WFAuditRecordMapper wfAuditRecordMapper) {
+		this.wfAuditRecordMapper = wfAuditRecordMapper;
+	}
+
+	@Test
+	public void testSelectByWorkitemId() {
+		try {
+			WFAuditRecord wfAuditRecord = wfAuditRecordMapper.selectByWorkitemId("03b7715a-bf72-11e7-8e22-c85b76a3c17b", "03e22af4-bf72-11e7-8e22-c85b76a3c17b");
+			System.out.println("测试呢！");
+			System.out.println(JSON.toJSONStringWithDateFormat(wfAuditRecord, "yyyy-MM-dd HH:mm:ss.SSS"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 *
@@ -90,5 +117,25 @@ public class TestOABizWFService {
 			e.printStackTrace();
 		}
 		return CommonExecuteStatus.SUCCESS.name();
+	}
+
+	@Test
+	public void testCompleteWorkitemByPK() {
+		Map<String, Object> variables = new LinkedHashMap<String, Object>();
+		variables.put("dynamic_participant_name", "李向东");
+		variables.put("dynamic_participant_partyid", "1240100700000010624");
+		variables.put("dynamic_participant_code", "1099100400000000001000010000100007000780000800005");
+		variables.put("dynamic_participant_dept_name", "集团客户事业部-保险客户销售服务部");
+		variables.put("dynamic_participant_dept_code", "10991004000000000010000100001000070007800008");
+		variables.put("business_bill_id", OABizUtil.generateNineteenUUIDPK());
+		variables.put("business_bill_name", "OA系统2017年光缆改造工程合同审计调整");
+		variables.put("business_bill_no", "OA" + System.currentTimeMillis());
+		variables.put("business_bill_kind_id", OABizUtil.generateNineteenUUIDPK());
+		variables.put("business_bill_kind_name", "合同审计");
+		try {
+			oaBizWFService.completeWorkitemByPK("afc13b62-c05c-11e7-bccc-c85b76a3c17b", variables);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

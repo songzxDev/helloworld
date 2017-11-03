@@ -1,6 +1,7 @@
 package cn.songzx.helloworld.workflow.biz.aspect;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class WorkflowBizAspect {
 	 */
 	@SuppressWarnings("unchecked")
 	@Around(value = "execution(* cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl.startProcessInstance*(..))")
-	public Object aroundStartKindMethod(ProceedingJoinPoint pjp) {
+	public Object aroundStartProcessInstanceKindMethod(ProceedingJoinPoint pjp) {
 
 		Object[] args = pjp.getArgs();// 获取代理目标对象的方法执行参数
 		if (args == null || args.length < 2 || args[0] == null || args[1] == null) {
@@ -51,6 +52,36 @@ public class WorkflowBizAspect {
 			WFBizData pretreatment = (WFBizData) returnValue;
 			String newProcInstId = pretreatment.getProcessInstanceId();
 			pretreatment = initWFBizDataRefNewProcInst((String) args[0], (Map<String, Object>) args[1], newProcInstId, (WorkflowBizActBpm518Impl) pjp.getTarget());
+			OABizUtil.copyProperties(pretreatment, returnValue);
+		}
+		return returnValue;
+	}
+
+	/**
+	 *
+	 * @Date: 2017年11月3日上午9:37:57
+	 * @Title: aroundCompleteWorkitemKindMethod
+	 * @Description: TODO(类WorkflowBizActBpm518Impl的提交工作项方法的环绕通知方法)
+	 * @param pjp
+	 * @return
+	 * @return Object 返回值类型
+	 */
+	@SuppressWarnings("unchecked")
+	@Around(value = "execution(* cn.songzx.helloworld.workflow.biz.impl.WorkflowBizActBpm518Impl.completeWorkitem*(..))")
+	public Object aroundCompleteWorkitemKindMethod(ProceedingJoinPoint pjp) {
+		Object[] args = pjp.getArgs();// 获取代理目标对象的方法执行参数
+		if (args == null || args.length < 2 || args[0] == null || args[1] == null) {
+			throw new RuntimeException("目标方法【" + pjp.getSignature().getName() + "(..)】执行失败，方法参数不符合规范！");
+		}
+		Object returnValue = null;
+		try {
+			returnValue = pjp.proceed(args);// 执行代理的目标方法
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		if (returnValue != null && returnValue instanceof WFWorkitem) {
+			WFWorkitem pretreatment = (WFWorkitem) returnValue;
+			pretreatment = initWFWorkitemRefNewTask((String) args[0], (Map<String, Object>) args[1], (WorkflowBizActBpm518Impl) pjp.getTarget());
 			OABizUtil.copyProperties(pretreatment, returnValue);
 		}
 		return returnValue;
@@ -173,6 +204,67 @@ public class WorkflowBizAspect {
 			}
 		}
 		return newWFBizData;
+	}
+
+	/**
+	 *
+	 * @Date: 2017年11月3日上午9:41:56
+	 * @Title: initWFWorkitemRefNewTask
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param histTaskId
+	 * @param variables
+	 * @param targetObj
+	 * @return
+	 * @return WFWorkitem 返回值类型
+	 */
+	private WFWorkitem initWFWorkitemRefNewTask(String histTaskId, Map<String, Object> variables, WorkflowBizActBpm518Impl targetObj) {
+		WFWorkitem newWFWorkitem = new WFWorkitem();
+		String procInstId = targetObj.getWorkflowHistoryBiz().createHistoricTaskInstanceQuery().taskId(histTaskId).singleResult().getProcessInstanceId();
+		String queryCurrentTask = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
+		Task currentTask = targetObj.getWorkflowTaskBiz().createNativeTaskQuery().sql(queryCurrentTask).parameter("procInstId", procInstId).singleResult();
+		if (currentTask != null) {
+			/* 初始化业务模块新工作项的相关信息 */
+			newWFWorkitem.setWfWorkitemId(currentTask.getId());
+			newWFWorkitem.setProcessInstanceId(currentTask.getProcessInstanceId());
+			newWFWorkitem.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(currentTask.getProcessDefinitionId()).getName());
+			newWFWorkitem.setWfEngineType(WFEngineType.ACTIVITI518.name());
+			newWFWorkitem.setWfStepId(currentTask.getTaskDefinitionKey());
+			newWFWorkitem.setWfStepName(currentTask.getName());
+			newWFWorkitem.setWfStepType("" + WFStepType.GENERALSIGN.getIndex());
+			newWFWorkitem.setCreateDatetime(currentTask.getCreateTime());
+			newWFWorkitem.setPerformerName((String) variables.get("dynamic_participant_name"));
+			newWFWorkitem.setPerformerPartyid((String) variables.get("dynamic_participant_partyid"));
+			newWFWorkitem.setPerformerCode((String) variables.get("dynamic_participant_code"));
+			newWFWorkitem.setSenderCompletedDatetime((Date) variables.get("sender_completed_datetime"));
+			newWFWorkitem.setSenderName((String) variables.get("sender_name"));
+			newWFWorkitem.setSenderPartyid((String) variables.get("sender_partyid"));
+			newWFWorkitem.setSenderCode((String) variables.get("sender_code"));
+			newWFWorkitem.setUsableStatus("1");
+			newWFWorkitem.setDoneStatus("0");
+			newWFWorkitem.setReadStatus("0");
+			newWFWorkitem.setAuthorizeStatus("0");
+			/* 业务模块新工作项关联的审批记录 */
+			String queryHistActiInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricActivityInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND TASK_ID_=#{taskId} AND END_TIME_ IS NULL";
+			HistoricActivityInstance histActiInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricActivityInstanceQuery().sql(queryHistActiInst).parameter("procInstId", procInstId).parameter("taskId", currentTask.getId()).singleResult();
+			WFAuditRecord newWFAuditRecord = new WFAuditRecord();
+			newWFAuditRecord.setWfAuditRecordId(histActiInst.getId());
+			newWFAuditRecord.setCreateDatetime(histActiInst.getStartTime());
+			newWFAuditRecord.setProcessInstanceId(procInstId);
+			newWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(histActiInst.getProcessDefinitionId()).getName());
+			newWFAuditRecord.setCurrentStepId(histActiInst.getActivityId());
+			newWFAuditRecord.setCurrentStepName(histActiInst.getActivityName());
+			newWFAuditRecord.setCurrentStepType(histActiInst.getActivityType());
+			newWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
+			newWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
+			newWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
+			newWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
+			newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+			newWFAuditRecord.setCurrentWorkitemId(histActiInst.getTaskId());
+			newWFAuditRecord.setUsableStatus("1");
+			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+			newWFWorkitem.setOwnWFAuditRecord(newWFAuditRecord);
+		}
+		return newWFWorkitem;
 	}
 
 }

@@ -8,14 +8,18 @@
 */
 package cn.songzx.helloworld.oabiz.wf.service.aspect;
 
-import javax.annotation.Resource;
+import java.sql.SQLException;
+import java.util.Map;
 
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import cn.songzx.helloworld.oabiz.wf.pagemodel.WFBizDataPM;
-import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
+import cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl;
 
 /**
  * @ClassName: OABizWFServiceAspect
@@ -28,32 +32,55 @@ import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 @Component
 public class OABizWFServiceAspect {
 
-	@Resource(name = "oaBizWFService")
-	private OABizWFServiceI oaBizWFService;
-
-	/**
-	 *
-	 * @Date: 2017年10月30日下午5:58:02
-	 * @Title: startKindMethodAfterReturning
-	 * @Description: TODO(启动流程方法执行后的增强处理方法)
-	 * @param newWFBizData
-	 *            目标方法的返回值
-	 * @return void 返回值类型
-	 */
-	@AfterReturning(returning = "newWFBizDataPM", pointcut = "execution(* cn.songzx.helloworld.oabiz.wf.service..*.startProcessInstance*(..))")
-	public void startKindMethodAfterReturning(final WFBizDataPM newWFBizDataPM) {
-		/*
-		 * AfterReturning增强处理可以访问到方法的返回值，但它无法改变目标方法的返回值
-		 */
-		System.out.println("启动流程方法执行后的增强处理方法【startKindMethodAfterReturning(..)】开始执行了!");
-		// TODO ......
+	@SuppressWarnings("unchecked")
+	@Around("execution(* cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl.completeWorkitem*(..))")
+	public Object aroundCompleteWorkitemKindMethod(ProceedingJoinPoint pjp) {
+		Object returnValue = null;
+		// before
+		OABizWFServiceImpl targetObj = (OABizWFServiceImpl) pjp.getTarget();
+		Object[] args = pjp.getArgs();
+		String targetMethodName = pjp.getSignature().getName();
+		if (args == null || args.length < 2 || args[0] == null || args[1] == null) {
+			throw new RuntimeException("执行目标方法【" + targetMethodName + "】(..)失败，参数传入不符合规范！");
+		}
+		String completeWorkitemId = (String) args[0];
+		Map<String, Object> completeVariables = (Map<String, Object>) args[1];
 		try {
-			Thread.sleep(2000L);// 模拟提交审批后，业务模块根据相应的业务类型做相关操作
-		} catch (InterruptedException e) {
+			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+			WFWorkitem completeWorkitem = targetObj.getWfWorkitemMapper().selectByPrimaryKey(completeWorkitemId);
+			completeWorkitem.setReadStatus("1");
+			completeWorkitem.setDoneStatus("1");
+			completeWorkitem.setPerformerCompletedDatetime(OABizUtil.getCurrentTimestamp());
+			completeWorkitem.setModifyDatetime(OABizUtil.getCurrentTimestamp());
+			targetObj.modifyWFWorkitem(completeWorkitem);
+			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+			WFAuditRecord completeAuditRecord = targetObj.getWfAuditRecordMapper().selectByWorkitemId(completeWorkitem.getProcessInstanceId(), completeWorkitem.getWfWorkitemId());
+			completeAuditRecord.setCurrentApproverAuditTime(OABizUtil.getCurrentTimestamp());
+			completeAuditRecord.setModifyDatetime(OABizUtil.getCurrentTimestamp());
+			completeAuditRecord.setNextStepId((String) completeVariables.get("next_step_id"));
+			completeAuditRecord.setNextStepName((String) completeVariables.get("next_step_name"));
+			completeAuditRecord.setNextStepType((String) completeVariables.get("next_step_type"));
+			completeAuditRecord.setNextApproverName((String) completeVariables.get("dynamic_participant_name"));
+			completeAuditRecord.setNextApproverPartyid((String) completeVariables.get("dynamic_participant_partyid"));
+			completeAuditRecord.setNextApproverCode((String) completeVariables.get("dynamic_participant_code"));
+			targetObj.modifyWFAuditRecord(completeAuditRecord);
+			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+			completeVariables.put("sender_completed_datetime", completeWorkitem.getPerformerCompletedDatetime());
+			completeVariables.put("sender_name", completeWorkitem.getPerformerName());
+			completeVariables.put("sender_partyid", completeWorkitem.getPerformerPartyid());
+			completeVariables.put("sender_code", completeWorkitem.getPerformerCode());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("启动流程方法执行后的增强处理方法【startKindMethodAfterReturning(..)】执行结束了!");
-
+		try {
+			args[0] = completeWorkitemId;
+			args[1] = completeVariables;
+			returnValue = pjp.proceed(args);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return returnValue;
 	}
-
 }
