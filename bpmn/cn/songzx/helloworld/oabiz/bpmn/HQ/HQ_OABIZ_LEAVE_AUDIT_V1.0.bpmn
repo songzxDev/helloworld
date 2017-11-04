@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/songzx">
+  <process id="HQ_OABIZ_LEAVE_AUDIT_V1.0" name="集团_OA办公系统_请假单审批_V1.0" isExecutable="true">
+    <startEvent id="ACT000" name="启动流程"></startEvent>
+    <userTask id="ACT001" name="员工提交申请"></userTask>
+    <userTask id="ACT002" name="项目组长审批"></userTask>
+    <userTask id="ACT003" name="项目经理审批"></userTask>
+    <endEvent id="ACT999" name="结束流程"></endEvent>
+    <sequenceFlow id="GOTO_ACT002" sourceRef="ACT001" targetRef="ACT002"></sequenceFlow>
+    <sequenceFlow id="GOTO_ACT003" sourceRef="ACT002" targetRef="ACT003"></sequenceFlow>
+    <sequenceFlow id="GOTO_ACT001" sourceRef="ACT000" targetRef="ACT001"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="是否同意" default="GOTO_ACT999"></exclusiveGateway>
+    <sequenceFlow id="flow5" sourceRef="ACT003" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="GOTO_ACT999" name="同意" sourceRef="exclusivegateway1" targetRef="ACT999"></sequenceFlow>
+    <sequenceFlow id="BACK_ACT001" name="不同意" sourceRef="exclusivegateway1" targetRef="ACT001"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_HQ_OABIZ_LEAVE_AUDIT_V1.0">
+    <bpmndi:BPMNPlane bpmnElement="HQ_OABIZ_LEAVE_AUDIT_V1.0" id="BPMNPlane_HQ_OABIZ_LEAVE_AUDIT_V1.0">
+      <bpmndi:BPMNShape bpmnElement="ACT000" id="BPMNShape_ACT000">
+        <omgdc:Bounds height="35.0" width="35.0" x="100.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ACT001" id="BPMNShape_ACT001">
+        <omgdc:Bounds height="55.0" width="105.0" x="190.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ACT002" id="BPMNShape_ACT002">
+        <omgdc:Bounds height="55.0" width="105.0" x="350.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ACT003" id="BPMNShape_ACT003">
+        <omgdc:Bounds height="55.0" width="105.0" x="520.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ACT999" id="BPMNShape_ACT999">
+        <omgdc:Bounds height="35.0" width="35.0" x="800.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="157.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="GOTO_ACT002" id="BPMNEdge_GOTO_ACT002">
+        <omgdi:waypoint x="295.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="GOTO_ACT003" id="BPMNEdge_GOTO_ACT003">
+        <omgdi:waypoint x="455.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="520.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="GOTO_ACT001" id="BPMNEdge_GOTO_ACT001">
+        <omgdi:waypoint x="135.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="190.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="625.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="GOTO_ACT999" id="BPMNEdge_GOTO_ACT999">
+        <omgdi:waypoint x="720.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="800.0" y="177.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="734.0" y="160.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="BACK_ACT001" id="BPMNEdge_BACK_ACT001">
+        <omgdi:waypoint x="700.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="699.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="498.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="242.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="242.0" y="205.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="422.0" y="249.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

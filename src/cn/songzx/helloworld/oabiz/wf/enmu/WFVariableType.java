@@ -17,35 +17,35 @@ package cn.songzx.helloworld.oabiz.wf.enmu;
  */
 public enum WFVariableType {
 
-	/***/
+	/** 当前参与者姓名 */
 	current_participant_name("current_participant_name", "", "当前参与者姓名"),
-	/***/
+	/** 当前参与者partyid */
 	current_participant_partyid("current_participant_partyid", "", "当前参与者partyid"),
-	/***/
+	/** 当前参与者code */
 	current_participant_code("current_participant_code", "", "当前参与者code"),
-	/***/
+	/** 当前参与者部门名称 */
 	current_participant_dept_name("current_participant_dept_name", "", "当前参与者部门名称"),
-	/***/
+	/** 当前参与者部门code */
 	current_participant_dept_code("current_participant_dept_code", "", "当前参与者部门code"),
-	/***/
+	/** 以前参与者姓名 */
 	previous_participant_name("previous_participant_name", "", "以前参与者姓名"),
-	/***/
+	/** 以前参与者partyid */
 	previous_participant_partyid("previous_participant_partyid", "", "以前参与者partyid"),
-	/***/
+	/** 以前参与者code */
 	previous_participant_code("previous_participant_code", "", "以前参与者code"),
-	/***/
+	/** 以前参与者部门名称 */
 	previous_participant_dept_name("previous_participant_dept_name", "", "以前参与者部门名称"),
-	/***/
+	/** 以前参与者部门code */
 	previous_participant_dept_code("previous_participant_dept_code", "", "以前参与者部门code"),
-	/***/
+	/** 业务单据主键 */
 	business_bill_id("business_bill_id", "", "业务单据主键"),
-	/***/
+	/** 业务单据名称 */
 	business_bill_name("business_bill_name", "", "业务单据名称"),
-	/***/
+	/** 业务单据编号 */
 	business_bill_no("business_bill_no", "", "业务单据编号"),
-	/***/
+	/** 业务单据类型id */
 	business_bill_kind_id("business_bill_kind_id", "", "业务单据类型id"),
-	/***/
+	/** 业务单据类型名称 */
 	business_bill_kind_name("business_bill_kind_name", "", "业务单据类型名称");
 
 	private String key;
