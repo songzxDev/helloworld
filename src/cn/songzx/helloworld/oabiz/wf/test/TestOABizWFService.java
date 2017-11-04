@@ -24,7 +24,11 @@ import com.alibaba.fastjson.JSON;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
+import cn.songzx.helloworld.oabiz.wf.dao.WFBpmnConfigVarRefMapper;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFEngineType;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFVariableType;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef;
 import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
 import net.sourceforge.groboutils.junit.v1.MultiThreadedTestRunner;
@@ -45,6 +49,8 @@ public class TestOABizWFService {
 
 	private WFAuditRecordMapper wfAuditRecordMapper;
 
+	private WFBpmnConfigVarRefMapper wfBpmnConfigVarRefMapper;
+
 	public WFAuditRecordMapper getWfAuditRecordMapper() {
 		return wfAuditRecordMapper;
 	}
@@ -52,6 +58,15 @@ public class TestOABizWFService {
 	@Autowired
 	public void setWfAuditRecordMapper(WFAuditRecordMapper wfAuditRecordMapper) {
 		this.wfAuditRecordMapper = wfAuditRecordMapper;
+	}
+
+	public WFBpmnConfigVarRefMapper getWfBpmnConfigVarRefMapper() {
+		return wfBpmnConfigVarRefMapper;
+	}
+
+	@Autowired
+	public void setWfBpmnConfigVarRefMapper(WFBpmnConfigVarRefMapper wfBpmnConfigVarRefMapper) {
+		this.wfBpmnConfigVarRefMapper = wfBpmnConfigVarRefMapper;
 	}
 
 	@Test
@@ -136,6 +151,27 @@ public class TestOABizWFService {
 			oaBizWFService.completeWorkitemByPK("afc13b62-c05c-11e7-bccc-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void initWFBpmnConfigVarRef() {
+		WFBpmnConfigVarRef ref = new WFBpmnConfigVarRef();
+		for (WFVariableType enumValue : WFVariableType.values()) {
+			ref.setWfBpmnConfigVarRefId(OABizUtil.generateThirtySixUUIDPK());
+			ref.setBpmnVariableKey(enumValue.getKey());
+			ref.setBpmnVariableName("");
+			ref.setBpmnVariableIntro(enumValue.getIntro());
+			ref.setUsableStatus("1");
+			ref.setCreateDatetime(OABizUtil.getCurrentTimestamp());
+			ref.setBpmnEngineType(WFEngineType.ACTIVITI518.name());
+			wfBpmnConfigVarRefMapper.insertSelective(ref);
+		}
+	}
+
+	public static void main(String[] args) {
+		for (WFVariableType element : WFVariableType.values()) {
+			System.out.println(element);
 		}
 	}
 }
