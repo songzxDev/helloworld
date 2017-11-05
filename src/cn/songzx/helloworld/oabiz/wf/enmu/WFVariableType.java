@@ -53,6 +53,8 @@ public enum WFVariableType {
 	next_step_id("next_step_id", "", "下一步执行环节id"),
 	/** 下一步执行环节名称 */
 	next_step_name("next_step_name", "", "下一步执行环节名称"),
+	/** 下一步执行环节类型 */
+	next_step_type("next_step_type", "", "下一步执行环节类型"),
 	/** 当前审批人是否同意标识 */
 	is_agreed("is_agreed", "", "当前审批人是否同意标识");
 

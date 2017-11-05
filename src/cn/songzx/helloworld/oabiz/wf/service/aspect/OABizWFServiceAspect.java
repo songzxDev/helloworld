@@ -17,6 +17,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFVariableType;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
 import cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl;
@@ -57,18 +58,18 @@ public class OABizWFServiceAspect {
 			WFAuditRecord completeAuditRecord = targetObj.getWfAuditRecordMapper().selectByWorkitemId(completeWorkitem.getProcessInstanceId(), completeWorkitem.getWfWorkitemId());
 			completeAuditRecord.setCurrentApproverAuditTime(OABizUtil.getCurrentTimestamp());
 			completeAuditRecord.setModifyDatetime(OABizUtil.getCurrentTimestamp());
-			completeAuditRecord.setNextStepId((String) completeVariables.get("next_step_id"));
-			completeAuditRecord.setNextStepName((String) completeVariables.get("next_step_name"));
-			completeAuditRecord.setNextStepType((String) completeVariables.get("next_step_type"));
-			completeAuditRecord.setNextApproverName((String) completeVariables.get("dynamic_participant_name"));
-			completeAuditRecord.setNextApproverPartyid((String) completeVariables.get("dynamic_participant_partyid"));
-			completeAuditRecord.setNextApproverCode((String) completeVariables.get("dynamic_participant_code"));
+			completeAuditRecord.setNextStepId((String) completeVariables.get(WFVariableType.next_step_id.getKey()));
+			completeAuditRecord.setNextStepName((String) completeVariables.get(WFVariableType.next_step_name.getKey()));
+			completeAuditRecord.setNextStepType((String) completeVariables.get(WFVariableType.next_step_type.getKey()));
+			completeAuditRecord.setNextApproverName((String) completeVariables.get(WFVariableType.current_participant_name.getKey()));
+			completeAuditRecord.setNextApproverPartyid((String) completeVariables.get(WFVariableType.current_participant_partyid.getKey()));
+			completeAuditRecord.setNextApproverCode((String) completeVariables.get(WFVariableType.current_participant_code.getKey()));
 			targetObj.modifyWFAuditRecord(completeAuditRecord);
 			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
-			completeVariables.put("sender_completed_datetime", completeWorkitem.getPerformerCompletedDatetime());
-			completeVariables.put("sender_name", completeWorkitem.getPerformerName());
-			completeVariables.put("sender_partyid", completeWorkitem.getPerformerPartyid());
-			completeVariables.put("sender_code", completeWorkitem.getPerformerCode());
+			completeVariables.put(WFVariableType.previous_participant_completed_datetime.getKey(), completeWorkitem.getPerformerCompletedDatetime());
+			completeVariables.put(WFVariableType.previous_participant_name.getKey(), completeWorkitem.getPerformerName());
+			completeVariables.put(WFVariableType.previous_participant_partyid.getKey(), completeWorkitem.getPerformerPartyid());
+			completeVariables.put(WFVariableType.previous_participant_code.getKey(), completeWorkitem.getPerformerCode());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
