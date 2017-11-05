@@ -149,7 +149,7 @@ public class TestOABizWFService {
 		variables.put("business_bill_kind_name", "请假单");
 		variables.put("is_agreed", true);
 		try {
-			oaBizWFService.completeWorkitemByPK("9ebf2888-c1f7-11e7-9532-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("6ff31e9e-c1fd-11e7-8c08-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
