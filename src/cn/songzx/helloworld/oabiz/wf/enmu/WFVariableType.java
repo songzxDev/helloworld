@@ -37,6 +37,8 @@ public enum WFVariableType {
 	previous_participant_dept_name("previous_participant_dept_name", "", "以前参与者部门名称"),
 	/** 以前参与者部门code */
 	previous_participant_dept_code("previous_participant_dept_code", "", "以前参与者部门code"),
+	/** 以前参与者提交工作项日期时间 */
+	previous_participant_completed_datetime,
 	/** 业务单据主键 */
 	business_bill_id("business_bill_id", "", "业务单据主键"),
 	/** 业务单据名称 */

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFEngineType;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFStepType;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFVariableType;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFWorkitem;
@@ -112,16 +113,16 @@ public class WorkflowBizAspect {
 			newWFBizData.setUsableStatus("1");// 逻辑删除标识，1是否，0是被标记为逻辑删除
 			newWFBizData.setWfEngineType(WFEngineType.ACTIVITI518.name());// 流程引擎类型
 			newWFBizData.setBizBillAuditStatus(WorkflowBizI.APPROVAL_UNDERWAY);// 流程实例审批状态为：进行中
-			newWFBizData.setBizBillEditorName((String) variables.get("dynamic_participant_name"));// 参与者人员姓名
-			newWFBizData.setBizBillEditorPartyid((String) variables.get("dynamic_participant_partyid"));// 参与者人员partyid
-			newWFBizData.setBizBillEditorCode((String) variables.get("dynamic_participant_code"));// 参与者人员CODE
-			newWFBizData.setBizBillEditorDeptName((String) variables.get("dynamic_participant_dept_name"));// 参与者所在部门名称
-			newWFBizData.setBizBillEditorDeptCode((String) variables.get("dynamic_participant_dept_code"));// 参与者所在部门CODE
-			newWFBizData.setBizBillId((String) variables.get("business_bill_id"));// 业务单据主键
-			newWFBizData.setBizBillName((String) variables.get("business_bill_name"));// 业务单据名称
-			newWFBizData.setBizBillNo((String) variables.get("business_bill_no"));// 业务单据编号
-			newWFBizData.setBizBillKindId((String) variables.get("business_bill_kind_id"));// 业务类型ID
-			newWFBizData.setBizBillKindName((String) variables.get("business_bill_kind_name"));// 业务类型名称
+			newWFBizData.setBizBillEditorName((String) variables.get(WFVariableType.current_participant_name.getKey()));// 参与者人员姓名
+			newWFBizData.setBizBillEditorPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));// 参与者人员partyid
+			newWFBizData.setBizBillEditorCode((String) variables.get(WFVariableType.current_participant_code.getKey()));// 参与者人员CODE
+			newWFBizData.setBizBillEditorDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));// 参与者所在部门名称
+			newWFBizData.setBizBillEditorDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));// 参与者所在部门CODE
+			newWFBizData.setBizBillId((String) variables.get(WFVariableType.business_bill_id.getKey()));// 业务单据主键
+			newWFBizData.setBizBillName((String) variables.get(WFVariableType.business_bill_name.getKey()));// 业务单据名称
+			newWFBizData.setBizBillNo((String) variables.get(WFVariableType.business_bill_no.getKey()));// 业务单据编号
+			newWFBizData.setBizBillKindId((String) variables.get(WFVariableType.business_bill_kind_id.getKey()));// 业务类型ID
+			newWFBizData.setBizBillKindName((String) variables.get(WFVariableType.business_bill_kind_name.getKey()));// 业务类型名称
 			/* step2.初始化业务模块流程实例关联的工作项信息 */
 			List<WFWorkitem> newWFWorkitems = new ArrayList<WFWorkitem>();
 			String queryCurrentTask = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
@@ -137,12 +138,12 @@ public class WorkflowBizAspect {
 				newWFWorkitem.setWfStepType("" + WFStepType.GENERALSIGN.getIndex());
 				newWFWorkitem.setCreateDatetime(currentTask.getCreateTime());
 				newWFWorkitem.setSenderCompletedDatetime(currentTask.getCreateTime());
-				newWFWorkitem.setSenderName((String) variables.get("dynamic_participant_name"));
-				newWFWorkitem.setSenderPartyid((String) variables.get("dynamic_participant_partyid"));
-				newWFWorkitem.setSenderCode((String) variables.get("dynamic_participant_code"));
-				newWFWorkitem.setPerformerName((String) variables.get("dynamic_participant_name"));
-				newWFWorkitem.setPerformerPartyid((String) variables.get("dynamic_participant_partyid"));
-				newWFWorkitem.setPerformerCode((String) variables.get("dynamic_participant_code"));
+				newWFWorkitem.setSenderName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newWFWorkitem.setSenderPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newWFWorkitem.setSenderCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+				newWFWorkitem.setPerformerName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newWFWorkitem.setPerformerPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newWFWorkitem.setPerformerCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
 				newWFWorkitem.setUsableStatus("1");
 				newWFWorkitem.setDoneStatus("0");
 				newWFWorkitem.setReadStatus("1");
@@ -168,18 +169,18 @@ public class WorkflowBizAspect {
 				newFirstWFAuditRecord.setCurrentStepId(firstRecord.getActivityId());
 				newFirstWFAuditRecord.setCurrentStepName(firstRecord.getActivityName());
 				newFirstWFAuditRecord.setCurrentStepType(firstRecord.getActivityType());
-				newFirstWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
-				newFirstWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
-				newFirstWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
-				newFirstWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
-				newFirstWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+				newFirstWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newFirstWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newFirstWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+				newFirstWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
+				newFirstWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
 				newFirstWFAuditRecord.setCurrentWorkitemId("PLACEHOLDER-" + OABizUtil.generateNineteenUUIDPK());
 				newFirstWFAuditRecord.setNextStepId(secondRecord.getActivityId());
 				newFirstWFAuditRecord.setNextStepName(secondRecord.getActivityName());
 				newFirstWFAuditRecord.setNextStepType(secondRecord.getActivityType());
-				newFirstWFAuditRecord.setNextApproverName((String) variables.get("dynamic_participant_name"));
-				newFirstWFAuditRecord.setNextApproverPartyid((String) variables.get("dynamic_participant_partyid"));
-				newFirstWFAuditRecord.setNextApproverCode((String) variables.get("dynamic_participant_code"));
+				newFirstWFAuditRecord.setNextApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newFirstWFAuditRecord.setNextApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newFirstWFAuditRecord.setNextApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
 				newFirstWFAuditRecord.setUsableStatus("1");
 				/* 业务模块流程实例关联的审批记录第二条数据 */
 				WFAuditRecord newSecondWFAuditRecord = new WFAuditRecord();
@@ -190,11 +191,11 @@ public class WorkflowBizAspect {
 				newSecondWFAuditRecord.setCurrentStepId(secondRecord.getActivityId());
 				newSecondWFAuditRecord.setCurrentStepName(secondRecord.getActivityName());
 				newSecondWFAuditRecord.setCurrentStepType(secondRecord.getActivityType());
-				newSecondWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
-				newSecondWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
-				newSecondWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
-				newSecondWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
-				newSecondWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+				newSecondWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newSecondWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newSecondWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+				newSecondWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
+				newSecondWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
 				newSecondWFAuditRecord.setCurrentWorkitemId(secondRecord.getTaskId());
 				newSecondWFAuditRecord.setUsableStatus("1");
 				/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
@@ -232,13 +233,13 @@ public class WorkflowBizAspect {
 			newWFWorkitem.setWfStepName(currentTask.getName());
 			newWFWorkitem.setWfStepType("" + WFStepType.GENERALSIGN.getIndex());
 			newWFWorkitem.setCreateDatetime(currentTask.getCreateTime());
-			newWFWorkitem.setPerformerName((String) variables.get("dynamic_participant_name"));
-			newWFWorkitem.setPerformerPartyid((String) variables.get("dynamic_participant_partyid"));
-			newWFWorkitem.setPerformerCode((String) variables.get("dynamic_participant_code"));
-			newWFWorkitem.setSenderCompletedDatetime((Date) variables.get("sender_completed_datetime"));
-			newWFWorkitem.setSenderName((String) variables.get("sender_name"));
-			newWFWorkitem.setSenderPartyid((String) variables.get("sender_partyid"));
-			newWFWorkitem.setSenderCode((String) variables.get("sender_code"));
+			newWFWorkitem.setPerformerName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+			newWFWorkitem.setPerformerPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+			newWFWorkitem.setPerformerCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+			newWFWorkitem.setSenderCompletedDatetime((Date) variables.get(WFVariableType.previous_participant_completed_datetime.getKey()));
+			newWFWorkitem.setSenderName((String) variables.get(WFVariableType.previous_participant_name.getKey()));
+			newWFWorkitem.setSenderPartyid((String) variables.get(WFVariableType.previous_participant_partyid.getKey()));
+			newWFWorkitem.setSenderCode((String) variables.get(WFVariableType.previous_participant_code.getKey()));
 			newWFWorkitem.setUsableStatus("1");
 			newWFWorkitem.setDoneStatus("0");
 			newWFWorkitem.setReadStatus("0");
@@ -254,11 +255,11 @@ public class WorkflowBizAspect {
 			newWFAuditRecord.setCurrentStepId(histActiInst.getActivityId());
 			newWFAuditRecord.setCurrentStepName(histActiInst.getActivityName());
 			newWFAuditRecord.setCurrentStepType(histActiInst.getActivityType());
-			newWFAuditRecord.setCurrentApproverName((String) variables.get("dynamic_participant_name"));
-			newWFAuditRecord.setCurrentApproverPartyid((String) variables.get("dynamic_participant_partyid"));
-			newWFAuditRecord.setCurrentApproverCode((String) variables.get("dynamic_participant_code"));
-			newWFAuditRecord.setCurrentApproverDeptName((String) variables.get("dynamic_participant_dept_name"));
-			newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get("dynamic_participant_dept_code"));
+			newWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
+			newWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+			newWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+			newWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
+			newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
 			newWFAuditRecord.setCurrentWorkitemId(histActiInst.getTaskId());
 			newWFAuditRecord.setUsableStatus("1");
 			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
