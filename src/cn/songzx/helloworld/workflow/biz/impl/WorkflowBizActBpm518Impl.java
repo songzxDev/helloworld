@@ -162,7 +162,7 @@ public class WorkflowBizActBpm518Impl extends WFInitializingBean implements Work
 	@Override
 	public WFWorkitem completeWorkitemByPK(String workitemId, Map<String, Object> variables) throws Exception {
 		WFWorkitem newWFWorkitem = new WFWorkitem();
-		workflowTaskBiz.complete(workitemId, variables, true);
+		workflowTaskBiz.complete(workitemId, variables);
 		return newWFWorkitem;
 	}
 

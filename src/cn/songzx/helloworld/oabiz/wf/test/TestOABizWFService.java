@@ -97,7 +97,7 @@ public class TestOABizWFService {
 				System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆【" + Thread.currentThread().getName() + "】★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			}
 		};
-		int runnerCount = 200;
+		int runnerCount = 1;
 		// Rnner数组，想当于并发多少个。
 		TestRunnable[] trs = new TestRunnable[runnerCount];
 		for (int i = 0; i < runnerCount; i++) {
@@ -115,17 +115,17 @@ public class TestOABizWFService {
 
 	private Serializable teststartProcessInstanceByKey() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put("dynamic_participant_name", "李向东");
-		variables.put("dynamic_participant_partyid", "1240100700000010624");
-		variables.put("dynamic_participant_code", "1099100400000000001000010000100007000780000800005");
-		variables.put("dynamic_participant_dept_name", "集团客户事业部-保险客户销售服务部");
+		variables.put("dynamic_participant_name", "肖飞雪");
+		variables.put("dynamic_participant_partyid", OABizUtil.generateNineteenUUIDPK());
+		variables.put("dynamic_participant_code", OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put("dynamic_participant_dept_name", "集团产品外包部");
 		variables.put("dynamic_participant_dept_code", "10991004000000000010000100001000070007800008");
 		variables.put("business_bill_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_name", "OA系统2017年光缆改造工程合同审计调整");
+		variables.put("business_bill_name", "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
 		variables.put("business_bill_no", "OA" + System.currentTimeMillis());
 		variables.put("business_bill_kind_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_kind_name", "合同审计");
-		String processDefinitionKey = "HQ_OABIZ_CONTRACT_AUDIT_V1.0";
+		variables.put("business_bill_kind_name", "请假单");
+		String processDefinitionKey = "HQ_OABIZ_LEAVE_AUDIT_V1.0";
 		try {
 			oaBizWFService.startProcessInstanceByKey(processDefinitionKey, variables);
 		} catch (Exception e) {
@@ -137,18 +137,19 @@ public class TestOABizWFService {
 	@Test
 	public void testCompleteWorkitemByPK() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put("dynamic_participant_name", "李向东");
-		variables.put("dynamic_participant_partyid", "1240100700000010624");
-		variables.put("dynamic_participant_code", "1099100400000000001000010000100007000780000800005");
-		variables.put("dynamic_participant_dept_name", "集团客户事业部-保险客户销售服务部");
+		variables.put("dynamic_participant_name", "肖飞雪");
+		variables.put("dynamic_participant_partyid", OABizUtil.generateNineteenUUIDPK());
+		variables.put("dynamic_participant_code", OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put("dynamic_participant_dept_name", "集团产品外包部");
 		variables.put("dynamic_participant_dept_code", "10991004000000000010000100001000070007800008");
 		variables.put("business_bill_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_name", "OA系统2017年光缆改造工程合同审计调整");
+		variables.put("business_bill_name", "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
 		variables.put("business_bill_no", "OA" + System.currentTimeMillis());
 		variables.put("business_bill_kind_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_kind_name", "合同审计");
+		variables.put("business_bill_kind_name", "请假单");
+		variables.put("is_agreed", true);
 		try {
-			oaBizWFService.completeWorkitemByPK("afc13b62-c05c-11e7-bccc-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("9ebf2888-c1f7-11e7-9532-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

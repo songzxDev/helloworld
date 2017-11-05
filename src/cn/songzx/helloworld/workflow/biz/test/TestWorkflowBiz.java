@@ -110,7 +110,7 @@ public class TestWorkflowBiz extends WorkflowBizActBpm518Impl {
 			System.out.println("☆★☆★☆★☆★☆★☆★☆★☆★☆★【" + courseFile + "】☆★☆★☆★☆★☆★☆★☆★☆★☆★");
 			String sourceFilePath = courseFile + "\\bpmn\\cn\\songzx\\helloworld\\oabiz\\bpmn\\HQ";
 			String zipFilePath = courseFile + "\\bpmn\\cn\\songzx\\helloworld\\oabiz\\bpmn\\HQ";
-			String fileName = "HQ_OABIZ_CONTRACT_AUDIT_V1.0";
+			String fileName = "HQ_OABIZ_LEAVE_AUDIT_V1.0";
 			// OABizUtil.fileToZip(sourceFilePath, zipFilePath, fileName);
 			String zipFileName = fileName + ".zip";
 			workflowBiz.deployDiagramByZipFile(zipFilePath + "\\" + zipFileName, zipFileName);

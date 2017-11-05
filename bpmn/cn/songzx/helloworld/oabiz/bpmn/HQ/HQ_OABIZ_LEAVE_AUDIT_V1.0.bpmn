@@ -9,10 +9,12 @@
     <sequenceFlow id="GOTO_ACT002" sourceRef="ACT001" targetRef="ACT002"></sequenceFlow>
     <sequenceFlow id="GOTO_ACT003" sourceRef="ACT002" targetRef="ACT003"></sequenceFlow>
     <sequenceFlow id="GOTO_ACT001" sourceRef="ACT000" targetRef="ACT001"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway1" name="是否同意" default="GOTO_ACT999"></exclusiveGateway>
-    <sequenceFlow id="flow5" sourceRef="ACT003" targetRef="exclusivegateway1"></sequenceFlow>
-    <sequenceFlow id="GOTO_ACT999" name="同意" sourceRef="exclusivegateway1" targetRef="ACT999"></sequenceFlow>
-    <sequenceFlow id="BACK_ACT001" name="不同意" sourceRef="exclusivegateway1" targetRef="ACT001"></sequenceFlow>
+    <sequenceFlow id="GOTOACT999" name="同意" sourceRef="ACT003" targetRef="ACT999">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_agreed == true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="BACK_ACT001" name="驳回" sourceRef="ACT003" targetRef="ACT001">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_agreed == false}]]></conditionExpression>
+    </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_HQ_OABIZ_LEAVE_AUDIT_V1.0">
     <bpmndi:BPMNPlane bpmnElement="HQ_OABIZ_LEAVE_AUDIT_V1.0" id="BPMNPlane_HQ_OABIZ_LEAVE_AUDIT_V1.0">
@@ -29,10 +31,7 @@
         <omgdc:Bounds height="55.0" width="105.0" x="520.0" y="150.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="ACT999" id="BPMNShape_ACT999">
-        <omgdc:Bounds height="35.0" width="35.0" x="800.0" y="160.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="157.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="730.0" y="160.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="GOTO_ACT002" id="BPMNEdge_GOTO_ACT002">
         <omgdi:waypoint x="295.0" y="177.0"></omgdi:waypoint>
@@ -46,25 +45,20 @@
         <omgdi:waypoint x="135.0" y="177.0"></omgdi:waypoint>
         <omgdi:waypoint x="190.0" y="177.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+      <bpmndi:BPMNEdge bpmnElement="GOTOACT999" id="BPMNEdge_GOTOACT999">
         <omgdi:waypoint x="625.0" y="177.0"></omgdi:waypoint>
-        <omgdi:waypoint x="680.0" y="177.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="GOTO_ACT999" id="BPMNEdge_GOTO_ACT999">
-        <omgdi:waypoint x="720.0" y="177.0"></omgdi:waypoint>
-        <omgdi:waypoint x="800.0" y="177.0"></omgdi:waypoint>
+        <omgdi:waypoint x="730.0" y="177.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="734.0" y="160.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="659.0" y="160.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="BACK_ACT001" id="BPMNEdge_BACK_ACT001">
-        <omgdi:waypoint x="700.0" y="197.0"></omgdi:waypoint>
-        <omgdi:waypoint x="699.0" y="270.0"></omgdi:waypoint>
-        <omgdi:waypoint x="498.0" y="270.0"></omgdi:waypoint>
-        <omgdi:waypoint x="242.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="572.0" y="205.0"></omgdi:waypoint>
+        <omgdi:waypoint x="572.0" y="279.0"></omgdi:waypoint>
+        <omgdi:waypoint x="242.0" y="279.0"></omgdi:waypoint>
         <omgdi:waypoint x="242.0" y="205.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="422.0" y="249.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="360.0" y="259.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
