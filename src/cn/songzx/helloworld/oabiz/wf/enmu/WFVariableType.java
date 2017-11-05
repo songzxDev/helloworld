@@ -46,7 +46,13 @@ public enum WFVariableType {
 	/** 业务单据类型id */
 	business_bill_kind_id("business_bill_kind_id", "", "业务单据类型id"),
 	/** 业务单据类型名称 */
-	business_bill_kind_name("business_bill_kind_name", "", "业务单据类型名称");
+	business_bill_kind_name("business_bill_kind_name", "", "业务单据类型名称"),
+	/** 下一步执行环节id */
+	next_step_id("next_step_id", "", "下一步执行环节id"),
+	/** 下一步执行环节名称 */
+	next_step_name("next_step_name", "", "下一步执行环节名称"),
+	/** 当前审批人是否同意标识 */
+	is_agreed("is_agreed", "", "当前审批人是否同意标识");
 
 	private String key;
 	private String name;
@@ -74,47 +80,26 @@ public enum WFVariableType {
 		this.intro = intro;
 	}
 
-	/**
-	 * @return the key
-	 */
 	public String getKey() {
 		return key;
 	}
 
-	/**
-	 * @param key
-	 *            the key to set
-	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
 
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the intro
-	 */
 	public String getIntro() {
 		return intro;
 	}
 
-	/**
-	 * @param intro
-	 *            the intro to set
-	 */
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
