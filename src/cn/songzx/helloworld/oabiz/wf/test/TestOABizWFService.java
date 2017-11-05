@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.songzx.helloworld.oabiz.util.OABizTestUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBpmnConfigVarRefMapper;
@@ -115,16 +116,16 @@ public class TestOABizWFService {
 
 	private Serializable teststartProcessInstanceByKey() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put("dynamic_participant_name", "肖飞雪");
-		variables.put("dynamic_participant_partyid", OABizUtil.generateNineteenUUIDPK());
-		variables.put("dynamic_participant_code", OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
-		variables.put("dynamic_participant_dept_name", "集团产品外包部");
-		variables.put("dynamic_participant_dept_code", "10991004000000000010000100001000070007800008");
-		variables.put("business_bill_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_name", "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
-		variables.put("business_bill_no", "OA" + System.currentTimeMillis());
-		variables.put("business_bill_kind_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_kind_name", "请假单");
+		variables.put(WFVariableType.current_participant_name.getKey(), "肖飞雪");
+		variables.put(WFVariableType.current_participant_partyid.getKey(), OABizTestUtil.generateRandomIDCard());
+		variables.put(WFVariableType.current_participant_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put(WFVariableType.current_participant_dept_name.getKey(), "集团产品外包部");
+		variables.put(WFVariableType.current_participant_dept_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put(WFVariableType.business_bill_id.getKey(), OABizUtil.generateNineteenUUIDPK());
+		variables.put(WFVariableType.business_bill_name.getKey(), "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
+		variables.put(WFVariableType.business_bill_no.getKey(), "OA" + System.currentTimeMillis());
+		variables.put(WFVariableType.business_bill_kind_id.getKey(), OABizUtil.generateNineteenUUIDPK());
+		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
 		String processDefinitionKey = "HQ_OABIZ_LEAVE_AUDIT_V1.0";
 		try {
 			oaBizWFService.startProcessInstanceByKey(processDefinitionKey, variables);
@@ -137,17 +138,17 @@ public class TestOABizWFService {
 	@Test
 	public void testCompleteWorkitemByPK() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put("dynamic_participant_name", "肖飞雪");
-		variables.put("dynamic_participant_partyid", OABizUtil.generateNineteenUUIDPK());
-		variables.put("dynamic_participant_code", OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
-		variables.put("dynamic_participant_dept_name", "集团产品外包部");
-		variables.put("dynamic_participant_dept_code", "10991004000000000010000100001000070007800008");
-		variables.put("business_bill_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_name", "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
-		variables.put("business_bill_no", "OA" + System.currentTimeMillis());
-		variables.put("business_bill_kind_id", OABizUtil.generateNineteenUUIDPK());
-		variables.put("business_bill_kind_name", "请假单");
-		variables.put("is_agreed", true);
+		variables.put(WFVariableType.current_participant_name.getKey(), "肖飞雪");
+		variables.put(WFVariableType.current_participant_partyid.getKey(), OABizTestUtil.generateRandomIDCard());
+		variables.put(WFVariableType.current_participant_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put(WFVariableType.current_participant_dept_name.getKey(), "集团产品外包部");
+		variables.put(WFVariableType.current_participant_dept_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
+		variables.put(WFVariableType.business_bill_id.getKey(), OABizUtil.generateNineteenUUIDPK());
+		variables.put(WFVariableType.business_bill_name.getKey(), "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
+		variables.put(WFVariableType.business_bill_no.getKey(), "OA" + System.currentTimeMillis());
+		variables.put(WFVariableType.business_bill_kind_id.getKey(), OABizUtil.generateNineteenUUIDPK());
+		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
+		variables.put(WFVariableType.is_agreed.getKey(), true);
 		try {
 			oaBizWFService.completeWorkitemByPK("6ff31e9e-c1fd-11e7-8c08-c85b76a3c17b", variables);
 		} catch (Exception e) {
