@@ -269,7 +269,7 @@ public class WorkflowBizAspect {
 			String isEndProcInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricProcessInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND END_TIME_ IS NOT NULL AND END_ACT_ID_ IS NOT NULL";
 			HistoricProcessInstance histProcInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricProcessInstanceQuery().sql(isEndProcInst).parameter("procInstId", procInstId).singleResult();
 			if (histProcInst != null) {// 当前流程实例已结束
-
+				// FIXME
 			}
 		}
 		return newWFWorkitem;
