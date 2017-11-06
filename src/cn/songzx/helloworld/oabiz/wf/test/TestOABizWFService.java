@@ -28,6 +28,7 @@ import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBizDataMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBpmnConfigVarRefMapper;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFEngineType;
+import cn.songzx.helloworld.oabiz.wf.enmu.WFStepType;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFVariableType;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
@@ -181,8 +182,11 @@ public class TestOABizWFService {
 		variables.put(WFVariableType.business_bill_kind_id.getKey(), OABizUtil.generateNineteenUUIDPK());
 		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
 		variables.put(WFVariableType.is_agreed.getKey(), true);
+		variables.put(WFVariableType.next_step_id.getKey(), "ACT003");
+		variables.put(WFVariableType.next_step_name.getKey(), "项目经理审批");
+		variables.put(WFVariableType.next_step_type.getKey(), "" + WFStepType.GENERALSIGN.getIndex());
 		try {
-			oaBizWFService.completeWorkitemByPK("31fdad16-c2bf-11e7-aaa9-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("81439c79-c2cf-11e7-ae24-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
