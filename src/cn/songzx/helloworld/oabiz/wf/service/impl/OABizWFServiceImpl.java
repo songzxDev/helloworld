@@ -324,7 +324,53 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	 */
 	@Override
 	public WFBizDataPM modifyWFBizData(WFBizData wfBizData) throws Exception {
-		return null;
+		WFBizDataPM wfBizDataPM = new WFBizDataPM();
+		wfBizDataMapper.updateByPrimaryKeySelective(wfBizData);
+		OABizUtil.copyProperties(wfBizData, wfBizDataPM);
+		return wfBizDataPM;
+	}
+
+	/**
+	 *
+	 * @Date: 2017年11月6日上午11:14:59
+	 * @Title: modifyBizBillInfoAfterProcInstEnd
+	 * @Description: TODO(流程实例结束后更新关联的业务单据相关信息)
+	 * @param wfBizData
+	 *            业务单据和流程实例关联信息表
+	 * @return
+	 * @throws Exception
+	 * @return WFBizDataPM 返回值类型
+	 */
+	@Override
+	public WFBizDataPM modifyBizBillInfoAfterProcInstEnd(WFBizData wfBizData) throws Exception {
+		WFBizDataPM wfBizDataPM = new WFBizDataPM();
+		try {
+			// FIXME ...... 后续需要根据实际业务单据类型添加相关逻辑
+			System.out.println("流程实例：☆" + wfBizData.getProcessInstanceId() + "★结束了，开始执行业务模块相关后续操作！");
+			Thread.sleep(2000L);// 模拟流程实例结束审批后，业务单据执行相关后续操作
+			System.out.println("业务单据【" + wfBizData.getBizBillNo() + "】已审批通过，根据相关规则后续操作已执行完成");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		OABizUtil.copyProperties(wfBizData, wfBizDataPM);
+		return wfBizDataPM;
+	}
+
+	/**
+	 * @Date: 2017年11月6日上午11:22:30
+	 * @Title: getWFBizDataByProcInstId
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param procInstId
+	 * @return
+	 * @throws Exception
+	 * @return 返回值类型
+	 */
+	@Override
+	public WFBizDataPM getWFBizDataByProcInstId(String procInstId) throws Exception {
+		WFBizDataPM wfBizDataPM = new WFBizDataPM();
+		WFBizData wfBizData = wfBizDataMapper.selectByProcInstId(procInstId);
+		OABizUtil.copyProperties(wfBizData, wfBizDataPM);
+		return wfBizDataPM;
 	}
 
 }

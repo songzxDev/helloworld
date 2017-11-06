@@ -2,13 +2,17 @@ package cn.songzx.helloworld.workflow.biz.listener;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
+
 import org.activiti.engine.EngineServices;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.engine.delegate.event.ActivitiEventType;
-import org.activiti.engine.task.Task;
+
+import cn.songzx.helloworld.oabiz.util.OABizUtil;
+import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
+import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
+import cn.songzx.helloworld.workflow.biz.WorkflowBizI;
 
 public class ActBpm518EventListener implements ActivitiEventListener, Serializable {
 
@@ -16,6 +20,9 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
 	 */
 	private static final long serialVersionUID = 8217370115363802174L;
+
+	@Resource(name = "oaBizWFService")
+	private OABizWFServiceI oaBizWFService;
 
 	/**
 	 * @Date: 2017年10月26日上午11:05:12
@@ -44,40 +51,29 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 		String executionId = event.getExecutionId();// 流程实例的分支流程ID
 		String processInstanceId = event.getProcessInstanceId();// 流程实例ID
 		switch (eventType) {
-		case TASK_CREATED:
-			try {
-				TaskService taskService = engineServices.getTaskService();
-				ManagementService managementService = engineServices.getManagementService();
-				if (taskService != null) {
-					String queryTaskSql = "SELECT * FROM " + managementService.getTableName(Task.class) + " WHERE PROC_INST_ID_=#{processInstanceId}";
-					Task currentTask = taskService.createNativeTaskQuery().sql(queryTaskSql).parameter("processInstanceId", processInstanceId).singleResult();
-					System.out.println();
-					StringBuilder stbu = new StringBuilder("Activiti518流程引擎流程新创建了一个待办任务！\r\n");
-					if (currentTask != null) {
-						stbu.append("流程实例ID: " + processInstanceId + "\r\n");
-						stbu.append("新增待办ID: " + currentTask.getId() + "\r\n");
-						stbu.append("当前处理环节ID: " + currentTask.getTaskDefinitionKey() + ", 当前处理环节名称: " + currentTask.getName() + "\r\n");
-					}
-					System.out.println(stbu.toString());
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		case TASK_CREATED:// 新增待办事项事件
+			System.out.println("Activiti518流程引擎待办任务已创建完成！");
 			break;
-		case TASK_ASSIGNED:
-			System.out.println("Activiti518流程引擎待办任务已指派了参与者！");
+		case TASK_ASSIGNED:// 待办事项指派参与者事件
+			System.out.println("Activiti518流程引擎待办任务参与者已指派！");
 			break;
-		case TASK_COMPLETED:
+		case TASK_COMPLETED:// 待办事项提交事件
 			System.out.println("Activiti518流程引擎待办任务已提交完成！");
 			break;
-		case PROCESS_COMPLETED:
-			// FIXME ......
+		case PROCESS_STARTED:// 新增流程实例事件
+			System.out.println("新流程实例：☆" + processInstanceId + "★创建了！");
+			break;
+		case PROCESS_COMPLETED:// 结束流程实例事件
 			try {
 				System.out.println("流程实例：☆" + processInstanceId + "★结束了！");
-				System.out.println("流程实例：☆" + processInstanceId + "★结束了，开始执行业务模块相关后续操作！");
-				Thread.sleep(5000L);// 模拟流程实例结束后，业务模块一些后续执行操作
-				System.out.println("已结束的流程实例：☆" + processInstanceId + "★对应的业务单据后续操作执行完成！");
-			} catch (InterruptedException e) {
+				WFBizData endWFBizData = oaBizWFService.getWFBizDataByProcInstId(processInstanceId);
+				if (endWFBizData != null) {
+					endWFBizData.setBizBillAuditStatus(WorkflowBizI.APPROVAL_COMPLETED);
+					endWFBizData.setModifyDatetime(OABizUtil.getCurrentTimestamp());
+					oaBizWFService.modifyWFBizData(endWFBizData);// 更新业务模块-流程实例业务单据关联信息表数据的审批状态为："通过审批"
+					oaBizWFService.modifyBizBillInfoAfterProcInstEnd(endWFBizData);// 更新此流程实例关联的业务单据的相关数据
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
@@ -96,7 +92,6 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 	 */
 	@Override
 	public boolean isFailOnException() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

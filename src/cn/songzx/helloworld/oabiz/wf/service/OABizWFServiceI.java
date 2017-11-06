@@ -56,6 +56,18 @@ public interface OABizWFServiceI {
 
 	/**
 	 *
+	 * @Date: 2017年11月6日上午11:21:55
+	 * @Title: getWFBizDataByProcInstId
+	 * @Description: TODO(根据流程实例ID获取业务模块和流程实例信息关联信息数据)
+	 * @param procInstId
+	 * @return
+	 * @throws Exception
+	 * @return WFBizDataPM 返回值类型
+	 */
+	public WFBizDataPM getWFBizDataByProcInstId(String procInstId) throws Exception;
+
+	/**
+	 *
 	 * @Date: 2017年10月23日上午10:00:47
 	 * @Title: completeWorkitemByPK
 	 * @Description: TODO(提交当前工作项，并返回新增的工作项)
@@ -140,4 +152,17 @@ public interface OABizWFServiceI {
 	 * @return WFBizDataPM 返回值类型
 	 */
 	public WFBizDataPM modifyWFBizData(WFBizData wfBizData) throws Exception;
+
+	/**
+	 *
+	 * @Date: 2017年11月6日上午11:14:59
+	 * @Title: modifyBizBillInfoAfterProcInstEnd
+	 * @Description: TODO(流程实例结束后更新关联的业务单据相关信息)
+	 * @param wfBizData
+	 *            业务单据和流程实例关联信息表
+	 * @return
+	 * @throws Exception
+	 * @return WFBizDataPM 返回值类型
+	 */
+	public WFBizDataPM modifyBizBillInfoAfterProcInstEnd(WFBizData wfBizData) throws Exception;
 }

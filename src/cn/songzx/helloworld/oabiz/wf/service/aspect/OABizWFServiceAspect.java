@@ -11,9 +11,11 @@ package cn.songzx.helloworld.oabiz.wf.service.aspect;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
@@ -33,6 +35,26 @@ import cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl;
 @Component
 public class OABizWFServiceAspect {
 
+	/**
+	 *
+	 * @Date: 2017年11月6日下午1:39:59
+	 * @Title: beforeAnyKindCheckoutArgs
+	 * @Description: TODO(对接口OABizWFServiceI实现类OABizWFServiceImpl下面的所有传参方法进行前置非空校验)
+	 * @param jp
+	 * @return void 返回值类型
+	 */
+	@Before("execution(* cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl.*(..))")
+	public void beforeAnyKindCheckoutArgs(JoinPoint jp) {
+		Object[] args = jp.getArgs();
+		if (args != null && args.length > 0) {
+			for (int i = 0; i < args.length; i++) {
+				if (args[i] == null) {
+					throw new RuntimeException("目标方法【" + jp.getSignature().getName() + "(..)】调用失败，前置参数校验不通过！");
+				}
+			}
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	@Around("execution(* cn.songzx.helloworld.oabiz.wf.service.impl.OABizWFServiceImpl.completeWorkitem*(..))")
 	public Object aroundCompleteWorkitemKindMethod(ProceedingJoinPoint pjp) {
@@ -42,7 +64,7 @@ public class OABizWFServiceAspect {
 		Object[] args = pjp.getArgs();
 		String targetMethodName = pjp.getSignature().getName();
 		if (args == null || args.length < 2 || args[0] == null || args[1] == null) {
-			throw new RuntimeException("执行目标方法【" + targetMethodName + "】(..)失败，参数传入不符合规范！");
+			throw new RuntimeException("执行目标方法【" + targetMethodName + "(..)】失败，参数传入不符合规范！");
 		}
 		String completeWorkitemId = (String) args[0];
 		Map<String, Object> completeVariables = (Map<String, Object>) args[1];

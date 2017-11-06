@@ -25,10 +25,12 @@ import com.alibaba.fastjson.JSON;
 import cn.songzx.helloworld.oabiz.util.OABizTestUtil;
 import cn.songzx.helloworld.oabiz.util.OABizUtil;
 import cn.songzx.helloworld.oabiz.wf.dao.WFAuditRecordMapper;
+import cn.songzx.helloworld.oabiz.wf.dao.WFBizDataMapper;
 import cn.songzx.helloworld.oabiz.wf.dao.WFBpmnConfigVarRefMapper;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFEngineType;
 import cn.songzx.helloworld.oabiz.wf.enmu.WFVariableType;
 import cn.songzx.helloworld.oabiz.wf.entity.WFAuditRecord;
+import cn.songzx.helloworld.oabiz.wf.entity.WFBizData;
 import cn.songzx.helloworld.oabiz.wf.entity.WFBpmnConfigVarRef;
 import cn.songzx.helloworld.oabiz.wf.service.OABizWFServiceI;
 import cn.songzx.helloworld.workflow.dao.enmu.CommonExecuteStatus;
@@ -50,6 +52,8 @@ public class TestOABizWFService {
 
 	private WFAuditRecordMapper wfAuditRecordMapper;
 
+	private WFBizDataMapper wfBizDataMapper;
+
 	private WFBpmnConfigVarRefMapper wfBpmnConfigVarRefMapper;
 
 	public WFAuditRecordMapper getWfAuditRecordMapper() {
@@ -70,12 +74,40 @@ public class TestOABizWFService {
 		this.wfBpmnConfigVarRefMapper = wfBpmnConfigVarRefMapper;
 	}
 
+	public WFBizDataMapper getWfBizDataMapper() {
+		return wfBizDataMapper;
+	}
+
+	@Autowired
+	public void setWfBizDataMapper(WFBizDataMapper wfBizDataMapper) {
+		this.wfBizDataMapper = wfBizDataMapper;
+	}
+
+	@Test
+	public void testSelectByProcInstId() {
+		try {
+			WFBizData wfBizData = wfBizDataMapper.selectByProcInstId("b456a29d-c29d-11e7-8c8e-c85b76a3c17b");
+			System.out.println("返回：" + JSON.toJSONStringWithDateFormat(wfBizData, "yyyy-MM-dd HH:mm:ss.SSS"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Test
 	public void testSelectByWorkitemId() {
 		try {
 			WFAuditRecord wfAuditRecord = wfAuditRecordMapper.selectByWorkitemId("03b7715a-bf72-11e7-8e22-c85b76a3c17b", "03e22af4-bf72-11e7-8e22-c85b76a3c17b");
 			System.out.println("测试呢！");
 			System.out.println(JSON.toJSONStringWithDateFormat(wfAuditRecord, "yyyy-MM-dd HH:mm:ss.SSS"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGetWFBizDataByProcInstId() {
+		try {
+			oaBizWFService.getWFBizDataByProcInstId(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -150,7 +182,7 @@ public class TestOABizWFService {
 		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
 		variables.put(WFVariableType.is_agreed.getKey(), true);
 		try {
-			oaBizWFService.completeWorkitemByPK("9e927880-c29e-11e7-84e1-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("31fdad16-c2bf-11e7-aaa9-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
