@@ -26,8 +26,8 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 	 */
 	@Override
 	public void onEvent(ActivitiEvent event) {
-		final ActivitiEventType eventType = event.getType();// 流程引擎事件类型
-		final EngineServices engineServices = event.getEngineServices();// 包含流程引擎定义的对外提供的所有服务的接口方法
+		ActivitiEventType eventType = event.getType();// 流程引擎事件类型
+		EngineServices engineServices = event.getEngineServices();// 包含流程引擎定义的对外提供的所有服务的接口方法
 		/*
 		 * execution 即流程执行线路，或者执行环境
 		 *
@@ -41,8 +41,8 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 		 * 而execution不一定对应一个task。
 		 * 从级别上来说，execution相当于task的执行环境，execution是包含task的。
 		 */
-		final String executionId = event.getExecutionId();// 流程实例的分支流程ID
-		final String processInstanceId = event.getProcessInstanceId();// 流程实例ID
+		String executionId = event.getExecutionId();// 流程实例的分支流程ID
+		String processInstanceId = event.getProcessInstanceId();// 流程实例ID
 		switch (eventType) {
 		case TASK_CREATED:
 			try {
@@ -66,10 +66,20 @@ public class ActBpm518EventListener implements ActivitiEventListener, Serializab
 			break;
 		case TASK_ASSIGNED:
 			System.out.println("Activiti518流程引擎待办任务已指派了参与者！");
-
 			break;
 		case TASK_COMPLETED:
 			System.out.println("Activiti518流程引擎待办任务已提交完成！");
+			break;
+		case PROCESS_COMPLETED:
+			// FIXME ......
+			try {
+				System.out.println("流程实例：☆" + processInstanceId + "★结束了！");
+				System.out.println("流程实例：☆" + processInstanceId + "★结束了，开始执行业务模块相关后续操作！");
+				Thread.sleep(5000L);// 模拟流程实例结束后，业务模块一些后续执行操作
+				System.out.println("已结束的流程实例：☆" + processInstanceId + "★对应的业务单据后续操作执行完成！");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			break;
 		default:
 			break;

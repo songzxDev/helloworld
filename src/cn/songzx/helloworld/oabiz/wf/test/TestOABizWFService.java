@@ -94,7 +94,7 @@ public class TestOABizWFService {
 			@Override
 			public void runTest() throws Throwable {
 				// 测试内容
-				teststartProcessInstanceByKey();
+				testStartProcessInstanceByKey();
 				System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆【" + Thread.currentThread().getName() + "】★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			}
 		};
@@ -114,15 +114,15 @@ public class TestOABizWFService {
 		}
 	}
 
-	private Serializable teststartProcessInstanceByKey() {
+	private Serializable testStartProcessInstanceByKey() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put(WFVariableType.current_participant_name.getKey(), "肖飞雪");
+		variables.put(WFVariableType.current_participant_name.getKey(), OABizTestUtil.generateRandomChineseName());
 		variables.put(WFVariableType.current_participant_partyid.getKey(), OABizTestUtil.generateRandomIDCard());
 		variables.put(WFVariableType.current_participant_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
 		variables.put(WFVariableType.current_participant_dept_name.getKey(), "集团产品外包部");
 		variables.put(WFVariableType.current_participant_dept_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
 		variables.put(WFVariableType.business_bill_id.getKey(), OABizUtil.generateNineteenUUIDPK());
-		variables.put(WFVariableType.business_bill_name.getKey(), "事假申请-北京回龙观新区光缆改造项目组员工-肖飞雪");
+		variables.put(WFVariableType.business_bill_name.getKey(), "【事假申请】-北京回龙观新区光缆改造项目组员工");
 		variables.put(WFVariableType.business_bill_no.getKey(), "OA" + System.currentTimeMillis());
 		variables.put(WFVariableType.business_bill_kind_id.getKey(), OABizUtil.generateNineteenUUIDPK());
 		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
@@ -138,7 +138,7 @@ public class TestOABizWFService {
 	@Test
 	public void testCompleteWorkitemByPK() {
 		Map<String, Object> variables = new LinkedHashMap<String, Object>();
-		variables.put(WFVariableType.current_participant_name.getKey(), "肖飞雪");
+		variables.put(WFVariableType.current_participant_name.getKey(), OABizTestUtil.generateRandomChineseName());
 		variables.put(WFVariableType.current_participant_partyid.getKey(), OABizTestUtil.generateRandomIDCard());
 		variables.put(WFVariableType.current_participant_code.getKey(), OABizUtil.generateNineteenUUIDPK() + "_" + OABizUtil.generateThirtySixUUIDPK());
 		variables.put(WFVariableType.current_participant_dept_name.getKey(), "集团产品外包部");
@@ -150,7 +150,7 @@ public class TestOABizWFService {
 		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
 		variables.put(WFVariableType.is_agreed.getKey(), true);
 		try {
-			oaBizWFService.completeWorkitemByPK("6ff31e9e-c1fd-11e7-8c08-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("9e927880-c29e-11e7-84e1-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -173,7 +173,7 @@ public class TestOABizWFService {
 
 	public static void main(String[] args) {
 		for (WFVariableType element : WFVariableType.values()) {
-			System.out.println(element);
+			System.out.println(element.getKey());
 		}
 	}
 }
