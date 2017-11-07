@@ -205,7 +205,7 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	@Override
 	public WFWorkitemPM addWFWorkitem(WFWorkitem wfWorkitem) throws Exception {
 		WFWorkitemPM wfWorkitemPM = null;
-		if (wfWorkitem != null) {
+		if (wfWorkitem != null && wfWorkitem.getWfWorkitemId() != null) {
 			wfWorkitemMapper.insertSelective(wfWorkitem);
 			wfWorkitemPM = new WFWorkitemPM();
 			OABizUtil.copyProperties(wfWorkitem, wfWorkitemPM);

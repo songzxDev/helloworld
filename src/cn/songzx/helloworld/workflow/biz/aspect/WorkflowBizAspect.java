@@ -269,7 +269,27 @@ public class WorkflowBizAspect {
 			String isEndProcInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricProcessInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND END_TIME_ IS NOT NULL AND END_ACT_ID_ IS NOT NULL";
 			HistoricProcessInstance histProcInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricProcessInstanceQuery().sql(isEndProcInst).parameter("procInstId", procInstId).singleResult();
 			if (histProcInst != null) {// 当前流程实例已结束
-				// FIXME
+				String queryHistActiInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricActivityInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND ACT_TYPE_='endEvent' AND END_TIME_ IS NOT NULL";
+				HistoricActivityInstance histActiInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricActivityInstanceQuery().sql(queryHistActiInst).parameter("procInstId", procInstId).singleResult();
+				WFAuditRecord newWFAuditRecord = new WFAuditRecord();
+				newWFAuditRecord.setWfAuditRecordId(histActiInst.getId());
+				newWFAuditRecord.setCreateDatetime(histActiInst.getStartTime());
+				newWFAuditRecord.setCurrentApproverAuditTime(histActiInst.getEndTime());
+				newWFAuditRecord.setModifyDatetime(histActiInst.getEndTime());
+				newWFAuditRecord.setProcessInstanceId(procInstId);
+				newWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(histActiInst.getProcessDefinitionId()).getName());
+				newWFAuditRecord.setCurrentStepId(histActiInst.getActivityId());
+				newWFAuditRecord.setCurrentStepName(histActiInst.getActivityName());
+				newWFAuditRecord.setCurrentStepType(histActiInst.getActivityType());
+				newWFAuditRecord.setCurrentWorkitemId(histActiInst.getId());
+				newWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
+				newWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
+				newWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
+				newWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
+				newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
+				newWFAuditRecord.setUsableStatus("1");
+				/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
+				newWFWorkitem.setOwnWFAuditRecord(newWFAuditRecord);
 			}
 		}
 		return newWFWorkitem;

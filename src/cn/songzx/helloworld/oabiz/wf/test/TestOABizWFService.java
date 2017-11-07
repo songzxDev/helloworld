@@ -182,11 +182,11 @@ public class TestOABizWFService {
 		variables.put(WFVariableType.business_bill_kind_id.getKey(), OABizUtil.generateNineteenUUIDPK());
 		variables.put(WFVariableType.business_bill_kind_name.getKey(), "请假单审批");
 		variables.put(WFVariableType.is_agreed.getKey(), true);
-		variables.put(WFVariableType.next_step_id.getKey(), "ACT003");
-		variables.put(WFVariableType.next_step_name.getKey(), "项目经理审批");
+		variables.put(WFVariableType.next_step_id.getKey(), "ACT999");
+		variables.put(WFVariableType.next_step_name.getKey(), "同意并结束审批");
 		variables.put(WFVariableType.next_step_type.getKey(), "" + WFStepType.GENERALSIGN.getIndex());
 		try {
-			oaBizWFService.completeWorkitemByPK("81439c79-c2cf-11e7-ae24-c85b76a3c17b", variables);
+			oaBizWFService.completeWorkitemByPK("54ea2a45-c37d-11e7-b90a-c85b76a3c17b", variables);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
