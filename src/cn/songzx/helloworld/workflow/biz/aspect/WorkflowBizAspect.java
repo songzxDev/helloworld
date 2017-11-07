@@ -221,11 +221,12 @@ public class WorkflowBizAspect {
 	 */
 	private WFWorkitem initWFWorkitemRefNewTask(String histTaskId, Map<String, Object> variables, WorkflowBizActBpm518Impl targetObj) {
 		WFWorkitem newWFWorkitem = new WFWorkitem();
+		WFAuditRecord newWFAuditRecord = new WFAuditRecord();
 		String procInstId = targetObj.getWorkflowHistoryBiz().createHistoricTaskInstanceQuery().taskId(histTaskId).singleResult().getProcessInstanceId();
 		String queryCurrentTask = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(Task.class) + " WHERE PROC_INST_ID_=#{procInstId}";
 		Task currentTask = targetObj.getWorkflowTaskBiz().createNativeTaskQuery().sql(queryCurrentTask).parameter("procInstId", procInstId).singleResult();
 		if (currentTask != null) {
-			/* 初始化业务模块新工作项的相关信息 */
+			/* step1 初始化业务模块新工作项的相关信息 */
 			newWFWorkitem.setWfWorkitemId(currentTask.getId());
 			newWFWorkitem.setProcessInstanceId(currentTask.getProcessInstanceId());
 			newWFWorkitem.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(currentTask.getProcessDefinitionId()).getName());
@@ -245,52 +246,49 @@ public class WorkflowBizAspect {
 			newWFWorkitem.setDoneStatus("0");
 			newWFWorkitem.setReadStatus("0");
 			newWFWorkitem.setAuthorizeStatus("0");
-			/* 业务模块新工作项关联的审批记录 */
+			/* step2.1 初始化业务模块新工作项关联的审批记录 */
 			String queryHistActiInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricActivityInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND TASK_ID_=#{taskId} AND END_TIME_ IS NULL";
 			HistoricActivityInstance histActiInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricActivityInstanceQuery().sql(queryHistActiInst).parameter("procInstId", procInstId).parameter("taskId", currentTask.getId()).singleResult();
-			WFAuditRecord newWFAuditRecord = new WFAuditRecord();
 			newWFAuditRecord.setWfAuditRecordId(histActiInst.getId());
 			newWFAuditRecord.setCreateDatetime(histActiInst.getStartTime());
+			newWFAuditRecord.setUsableStatus("1");
 			newWFAuditRecord.setProcessInstanceId(procInstId);
 			newWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(histActiInst.getProcessDefinitionId()).getName());
 			newWFAuditRecord.setCurrentStepId(histActiInst.getActivityId());
 			newWFAuditRecord.setCurrentStepName(histActiInst.getActivityName());
 			newWFAuditRecord.setCurrentStepType(histActiInst.getActivityType());
+			newWFAuditRecord.setCurrentWorkitemId(histActiInst.getTaskId());
 			newWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
 			newWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
 			newWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
 			newWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
 			newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
-			newWFAuditRecord.setCurrentWorkitemId(histActiInst.getTaskId());
-			newWFAuditRecord.setUsableStatus("1");
-			/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
-			newWFWorkitem.setOwnWFAuditRecord(newWFAuditRecord);
 		} else {
+			/* step2.2 判断当前流程实例是否已结束 */
 			String isEndProcInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricProcessInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND END_TIME_ IS NOT NULL AND END_ACT_ID_ IS NOT NULL";
 			HistoricProcessInstance histProcInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricProcessInstanceQuery().sql(isEndProcInst).parameter("procInstId", procInstId).singleResult();
 			if (histProcInst != null) {// 当前流程实例已结束
 				String queryHistActiInst = "SELECT * FROM " + targetObj.getWorkflowManagementBiz().getTableName(HistoricActivityInstance.class) + " WHERE PROC_INST_ID_=#{procInstId} AND ACT_TYPE_='endEvent' AND END_TIME_ IS NOT NULL";
 				HistoricActivityInstance histActiInst = targetObj.getWorkflowHistoryBiz().createNativeHistoricActivityInstanceQuery().sql(queryHistActiInst).parameter("procInstId", procInstId).singleResult();
-				WFAuditRecord newWFAuditRecord = new WFAuditRecord();
 				newWFAuditRecord.setWfAuditRecordId(histActiInst.getId());
 				newWFAuditRecord.setCreateDatetime(histActiInst.getStartTime());
-				newWFAuditRecord.setCurrentApproverAuditTime(histActiInst.getEndTime());
 				newWFAuditRecord.setModifyDatetime(histActiInst.getEndTime());
+				newWFAuditRecord.setUsableStatus("1");
 				newWFAuditRecord.setProcessInstanceId(procInstId);
 				newWFAuditRecord.setProcessName(targetObj.getWorkflowRepositoryBiz().getProcessDefinition(histActiInst.getProcessDefinitionId()).getName());
 				newWFAuditRecord.setCurrentStepId(histActiInst.getActivityId());
 				newWFAuditRecord.setCurrentStepName(histActiInst.getActivityName());
 				newWFAuditRecord.setCurrentStepType(histActiInst.getActivityType());
 				newWFAuditRecord.setCurrentWorkitemId(histActiInst.getId());
+				newWFAuditRecord.setCurrentApproverAuditTime(histActiInst.getEndTime());
 				newWFAuditRecord.setCurrentApproverName((String) variables.get(WFVariableType.current_participant_name.getKey()));
 				newWFAuditRecord.setCurrentApproverPartyid((String) variables.get(WFVariableType.current_participant_partyid.getKey()));
 				newWFAuditRecord.setCurrentApproverCode((String) variables.get(WFVariableType.current_participant_code.getKey()));
 				newWFAuditRecord.setCurrentApproverDeptName((String) variables.get(WFVariableType.current_participant_dept_name.getKey()));
 				newWFAuditRecord.setCurrentApproverDeptCode((String) variables.get(WFVariableType.current_participant_dept_code.getKey()));
-				newWFAuditRecord.setUsableStatus("1");
-				/* ☆ ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ */
-				newWFWorkitem.setOwnWFAuditRecord(newWFAuditRecord);
 			}
+			/* step3 添加当前流程实例的工作项关联的审批记录 */
+			newWFWorkitem.setOwnWFAuditRecord(newWFAuditRecord);
 		}
 		return newWFWorkitem;
 	}

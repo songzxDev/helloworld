@@ -226,7 +226,7 @@ public class OABizWFServiceImpl implements OABizWFServiceI {
 	@Override
 	public WFAuditRecordPM addWFAuditRecord(WFAuditRecord wfAuditRecord) throws Exception {
 		WFAuditRecordPM wfAuditRecordPM = null;
-		if (wfAuditRecord != null) {
+		if (wfAuditRecord != null && wfAuditRecord.getWfAuditRecordId() != null) {
 			wfAuditRecordMapper.insertSelective(wfAuditRecord);
 			wfAuditRecordPM = new WFAuditRecordPM();
 			OABizUtil.copyProperties(wfAuditRecord, wfAuditRecordPM);
